@@ -61,6 +61,36 @@
       box-shadow: 0 0 0 2px #c7d2fe, 0 2px 4px rgba(79, 70, 229, 0.45) !important;
       transform: scale(1.1) !important;
     }
+
+    /* ============================================================== */
+    /* INDIKATOR BUTIR ISIAN PENILAIAN YANG TERLEWAT / BELUM DIISI    */
+    /* ============================================================== */
+    .row-unfilled {
+      border-color: #f43f5e !important;
+      background-color: #fff1f2 !important;
+      box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.45) !important;
+      transition: all 0.25s ease-in-out !important;
+      animation: pulseRow 2s infinite ease-in-out !important;
+    }
+    @keyframes pulseRow {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.45); }
+      50% { box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.2); }
+    }
+    .badge-missing-indicator {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      color: #be123c !important;
+      background-color: #ffe4e6 !important;
+      border: 1px solid #fecdd3 !important;
+      padding: 1.5px 6px !important;
+      border-radius: 4px !important;
+      margin-left: 6px !important;
+      letter-spacing: 0.025em !important;
+      white-space: nowrap !important;
+    }
     @media print {
       *, *::before, *::after {
         -webkit-print-color-adjust: exact !important;
@@ -781,7 +811,10 @@
                       <div class="text-[10px] text-slate-500">Bobot 5% • Presensi Riil</div>
                     </div>
                   </div>
-                  <span id="ci-side-hadir-badge" class="text-[11px] font-mono font-bold text-blue-700 bg-white px-2 py-0.5 rounded border border-blue-100">5.00 / 5</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="ci-side-missing-hadir"></span>
+                    <span id="ci-side-hadir-badge" class="text-[11px] font-mono font-bold text-blue-700 bg-white px-2 py-0.5 rounded border border-blue-100">5.00 / 5</span>
+                  </div>
                 </button>
 
                 <!-- Tab 2: Kinerja & Sikap -->
@@ -793,7 +826,10 @@
                       <div class="text-[10px] text-slate-500">Bobot 20% • 6 Indikator</div>
                     </div>
                   </div>
-                  <span id="ci-side-kinerja-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 20</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="ci-side-missing-kinerja"></span>
+                    <span id="ci-side-kinerja-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 20</span>
+                  </div>
                 </button>
 
                 <!-- Tab 3: Target Kompetensi -->
@@ -805,7 +841,10 @@
                       <div class="text-[10px] text-slate-500">Bobot 20% • 28 Prosedur</div>
                     </div>
                   </div>
-                  <span id="ci-side-komp-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 20</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="ci-side-missing-komp"></span>
+                    <span id="ci-side-komp-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 20</span>
+                  </div>
                 </button>
 
                 <!-- Tab 4: Ujian Laporan CI -->
@@ -817,7 +856,10 @@
                       <div class="text-[10px] text-slate-500">Bobot 15% • 20 Aspek</div>
                     </div>
                   </div>
-                  <span id="ci-side-lap-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 15</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="ci-side-missing-lap"></span>
+                    <span id="ci-side-lap-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 15</span>
+                  </div>
                 </button>
 
                 <!-- Tab 5: Konfirmasi & Tanda Tangan -->
@@ -829,7 +871,10 @@
                       <div class="text-[10px] text-slate-500">Finalisasi Nilai CI</div>
                     </div>
                   </div>
-                  <span id="ci-side-status-badge" class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Draf</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="ci-side-missing-submit"></span>
+                    <span id="ci-side-status-badge" class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Draf</span>
+                  </div>
                 </button>
               </nav>
 
@@ -868,11 +913,11 @@
                   </div>
                 </div>
 
-                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-center gap-4">
+                <div id="row-ci-hadir" class="rubric-row p-6 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-center gap-4 transition">
                   <div class="w-full sm:w-auto">
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Persentase Kehadiran (%):</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Persentase Kehadiran (%): <span id="badge-ci-hadir"></span></label>
                     <div class="flex items-center gap-2">
-                      <input type="number" id="ci-input-kehadiran" min="0" max="100" value="100" oninput="recalcCI()" class="w-32 text-center text-base font-bold border border-slate-300 rounded-lg py-2 focus:ring-2 focus:ring-blue-500 bg-white">
+                      <input type="number" id="ci-input-kehadiran" min="0" max="100" value="100" oninput="onKehadiranChange()" class="w-32 text-center text-base font-bold border border-slate-300 rounded-lg py-2 focus:ring-2 focus:ring-blue-500 bg-white">
                       <span class="text-sm font-bold text-slate-700">%</span>
                     </div>
                   </div>
@@ -1056,17 +1101,19 @@
 
                 <!-- Signer Form -->
                 <div class="p-4 bg-white border border-slate-200 rounded-xl space-y-4">
-                  <div>
-                    <label class="block text-xs font-bold text-slate-800 mb-1">Nama CI / Pembimbing Lapangan (Sesuai Gelar):</label>
-                    <input type="text" id="ci-signer-name" placeholder="Nama CI & Gelar" class="w-full text-xs border border-slate-300 rounded-lg px-3.5 py-2.5 focus:ring-2 focus:ring-blue-500 font-medium">
+                  <div id="row-ci-signer" class="rubric-row p-3 rounded-lg border border-transparent transition">
+                    <label class="block text-xs font-bold text-slate-800 mb-1">
+                      Nama CI / Pembimbing Lapangan (Sesuai Gelar): <span id="badge-ci-signer"></span>
+                    </label>
+                    <input type="text" id="ci-signer-name" placeholder="Nama CI & Gelar" oninput="onSignerChange('ci')" class="w-full text-xs border border-slate-300 rounded-lg px-3.5 py-2.5 focus:ring-2 focus:ring-blue-500 font-medium">
                     <span class="text-[11px] text-slate-400 block mt-1">Nama ini otomatis dicantumkan pada kolom tanda tangan Berita Acara resmi.</span>
                   </div>
 
                   <!-- CANVAS TANDA TANGAN DIGITAL CI -->
-                  <div class="pt-3 border-t border-slate-100 space-y-2">
+                  <div id="row-ci-signature" class="rubric-row pt-3 border-t border-slate-100 space-y-2 p-3 rounded-lg border border-transparent transition">
                     <div class="flex items-center justify-between">
                       <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                        <span>✍️ Goreskan Tanda Tangan Digital CI:</span>
+                        <span>✍️ Goreskan Tanda Tangan Digital CI:</span> <span id="badge-ci-signature"></span>
                       </label>
                       <div class="flex items-center gap-2">
                         <span id="ci-sig-status" class="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-500 font-medium border border-slate-200">Belum Bertanda Tangan</span>
@@ -1194,7 +1241,10 @@
                       <div class="text-[10px] text-slate-500">Bobot 25% • 21 Butir Soal</div>
                     </div>
                   </div>
-                  <span id="dosen-side-resp-badge" class="text-[11px] font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-100">0.00 / 25</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="dosen-side-missing-resp"></span>
+                    <span id="dosen-side-resp-badge" class="text-[11px] font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-100">0.00 / 25</span>
+                  </div>
                 </button>
 
                 <!-- Tab 2 -->
@@ -1206,7 +1256,10 @@
                       <div class="text-[10px] text-slate-500">Bobot 15% • 20 Butir Soal</div>
                     </div>
                   </div>
-                  <span id="dosen-side-lap-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 15</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="dosen-side-missing-lap"></span>
+                    <span id="dosen-side-lap-badge" class="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">0.00 / 15</span>
+                  </div>
                 </button>
 
                 <!-- Tab 3 -->
@@ -1218,7 +1271,10 @@
                       <div class="text-[10px] text-slate-500">Pengesahan & Finalisasi</div>
                     </div>
                   </div>
-                  <span id="dosen-side-status-badge" class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Draf</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span id="dosen-side-missing-submit"></span>
+                    <span id="dosen-side-status-badge" class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Draf</span>
+                  </div>
                 </button>
               </nav>
 
@@ -1347,17 +1403,19 @@
 
                 <!-- Signer Form -->
                 <div class="p-4 bg-white border border-slate-200 rounded-xl space-y-4">
-                  <div>
-                    <label class="block text-xs font-bold text-slate-800 mb-1">Nama Dosen Penguji / DPL (Sesuai Gelar):</label>
-                    <input type="text" id="dosen-signer-name" placeholder="Nama Dosen & Gelar" class="w-full text-xs border border-slate-300 rounded-lg px-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 font-medium">
+                  <div id="row-dosen-signer" class="rubric-row p-3 rounded-lg border border-transparent transition">
+                    <label class="block text-xs font-bold text-slate-800 mb-1">
+                      Nama Dosen Penguji / DPL (Sesuai Gelar): <span id="badge-dosen-signer"></span>
+                    </label>
+                    <input type="text" id="dosen-signer-name" placeholder="Nama Dosen & Gelar" oninput="onSignerChange('dosen')" class="w-full text-xs border border-slate-300 rounded-lg px-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 font-medium">
                     <span class="text-[11px] text-slate-400 block mt-1">Nama ini akan dicantumkan secara otomatis pada lembar Berita Acara resmi.</span>
                   </div>
 
                   <!-- CANVAS TANDA TANGAN DIGITAL DOSEN -->
-                  <div class="pt-3 border-t border-slate-100 space-y-2">
+                  <div id="row-dosen-signature" class="rubric-row pt-3 border-t border-slate-100 space-y-2 p-3 rounded-lg border border-transparent transition">
                     <div class="flex items-center justify-between">
                       <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                        <span>✍️ Goreskan Tanda Tangan Digital Dosen:</span>
+                        <span>✍️ Goreskan Tanda Tangan Digital Dosen:</span> <span id="badge-dosen-signature"></span>
                       </label>
                       <div class="flex items-center gap-2">
                         <span id="dosen-sig-status" class="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-500 font-medium border border-slate-200">Belum Bertanda Tangan</span>
@@ -2085,6 +2143,51 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: PERINGATAN BUTIR BELUM DIISI (VALIDATION ALERT)         -->
+  <!-- ============================================================== -->
+  <div id="validation-alert-modal" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-rose-100 animate-in fade-in zoom-in-95 duration-200">
+      <div class="p-5 bg-gradient-to-r from-rose-600 via-rose-500 to-red-600 text-white flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0 text-xl font-bold">
+          ⚠️
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-bold text-base tracking-tight leading-snug">Pengisian Nilai Belum Lengkap!</h3>
+          <p class="text-xs text-rose-100 mt-0.5">Ada butir penilaian atau pengesahan yang masih belum diisi.</p>
+        </div>
+        <button type="button" onclick="closeValidationModal()" class="text-white/80 hover:text-white text-lg leading-none p-1 cursor-pointer">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <div class="bg-rose-50 border border-rose-200 rounded-xl p-3.5 text-xs text-rose-900 space-y-1">
+          <p class="font-semibold text-rose-950">Perhatian Sebelum Finalisasi:</p>
+          <p class="leading-relaxed">Nilai tidak dapat difinalisasi / dikirim karena masih ada <strong id="val-modal-missing-count" class="text-rose-700 underline font-extrabold">0 butir</strong> yang belum Anda nilai atau lengkapi.</p>
+        </div>
+
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Rincian Bagian yang Belum Lengkap:</label>
+          <div id="val-modal-breakdown" class="max-h-52 overflow-y-auto space-y-2 text-xs pr-1">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-500 italic bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          💡 Tips: Butir yang belum diisi telah ditandai dengan kotak warna merah di lembar formulir dan dapat langsung dilengkapi sekarang.
+        </p>
+
+        <div class="pt-3 border-t border-slate-200 flex flex-col sm:flex-row items-center gap-2 justify-end">
+          <button type="button" onclick="closeValidationModal()" class="w-full sm:w-auto px-4 py-2 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-50 text-xs font-semibold transition cursor-pointer">
+            Tinjau Formulir
+          </button>
+          <button type="button" onclick="jumpToFirstMissingField()" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer">
+            <span>🔍 Tunjukkan & Lengkapi Sekarang</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -4345,6 +4448,9 @@
           this.isDrawing = false;
           if (this.hasDrawn) {
             this.currentDataUrl = this.canvas.toDataURL('image/png');
+            if (typeof this.onSigned === 'function') {
+              this.onSigned();
+            }
           }
         }
       }
@@ -4407,10 +4513,12 @@
 
     function clearCISignature() {
       if (ciSigPad) ciSigPad.clear();
+      if (typeof refreshActiveMissingCounts === 'function') refreshActiveMissingCounts();
     }
 
     function clearDosenSignature() {
       if (dosenSigPad) dosenSigPad.clear();
+      if (typeof refreshActiveMissingCounts === 'function') refreshActiveMissingCounts();
     }
 
     function getStoredData() {
@@ -4500,12 +4608,15 @@
       kinContainer.innerHTML = '';
       KINERJA_ITEMS.forEach((it, idx) => {
         kinContainer.innerHTML += `
-          <div class="p-3 rounded-lg border border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <span class="text-xs text-slate-800 font-medium">${idx + 1}. ${it.text}</span>
+          <div id="row-kin-${it.id}" class="rubric-row p-3 rounded-lg border border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition">
+            <span class="text-xs text-slate-800 font-medium">
+              ${idx + 1}. ${it.text}
+              <span id="badge-kin-${it.id}"></span>
+            </span>
             <div class="flex items-center gap-1.5 shrink-0">
               ${[1,2,3,4].map(val => `
                 <label class="cursor-pointer select-none">
-                  <input type="radio" name="kin_${it.id}" value="${val}" onchange="recalcCI()" class="peer sr-only">
+                  <input type="radio" name="kin_${it.id}" value="${val}" onchange="onRubricScoreChange('kin', '${it.id}')" class="peer sr-only">
                   <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
                 </label>
               `).join('')}
@@ -4519,12 +4630,15 @@
       kompContainer.innerHTML = '';
       KOMPETENSI_GROUPS.forEach((g) => {
         let itemsHtml = g.items.map((it, idx) => `
-          <div class="p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <span class="text-slate-800">${it.text}</span>
+          <div id="row-komp-${it.id}" class="rubric-row p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+            <span class="text-slate-800">
+              ${it.text}
+              <span id="badge-komp-${it.id}"></span>
+            </span>
             <div class="flex items-center gap-1.5 shrink-0">
               ${[1,2,3,4].map(val => `
                 <label class="cursor-pointer select-none">
-                  <input type="radio" name="komp_${it.id}" value="${val}" onchange="recalcCI()" class="peer sr-only">
+                  <input type="radio" name="komp_${it.id}" value="${val}" onchange="onRubricScoreChange('komp', '${it.id}')" class="peer sr-only">
                   <span class="rating-btn inline-flex h-6 w-6 items-center justify-center rounded border border-slate-300 bg-white text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
                 </label>
               `).join('')}
@@ -4545,15 +4659,18 @@
       lapCIContainer.innerHTML = '';
       LAPORAN_GROUPS.forEach((g) => {
         let itemsHtml = g.items.map((it) => `
-          <div class="p-2.5 rounded-lg border border-slate-200/90 hover:border-blue-300 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+          <div id="row-lapci-${it.id}" class="rubric-row p-2.5 rounded-lg border border-slate-200/90 hover:border-blue-300 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
             <div class="flex items-start gap-2.5">
               <span class="font-bold text-slate-400 text-xs shrink-0 mt-0.5">${it.num}.</span>
-              <span class="text-slate-800 font-medium leading-relaxed">${it.text}</span>
+              <span class="text-slate-800 font-medium leading-relaxed">
+                ${it.text}
+                <span id="badge-lapci-${it.id}"></span>
+              </span>
             </div>
             <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
               ${[1,2,3,4,5].map(val => `
                 <label class="cursor-pointer select-none">
-                  <input type="radio" name="lapci_${it.id}" value="${val}" onchange="recalcCI()" class="peer sr-only">
+                  <input type="radio" name="lapci_${it.id}" value="${val}" onchange="onRubricScoreChange('lapci', '${it.id}')" class="peer sr-only">
                   <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
                 </label>
               `).join('')}
@@ -4589,12 +4706,15 @@
       respContainer.innerHTML = '';
       RESPONSI_GROUPS.forEach((g) => {
         let itemsHtml = g.items.map((it, idx) => `
-          <div class="p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <span class="text-slate-800">${it.text}</span>
+          <div id="row-resp-${it.id}" class="rubric-row p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+            <span class="text-slate-800">
+              ${it.text}
+              <span id="badge-resp-${it.id}"></span>
+            </span>
             <div class="flex items-center gap-1.5 shrink-0">
               ${[1,2,3,4,5].map(val => `
                 <label class="cursor-pointer select-none">
-                  <input type="radio" name="resp_${it.id}" value="${val}" onchange="recalcDosen()" class="peer sr-only">
+                  <input type="radio" name="resp_${it.id}" value="${val}" onchange="onRubricScoreChange('resp', '${it.id}')" class="peer sr-only">
                   <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
                 </label>
               `).join('')}
@@ -4615,15 +4735,18 @@
       lapDosContainer.innerHTML = '';
       LAPORAN_GROUPS.forEach((g) => {
         let itemsHtml = g.items.map((it) => `
-          <div class="p-2.5 rounded-lg border border-slate-200/90 hover:border-indigo-300 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+          <div id="row-lapdos-${it.id}" class="rubric-row p-2.5 rounded-lg border border-slate-200/90 hover:border-indigo-300 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
             <div class="flex items-start gap-2.5">
               <span class="font-bold text-slate-400 text-xs shrink-0 mt-0.5">${it.num}.</span>
-              <span class="text-slate-800 font-medium leading-relaxed">${it.text}</span>
+              <span class="text-slate-800 font-medium leading-relaxed">
+                ${it.text}
+                <span id="badge-lapdos-${it.id}"></span>
+              </span>
             </div>
             <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
               ${[1,2,3,4,5].map(val => `
                 <label class="cursor-pointer select-none">
-                  <input type="radio" name="lapdos_${it.id}" value="${val}" onchange="recalcDosen()" class="peer sr-only">
+                  <input type="radio" name="lapdos_${it.id}" value="${val}" onchange="onRubricScoreChange('lapdos', '${it.id}')" class="peer sr-only">
                   <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
                 </label>
               `).join('')}
@@ -4804,6 +4927,7 @@
     }
 
     function loadStudentToCIForm() {
+      if (typeof clearCIValidationMarks === 'function') clearCIValidationMarks();
       const select = document.getElementById('ci-student-select');
       if (!select) return;
       const nim = select.value;
@@ -5008,9 +5132,386 @@
       updateRadioVisuals();
     }
 
+    // -------------------------------------------------------------
+    // SISTEM VALIDASI & PENANDA VISUAL BUTIR PENILAIAN TERLEWAT
+    // -------------------------------------------------------------
+    let activeValidationState = null;
+
+    function onRubricScoreChange(type, id) {
+      if (type === 'kin' || type === 'komp' || type === 'lapci') {
+        recalcCI();
+      } else {
+        recalcDosen();
+      }
+      const row = document.getElementById(`row-${type}-${id}`);
+      if (row) row.classList.remove('row-unfilled');
+      const badge = document.getElementById(`badge-${type}-${id}`);
+      if (badge) badge.innerHTML = '';
+
+      if (activeValidationState && activeValidationState.role === (type === 'resp' || type === 'lapdos' ? 'DOSEN' : 'CI')) {
+        refreshActiveMissingCounts();
+      }
+    }
+
+    function onKehadiranChange() {
+      recalcCI();
+      const input = document.getElementById('ci-input-kehadiran');
+      const row = document.getElementById('row-ci-hadir');
+      const badge = document.getElementById('badge-ci-hadir');
+      if (input && input.value.trim() !== '' && !isNaN(input.value) && Number(input.value) >= 0 && Number(input.value) <= 100) {
+        if (row) row.classList.remove('row-unfilled');
+        if (badge) badge.innerHTML = '';
+        if (activeValidationState && activeValidationState.role === 'CI') {
+          refreshActiveMissingCounts();
+        }
+      }
+    }
+
+    function onSignerChange(role) {
+      const row = document.getElementById(`row-${role}-signer`);
+      const badge = document.getElementById(`badge-${role}-signer`);
+      const input = document.getElementById(`${role}-signer-name`);
+      if (input && input.value.trim() !== '') {
+        if (row) row.classList.remove('row-unfilled');
+        if (badge) badge.innerHTML = '';
+        if (activeValidationState && activeValidationState.role.toLowerCase() === role.toLowerCase()) {
+          refreshActiveMissingCounts();
+        }
+      }
+    }
+
+    function clearCIValidationMarks() {
+      activeValidationState = null;
+      document.querySelectorAll('#tab-ci .row-unfilled').forEach(el => el.classList.remove('row-unfilled'));
+      document.querySelectorAll('#tab-ci .badge-missing-indicator').forEach(el => el.remove());
+      ['hadir', 'kinerja', 'komp', 'lap', 'submit'].forEach(p => {
+        const span = document.getElementById(`ci-side-missing-${p}`);
+        if (span) span.innerHTML = '';
+      });
+    }
+
+    function clearDosenValidationMarks() {
+      activeValidationState = null;
+      document.querySelectorAll('#tab-dosen .row-unfilled').forEach(el => el.classList.remove('row-unfilled'));
+      document.querySelectorAll('#tab-dosen .badge-missing-indicator').forEach(el => el.remove());
+      ['resp', 'lap', 'submit'].forEach(p => {
+        const span = document.getElementById(`dosen-side-missing-${p}`);
+        if (span) span.innerHTML = '';
+      });
+    }
+
+    function validateCIForm() {
+      clearCIValidationMarks();
+      const missing = [];
+
+      // 1. Kehadiran
+      const hadirInput = document.getElementById('ci-input-kehadiran');
+      const hadirVal = hadirInput ? hadirInput.value.trim() : '';
+      if (hadirVal === '' || isNaN(hadirVal) || Number(hadirVal) < 0 || Number(hadirVal) > 100) {
+        missing.push({
+          part: 'hadir',
+          partName: '1. Presensi Kehadiran',
+          rowId: 'row-ci-hadir',
+          badgeId: 'badge-ci-hadir',
+          label: 'Presensi Kehadiran Mahasiswa (0-100%)'
+        });
+      }
+
+      // 2. Kinerja & Sikap (6 items)
+      KINERJA_ITEMS.forEach((it, idx) => {
+        const checked = document.querySelector(`input[name="kin_${it.id}"]:checked`);
+        if (!checked) {
+          missing.push({
+            part: 'kinerja',
+            partName: '2. Kinerja & Sikap',
+            rowId: `row-kin-${it.id}`,
+            badgeId: `badge-kin-${it.id}`,
+            label: `Butir ${idx + 1}: ${it.text}`
+          });
+        }
+      });
+
+      // 3. Target Kompetensi (28 items)
+      KOMPETENSI_GROUPS.forEach(g => {
+        g.items.forEach(it => {
+          const checked = document.querySelector(`input[name="komp_${it.id}"]:checked`);
+          if (!checked) {
+            missing.push({
+              part: 'komp',
+              partName: '3. Target Kompetensi',
+              rowId: `row-komp-${it.id}`,
+              badgeId: `badge-komp-${it.id}`,
+              label: `[${g.name}] ${it.text}`
+            });
+          }
+        });
+      });
+
+      // 4. Ujian Laporan CI (20 items)
+      LAPORAN_ITEMS.forEach(it => {
+        const checked = document.querySelector(`input[name="lapci_${it.id}"]:checked`);
+        if (!checked) {
+          missing.push({
+            part: 'lap',
+            partName: '4. Ujian Laporan CI',
+            rowId: `row-lapci-${it.id}`,
+            badgeId: `badge-lapci-${it.id}`,
+            label: `Butir ${it.num}: ${it.text}`
+          });
+        }
+      });
+
+      // 5. Pengesahan (Nama CI & TTD)
+      const signer = document.getElementById('ci-signer-name')?.value?.trim();
+      if (!signer) {
+        missing.push({
+          part: 'submit',
+          partName: '5. Konfirmasi & Pengesahan',
+          rowId: 'row-ci-signer',
+          badgeId: 'badge-ci-signer',
+          label: 'Nama Lengkap & Gelar Pembimbing CI'
+        });
+      }
+
+      const hasSig = ciSigPad && ciSigPad.hasDrawn && ciSigPad.currentDataUrl;
+      if (!hasSig) {
+        missing.push({
+          part: 'submit',
+          partName: '5. Konfirmasi & Pengesahan',
+          rowId: 'row-ci-signature',
+          badgeId: 'badge-ci-signature',
+          label: 'Goresan Tanda Tangan Digital CI'
+        });
+      }
+
+      if (missing.length > 0) {
+        applyValidationVisuals('CI', missing);
+        return { isValid: false, role: 'CI', missing };
+      }
+
+      return { isValid: true, role: 'CI', missing: [] };
+    }
+
+    function validateDosenForm() {
+      clearDosenValidationMarks();
+      const missing = [];
+
+      // 1. Responsi (21 items)
+      RESPONSI_GROUPS.forEach(g => {
+        g.items.forEach(it => {
+          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+          if (!checked) {
+            missing.push({
+              part: 'resp',
+              partName: '1. Ujian Responsi',
+              rowId: `row-resp-${it.id}`,
+              badgeId: `badge-resp-${it.id}`,
+              label: `[${g.name}] ${it.text}`
+            });
+          }
+        });
+      });
+
+      // 2. Laporan Dosen (20 items)
+      LAPORAN_ITEMS.forEach(it => {
+        const checked = document.querySelector(`input[name="lapdos_${it.id}"]:checked`);
+        if (!checked) {
+          missing.push({
+            part: 'lap',
+            partName: '2. Laporan & Presentasi',
+            rowId: `row-lapdos-${it.id}`,
+            badgeId: `badge-lapdos-${it.id}`,
+            label: `Butir ${it.num}: ${it.text}`
+          });
+        }
+      });
+
+      // 3. Pengesahan (Nama Dosen & TTD)
+      const signer = document.getElementById('dosen-signer-name')?.value?.trim();
+      if (!signer) {
+        missing.push({
+          part: 'submit',
+          partName: '3. Konfirmasi & Pengesahan',
+          rowId: 'row-dosen-signer',
+          badgeId: 'badge-dosen-signer',
+          label: 'Nama Lengkap & Gelar Dosen Penguji / DPL'
+        });
+      }
+
+      const hasSig = dosenSigPad && dosenSigPad.hasDrawn && dosenSigPad.currentDataUrl;
+      if (!hasSig) {
+        missing.push({
+          part: 'submit',
+          partName: '3. Konfirmasi & Pengesahan',
+          rowId: 'row-dosen-signature',
+          badgeId: 'badge-dosen-signature',
+          label: 'Goresan Tanda Tangan Digital Dosen'
+        });
+      }
+
+      if (missing.length > 0) {
+        applyValidationVisuals('DOSEN', missing);
+        return { isValid: false, role: 'DOSEN', missing };
+      }
+
+      return { isValid: true, role: 'DOSEN', missing: [] };
+    }
+
+    function applyValidationVisuals(role, missing) {
+      activeValidationState = {
+        role,
+        missing,
+        firstMissing: missing[0]
+      };
+
+      missing.forEach(m => {
+        const row = document.getElementById(m.rowId);
+        if (row) row.classList.add('row-unfilled');
+        const badge = document.getElementById(m.badgeId);
+        if (badge) {
+          badge.innerHTML = `<span class="badge-missing-indicator">⚠️ Belum Diisi</span>`;
+        }
+      });
+
+      refreshActiveMissingCounts();
+    }
+
+    function refreshActiveMissingCounts() {
+      if (!activeValidationState) return;
+      const role = activeValidationState.role;
+      if (role === 'CI') {
+        const counts = { hadir: 0, kinerja: 0, komp: 0, lap: 0, submit: 0 };
+        const hadirInput = document.getElementById('ci-input-kehadiran');
+        const hVal = hadirInput ? hadirInput.value.trim() : '';
+        if (hVal === '' || isNaN(hVal) || Number(hVal) < 0 || Number(hVal) > 100) counts.hadir++;
+
+        KINERJA_ITEMS.forEach(it => {
+          if (!document.querySelector(`input[name="kin_${it.id}"]:checked`)) counts.kinerja++;
+        });
+        KOMPETENSI_GROUPS.forEach(g => {
+          g.items.forEach(it => {
+            if (!document.querySelector(`input[name="komp_${it.id}"]:checked`)) counts.komp++;
+          });
+        });
+        LAPORAN_ITEMS.forEach(it => {
+          if (!document.querySelector(`input[name="lapci_${it.id}"]:checked`)) counts.lap++;
+        });
+        if (!document.getElementById('ci-signer-name')?.value?.trim()) counts.submit++;
+        if (!(ciSigPad && ciSigPad.hasDrawn && ciSigPad.currentDataUrl)) counts.submit++;
+
+        Object.keys(counts).forEach(p => {
+          const el = document.getElementById(`ci-side-missing-${p}`);
+          if (el) {
+            if (counts[p] > 0) {
+              el.innerHTML = `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-600 text-white animate-pulse">${counts[p]} kosong</span>`;
+            } else {
+              el.innerHTML = '';
+            }
+          }
+        });
+      } else if (role === 'DOSEN') {
+        const counts = { resp: 0, lap: 0, submit: 0 };
+        RESPONSI_GROUPS.forEach(g => {
+          g.items.forEach(it => {
+            if (!document.querySelector(`input[name="resp_${it.id}"]:checked`)) counts.resp++;
+          });
+        });
+        LAPORAN_ITEMS.forEach(it => {
+          if (!document.querySelector(`input[name="lapdos_${it.id}"]:checked`)) counts.lap++;
+        });
+        if (!document.getElementById('dosen-signer-name')?.value?.trim()) counts.submit++;
+        if (!(dosenSigPad && dosenSigPad.hasDrawn && dosenSigPad.currentDataUrl)) counts.submit++;
+
+        Object.keys(counts).forEach(p => {
+          const el = document.getElementById(`dosen-side-missing-${p}`);
+          if (el) {
+            if (counts[p] > 0) {
+              el.innerHTML = `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-600 text-white animate-pulse">${counts[p]} kosong</span>`;
+            } else {
+              el.innerHTML = '';
+            }
+          }
+        });
+      }
+    }
+
+    function showValidationAlertModal(valResult) {
+      const modal = document.getElementById('validation-alert-modal');
+      const countEl = document.getElementById('val-modal-missing-count');
+      const breakdownEl = document.getElementById('val-modal-breakdown');
+      if (!modal || !countEl || !breakdownEl) return;
+
+      countEl.innerText = `${valResult.missing.length} butir isian`;
+
+      const groups = {};
+      valResult.missing.forEach(m => {
+        if (!groups[m.partName]) groups[m.partName] = [];
+        groups[m.partName].push(m);
+      });
+
+      let html = '';
+      Object.keys(groups).forEach(pName => {
+        const items = groups[pName];
+        html += `
+          <div class="p-2.5 rounded-lg border border-rose-100 bg-rose-50/50">
+            <div class="flex items-center justify-between font-bold text-rose-950 text-xs mb-1">
+              <span>${pName}</span>
+              <span class="px-2 py-0.5 rounded bg-rose-200 text-rose-900 text-[10px] font-extrabold">${items.length} butir belum diisi</span>
+            </div>
+            <ul class="list-disc list-inside text-[11px] text-slate-600 space-y-0.5">
+              ${items.slice(0, 3).map(it => `<li class="truncate">${it.label}</li>`).join('')}
+              ${items.length > 3 ? `<li class="text-[10px] text-rose-600 font-semibold italic">...dan ${items.length - 3} butir lainnya</li>` : ''}
+            </ul>
+          </div>
+        `;
+      });
+
+      breakdownEl.innerHTML = html;
+      modal.classList.remove('hidden');
+    }
+
+    function closeValidationModal() {
+      const modal = document.getElementById('validation-alert-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function jumpToFirstMissingField() {
+      closeValidationModal();
+      if (!activeValidationState || !activeValidationState.firstMissing) return;
+      const { role, part, rowId } = activeValidationState.firstMissing;
+      if (role === 'CI') {
+        switchCIPart(part);
+      } else if (role === 'DOSEN') {
+        switchDosenPart(part);
+      }
+      setTimeout(() => {
+        const el = document.getElementById(rowId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.remove('row-unfilled');
+          void el.offsetWidth;
+          el.classList.add('row-unfilled');
+          const input = el.querySelector('input, canvas');
+          if (input && typeof input.focus === 'function') input.focus();
+        }
+      }, 120);
+    }
+
     function saveCIForm(isFinal) {
       const select = document.getElementById('ci-student-select');
-      if (!select || !select.value) return;
+      if (!select || !select.value) {
+        alert('Silakan pilih mahasiswa terlebih dahulu!');
+        return;
+      }
+
+      if (isFinal) {
+        const validation = validateCIForm();
+        if (!validation.isValid) {
+          showValidationAlertModal(validation);
+          return;
+        }
+      }
+
       const nim = select.value;
       const data = getStoredData();
       const rec = data[nim] || {};
@@ -5051,6 +5552,7 @@
       data[nim] = rec;
       saveStoredData(data);
       syncEvaluationToCloud(nim, rec);
+      clearCIValidationMarks();
       alert(isFinal ? 'Penilaian CI berhasil dikirim & difinalisasi!' : 'Draft Penilaian CI berhasil disimpan!');
     }
 
@@ -5144,6 +5646,7 @@
     }
 
     function loadStudentToDosenForm() {
+      if (typeof clearDosenValidationMarks === 'function') clearDosenValidationMarks();
       const select = document.getElementById('dosen-student-select');
       if (!select) return;
       const nim = select.value;
@@ -5361,7 +5864,19 @@
 
     function saveDosenForm(isFinal) {
       const select = document.getElementById('dosen-student-select');
-      if (!select || !select.value) return;
+      if (!select || !select.value) {
+        alert('Silakan pilih mahasiswa terlebih dahulu!');
+        return;
+      }
+
+      if (isFinal) {
+        const validation = validateDosenForm();
+        if (!validation.isValid) {
+          showValidationAlertModal(validation);
+          return;
+        }
+      }
+
       const nim = select.value;
       const data = getStoredData();
       const rec = data[nim] || {};
@@ -5395,6 +5910,7 @@
       data[nim] = rec;
       saveStoredData(data);
       syncEvaluationToCloud(nim, rec);
+      clearDosenValidationMarks();
       alert(isFinal ? 'Penilaian Dosen berhasil dikirim & difinalisasi!' : 'Draft Penilaian Dosen berhasil disimpan!');
     }
 
@@ -6471,7 +6987,26 @@
     window.addEventListener('DOMContentLoaded', () => {
       try {
         ciSigPad = new CanvasSignaturePad('ci-sig-canvas', 'ci-sig-placeholder', 'ci-sig-status');
+        ciSigPad.onSigned = () => {
+          const row = document.getElementById('row-ci-signature');
+          if (row) row.classList.remove('row-unfilled');
+          const badge = document.getElementById('badge-ci-signature');
+          if (badge) badge.innerHTML = '';
+          if (activeValidationState && activeValidationState.role === 'CI') {
+            refreshActiveMissingCounts();
+          }
+        };
+
         dosenSigPad = new CanvasSignaturePad('dosen-sig-canvas', 'dosen-sig-placeholder', 'dosen-sig-status');
+        dosenSigPad.onSigned = () => {
+          const row = document.getElementById('row-dosen-signature');
+          if (row) row.classList.remove('row-unfilled');
+          const badge = document.getElementById('badge-dosen-signature');
+          if (badge) badge.innerHTML = '';
+          if (activeValidationState && activeValidationState.role === 'DOSEN') {
+            refreshActiveMissingCounts();
+          }
+        };
 
         window.addEventListener('resize', () => {
           if (ciSigPad) ciSigPad.setupDimensions();
