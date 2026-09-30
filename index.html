@@ -8,6 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SheetJS (xlsx) CDN untuk Impor/Ekspor Excel Langsung di Browser -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Google Firebase App & Firestore CDN (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -149,6 +152,12 @@
         <p class="text-[11px] text-slate-400 font-medium">Pilih peran penilai untuk mengakses instrumen penilaian</p>
       </div>
 
+      <!-- Cloud DB Status on Login -->
+      <div id="login-cloud-status" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100/80 border border-slate-200 text-[10px] font-semibold text-slate-600 transition">
+        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse" id="login-cloud-dot"></span>
+        <span id="login-cloud-text">Menghubungkan Database Cloud...</span>
+      </div>
+
       <!-- Error Alert -->
       <div id="login-error" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium text-left"></div>
 
@@ -265,6 +274,13 @@
           <div onclick="openUserSettingsModal()" title="Klik untuk Pengaturan Akun" class="h-9 w-9 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:border-indigo-300 border border-slate-200 flex items-center justify-center font-bold text-slate-700 hover:text-indigo-700 text-sm shadow-inner cursor-pointer transition" id="current-user-avatar">
             U
           </div>
+
+          <!-- Cloud Database Sync Status -->
+          <button type="button" id="cloud-sync-badge" onclick="manualTriggerCloudSync()" title="Status Sinkronisasi Database Cloud Firestore (Klik untuk sinkronisasi manual)" class="cursor-pointer flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse" id="cloud-status-dot"></span>
+            <span id="cloud-status-label" class="hidden sm:inline text-[11px]">Cloud Menghubungkan...</span>
+            <span class="sm:hidden text-[10px]">Cloud</span>
+          </button>
 
           <button type="button" onclick="openUserSettingsModal()" title="Pengaturan Akun & Kata Sandi" class="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1.5 shadow-2xs">
             <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1898,6 +1914,264 @@
     const SESSION_STORAGE_KEY = 'standalone_sep_current_session';
     const EVALUATION_STORAGE_KEY = 'standalone_sep_magang_2026';
 
+    // =============================================================
+    // GOOGLE FIREBASE CLOUD FIRESTORE REAL-TIME SYNCHRONIZATION
+    // =============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCevdaveNgERm2BNuv1y4DNpQ57UgbDDjE",
+      authDomain: "sipinter-magang.firebaseapp.com",
+      projectId: "sipinter-magang",
+      storageBucket: "sipinter-magang.firebasestorage.app",
+      messagingSenderId: "323708997298",
+      appId: "1:323708997298:web:a83a88bb8034a5238ec3ab",
+      measurementId: "G-90XW7F94CH"
+    };
+
+    let fbApp = null;
+    let firestore = null;
+    let isCloudOnline = false;
+    let isWritingToCloud = false;
+
+    function initFirebaseSync() {
+      if (typeof firebase === 'undefined') {
+        updateCloudStatus('offline', 'Firebase SDK Offline');
+        return;
+      }
+
+      try {
+        if (!firebase.apps || !firebase.apps.length) {
+          fbApp = firebase.initializeApp(firebaseConfig);
+        } else {
+          fbApp = firebase.app();
+        }
+        firestore = firebase.firestore();
+
+        updateCloudStatus('connecting', 'Menghubungkan Cloud...');
+        setupFirestoreRealtimeListeners();
+      } catch (err) {
+        console.warn('Inisialisasi Firebase gagal:', err);
+        updateCloudStatus('error', 'Koneksi Cloud Terbatas');
+      }
+    }
+
+    function updateCloudStatus(status, label) {
+      const dotEl = document.getElementById('cloud-status-dot');
+      const labelEl = document.getElementById('cloud-status-label');
+      const badgeEl = document.getElementById('cloud-sync-badge');
+      const loginDot = document.getElementById('login-cloud-dot');
+      const loginText = document.getElementById('login-cloud-text');
+
+      if (status === 'online') {
+        isCloudOnline = true;
+        if (dotEl) dotEl.className = 'w-2 h-2 rounded-full bg-emerald-500';
+        if (labelEl) labelEl.innerText = label || 'Cloud Firestore Live ✓';
+        if (badgeEl) {
+          badgeEl.className = 'cursor-pointer flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition shadow-2xs';
+        }
+        if (loginDot) loginDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+        if (loginText) loginText.innerText = 'Database Cloud Terhubung ✓';
+      } else if (status === 'syncing') {
+        if (dotEl) dotEl.className = 'w-2 h-2 rounded-full bg-blue-500 animate-spin';
+        if (labelEl) labelEl.innerText = label || 'Menyimpan Cloud...';
+        if (badgeEl) {
+          badgeEl.className = 'cursor-pointer flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 transition shadow-2xs';
+        }
+      } else if (status === 'error') {
+        isCloudOnline = false;
+        if (dotEl) dotEl.className = 'w-2 h-2 rounded-full bg-rose-500';
+        if (labelEl) labelEl.innerText = label || 'Cek Izin Cloud';
+        if (badgeEl) {
+          badgeEl.className = 'cursor-pointer flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 transition shadow-2xs';
+        }
+        if (loginDot) loginDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+        if (loginText) loginText.innerText = 'Mode Offline (Lokal)';
+      } else {
+        isCloudOnline = false;
+        if (dotEl) dotEl.className = 'w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+        if (labelEl) labelEl.innerText = label || 'Mode Offline';
+        if (badgeEl) {
+          badgeEl.className = 'cursor-pointer flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition shadow-2xs';
+        }
+        if (loginDot) loginDot.className = 'w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+        if (loginText) loginText.innerText = label || 'Menghubungkan Cloud...';
+      }
+    }
+
+    function setupFirestoreRealtimeListeners() {
+      if (!firestore) return;
+
+      // 1. Sinkronisasi Data Mahasiswa
+      firestore.collection('sipinter_config').doc('students').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list)) {
+            if (!isWritingToCloud) {
+              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(cloudData.list));
+              syncAllComponents();
+            }
+          }
+        } else {
+          // Auto-seed data lokal awal ke Cloud Firestore
+          const localStudents = getStudents();
+          firestore.collection('sipinter_config').doc('students').set({
+            list: localStudents,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+        updateCloudStatus('online', 'Cloud Firestore Live ✓');
+      }, err => {
+        console.warn('Listener students error:', err);
+        updateCloudStatus('error', err.code === 'permission-denied' ? 'Atur Rules Firestore' : 'Koneksi Terbatas');
+      });
+
+      // 2. Sinkronisasi Akun Pengguna (Users)
+      firestore.collection('sipinter_config').doc('users').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list)) {
+            if (!isWritingToCloud) {
+              localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cloudData.list));
+              renderUsersTable();
+              if (typeof selectLoginRole === 'function') {
+                selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
+              }
+            }
+          }
+        } else {
+          const localUsers = getUsers();
+          firestore.collection('sipinter_config').doc('users').set({
+            list: localUsers,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+      }, err => {
+        console.warn('Listener users error:', err);
+      });
+
+      // 3. Sinkronisasi Lahan / Rumah Sakit
+      firestore.collection('sipinter_config').doc('hospitals').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list)) {
+            if (!isWritingToCloud) {
+              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(cloudData.list));
+            }
+          }
+        } else {
+          const localHosp = getHospitals();
+          firestore.collection('sipinter_config').doc('hospitals').set({
+            list: localHosp,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+      }, err => {
+        console.warn('Listener hospitals error:', err);
+      });
+
+      // 4. Sinkronisasi Penilaian (Evaluations)
+      firestore.collection('sipinter_evaluations').onSnapshot(snapshot => {
+        if (!snapshot.empty) {
+          const currentEvals = getStoredData();
+          let changed = false;
+          snapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            const nim = docSnap.id;
+            if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
+              currentEvals[nim] = data;
+              changed = true;
+            }
+          });
+
+          if (changed && !isWritingToCloud) {
+            localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(currentEvals));
+            renderRekapTable();
+            if (typeof currentNIM !== 'undefined' && currentNIM) {
+              if (typeof populateStudentDataCI === 'function') populateStudentDataCI(currentNIM);
+              if (typeof populateStudentDataDosen === 'function') populateStudentDataDosen(currentNIM);
+            }
+          }
+        } else {
+          const localEvals = getStoredData();
+          Object.keys(localEvals).forEach(nim => {
+            firestore.collection('sipinter_evaluations').doc(nim).set(localEvals[nim]).catch(console.error);
+          });
+        }
+      }, err => {
+        console.warn('Listener evaluations error:', err);
+      });
+    }
+
+    function syncDocToCloud(collectionName, docId, data) {
+      if (!firestore) return;
+      isWritingToCloud = true;
+      updateCloudStatus('syncing', 'Menyimpan ke Cloud...');
+
+      firestore.collection(collectionName).doc(docId).set({
+        ...data,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        setTimeout(() => {
+          isWritingToCloud = false;
+          updateCloudStatus('online', 'Cloud Firestore Live ✓');
+        }, 500);
+      }).catch(err => {
+        isWritingToCloud = false;
+        console.error('Gagal simpan ke Firestore:', err);
+        updateCloudStatus('error', 'Gagal Simpan Cloud');
+      });
+    }
+
+    function syncEvaluationToCloud(nim, evalRecord) {
+      if (!firestore || !nim || !evalRecord) return;
+      isWritingToCloud = true;
+      updateCloudStatus('syncing', 'Menyimpan Nilai...');
+
+      firestore.collection('sipinter_evaluations').doc(nim).set({
+        ...evalRecord,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        setTimeout(() => {
+          isWritingToCloud = false;
+          updateCloudStatus('online', 'Cloud Firestore Live ✓');
+        }, 500);
+      }).catch(err => {
+        isWritingToCloud = false;
+        console.error('Gagal simpan nilai ke Firestore:', err);
+        updateCloudStatus('error', 'Gagal Simpan Nilai');
+      });
+    }
+
+    function manualTriggerCloudSync() {
+      if (!firestore) {
+        alert('Database Cloud Firestore belum terhubung.\n\nSistem saat ini tetap berjalan aman menggunakan penyimpanan lokal (LocalStorage).');
+        return;
+      }
+
+      if (!confirm('🔄 Sinkronisasi Manual Cloud Database:\n\nUnggah seluruh data lokal saat ini (Mahasiswa, Akun Penilai, dan Nilai) ke Cloud Firestore sekarang?')) {
+        return;
+      }
+
+      updateCloudStatus('syncing', 'Mengunggah Semua Data...');
+      const students = getStudents();
+      const users = getUsers();
+      const hospitals = getHospitals();
+      const evaluations = getStoredData();
+
+      Promise.all([
+        firestore.collection('sipinter_config').doc('students').set({ list: students, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        firestore.collection('sipinter_config').doc('users').set({ list: users, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        firestore.collection('sipinter_config').doc('hospitals').set({ list: hospitals, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        ...Object.keys(evaluations).map(nim => firestore.collection('sipinter_evaluations').doc(nim).set(evaluations[nim]))
+      ]).then(() => {
+        updateCloudStatus('online', 'Cloud Firestore Live ✓');
+        alert('✅ Sinkronisasi Berhasil!\n\nSeluruh data mahasiswa, akun, dan nilai telah terunggah ke Cloud Firestore.');
+      }).catch(err => {
+        console.error('Gagal sinkronisasi massal:', err);
+        alert('Gagal sinkronisasi ke cloud: ' + err.message + '\n\nPastikan aturan Firestore Rules Anda telah mengizinkan read/write (Test mode).');
+        updateCloudStatus('error', 'Cek Izin Firestore');
+      });
+    }
+
     // -------------------------------------------------------------
     // GETTER & SETTER MASTER DATA MAHASISWA & LAHAN
     // -------------------------------------------------------------
@@ -1949,6 +2223,7 @@
 
     function saveStudents(list) {
       localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
+      syncDocToCloud('sipinter_config', 'students', { list: list });
       syncAllComponents();
     }
 
@@ -1956,6 +2231,8 @@
       if (confirm('Kembalikan data mahasiswa ke daftar asli 72 mahasiswa dari dokumen Excel institusi?')) {
         localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
         localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+        syncDocToCloud('sipinter_config', 'students', { list: STUDENTS_DEFAULT });
+        syncDocToCloud('sipinter_config', 'hospitals', { list: HOSPITALS_DEFAULT });
         syncAllComponents();
         alert('Data mahasiswa berhasil di-reset ke 72 mahasiswa asli!');
       }
@@ -1975,6 +2252,7 @@
 
     function saveHospitals(list) {
       localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(list));
+      syncDocToCloud('sipinter_config', 'hospitals', { list: list });
       syncAllComponents();
     }
 
@@ -2043,6 +2321,7 @@
       const hasAdmin = users.some(u => (u.username || '').toLowerCase() === 'admin');
       if (!hasAdmin) users.unshift(JSON.parse(JSON.stringify(ADMIN_USER)));
       localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+      syncDocToCloud('sipinter_config', 'users', { list: users });
       renderUsersTable();
       if (typeof selectLoginRole === 'function') {
         selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
@@ -2052,6 +2331,7 @@
     function resetUsersToDefault() {
       if (confirm('Kembalikan semua daftar akun pengguna ke pengaturan awal?')) {
         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
+        syncDocToCloud('sipinter_config', 'users', { list: DEFAULT_USERS });
         renderUsersTable();
         if (typeof selectLoginRole === 'function') {
           selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
@@ -4490,6 +4770,7 @@
 
       data[nim] = rec;
       saveStoredData(data);
+      syncEvaluationToCloud(nim, rec);
       alert(isFinal ? 'Penilaian CI berhasil dikirim & difinalisasi!' : 'Draft Penilaian CI berhasil disimpan!');
     }
 
@@ -4829,6 +5110,7 @@
 
       data[nim] = rec;
       saveStoredData(data);
+      syncEvaluationToCloud(nim, rec);
       alert(isFinal ? 'Penilaian Dosen berhasil dikirim & difinalisasi!' : 'Draft Penilaian Dosen berhasil disimpan!');
     }
 
@@ -5206,6 +5488,7 @@
         applyUserSession();
         switchCIPart('hadir');
         switchDosenPart('resp');
+        initFirebaseSync();
 
         document.addEventListener('change', (e) => {
           if (e.target && e.target.type === 'radio') {
