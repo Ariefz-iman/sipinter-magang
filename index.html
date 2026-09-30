@@ -11,6 +11,8 @@
   <!-- Google Firebase App & Firestore CDN (Compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <!-- html2pdf.js CDN untuk Unduh File PDF Langsung di Browser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1660,19 +1662,16 @@
         <div>
           <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
             <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold">PDF</span>
-            <span>Pratinjau Lembar Berita Acara & Unduh PDF</span>
+            <span>Pratinjau Lembar Berita Acara</span>
           </h3>
           <p class="text-[11px] text-slate-500">Format Resmi Kemenkes RI — Dual Sign-off Pembimbing Lahan (CI) & Dosen DPL</p>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="saveAsPDF()" id="btn-save-pdf" class="text-xs px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow transition flex items-center gap-1.5">
-            <span>📥 Unduh File PDF Langsung</span>
+          <button type="button" onclick="saveAsPDF()" id="btn-save-pdf" class="text-xs px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow transition flex items-center gap-1.5 cursor-pointer">
+            <span>📥 Unduh File PDF</span>
           </button>
-          <button type="button" onclick="openPrintWindow()" class="text-xs px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold shadow transition flex items-center gap-1.5">
-            <span>👁️ Buka Pratinjau PDF (Tab Baru)</span>
-          </button>
-          <button type="button" onclick="closePrintModal()" class="text-xs px-3 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-600 font-semibold transition">
-            Tutup
+          <button type="button" onclick="closePrintModal()" class="text-xs px-3.5 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-600 font-semibold transition cursor-pointer">
+            ✕ Tutup
           </button>
         </div>
       </div>
@@ -2722,8 +2721,8 @@
             }
           </td>
           <td class="p-3 text-center no-print">
-            <button onclick="openPrintModal('${s.nim}')" class="px-2.5 py-1 text-[11px] rounded bg-white hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 border border-slate-300 font-semibold text-slate-700 shadow-xs transition flex items-center gap-1 mx-auto">
-              <span>📄 Cetak / PDF</span>
+            <button onclick="openPrintModal('${s.nim}')" class="px-2.5 py-1 text-[11px] rounded bg-white hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 border border-slate-300 font-semibold text-slate-700 shadow-xs transition flex items-center gap-1 mx-auto cursor-pointer">
+              <span>📄 Pratinjau & Unduh PDF</span>
             </button>
           </td>
         `;
@@ -5173,8 +5172,44 @@
     }
 
     function saveAsPDF() {
-      // Buka pratinjau lembar A4 Berita Acara resmi di tab baru untuk disimpan sebagai PDF atau dicetak langsung
-      openPrintWindow();
+      const element = document.getElementById('printable-area');
+      if (!element) return;
+      const nim = document.getElementById('print-mhs-nim')?.innerText.trim() || 'MHS';
+      const name = document.getElementById('print-mhs-name')?.innerText.trim() || 'Mahasiswa';
+      const cleanName = name.replace(/[^a-zA-Z0-9]/g, '_');
+      const filename = `Berita_Acara_${nim}_${cleanName}.pdf`;
+
+      const btn = document.getElementById('btn-save-pdf');
+      const origText = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.innerHTML = '<span>⏳ Memproses Unduhan PDF...</span>';
+        btn.disabled = true;
+      }
+
+      if (typeof html2pdf !== 'undefined') {
+        const opt = {
+          margin:       [8, 10, 8, 10],
+          filename:     filename,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2, useCORS: true, logging: false },
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save().then(() => {
+          if (btn) {
+            btn.innerHTML = origText;
+            btn.disabled = false;
+          }
+        }).catch(err => {
+          console.warn('Gagal unduh dengan html2pdf:', err);
+          if (btn) {
+            btn.innerHTML = origText;
+            btn.disabled = false;
+          }
+          openPrintWindow();
+        });
+      } else {
+        openPrintWindow();
+      }
     }
 
     function openPrintWindow() {
@@ -5388,7 +5423,7 @@
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
       <button onclick="window.print()" style="background:#059669; color:#ffffff; font-weight:700; padding:9px 20px; border-radius:8px; border:none; cursor:pointer; font-size:12px; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(0,0,0,0.3);">
-        🖨️ Cetak / Simpan sebagai PDF (A4)
+        📥 Simpan / Unduh PDF (A4)
       </button>
       <button onclick="window.close()" style="background:#475569; color:#ffffff; font-weight:600; padding:9px 16px; border-radius:8px; border:none; cursor:pointer; font-size:12px;">
         ✕ Tutup Tab
