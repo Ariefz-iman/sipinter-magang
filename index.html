@@ -13,6 +13,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <!-- html2pdf.js CDN untuk Unduh File PDF Langsung di Browser -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- Chart.js CDN untuk Visualisasi Grafik & Analisis Interaktif -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -398,6 +400,289 @@
             </table>
           </div>
         </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB: DASHBOARD ANALISIS & LAPORAN EKSEKUTIF -->
+      <!-- ============================================================== -->
+      <section id="tab-analytics" class="tab-content hidden space-y-6">
+        
+        <!-- BANNER TITLE -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 rounded-2xl p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                EKSEKUTIF & EVALUASI
+              </span>
+              <span class="text-xs text-slate-300">D3 RMIK Poltekkes Kemenkes Tasikmalaya</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">Dashboard Analisis & Laporan</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              Monitoring riil waktu pengumpulan nilai CI & Dosen, pemeringkatan capaian kompetensi mahasiswa, serta analisis komparasi rerata performa seluruh wahana/rumah sakit mitra.
+            </p>
+          </div>
+          <div class="flex items-center gap-2.5 shrink-0">
+            <button onclick="renderAnalyticsDashboard()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/20 transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+              <span>🔄 Segarkan Data</span>
+            </button>
+            <button onclick="window.print()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md cursor-pointer">
+              <span>🖨️ Cetak Ringkasan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI SUMMARY CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Cakupan Data</p>
+              <p class="text-2xl font-black text-slate-900 mt-0.5" id="ana-kpi-mhs">0</p>
+              <p class="text-[11px] text-slate-500 mt-0.5" id="ana-kpi-lahan">0 Wahana / RS Mitra</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">👥</div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Ketuntasan CI (Lahan)</p>
+              <p class="text-2xl font-black text-blue-600 mt-0.5" id="ana-kpi-ci-pct">0%</p>
+              <p class="text-[11px] text-slate-500 mt-0.5" id="ana-kpi-ci-count">0 / 0 Mahasiswa Tuntas</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">🏥</div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Ketuntasan Dosen (DPL)</p>
+              <p class="text-2xl font-black text-indigo-600 mt-0.5" id="ana-kpi-dosen-pct">0%</p>
+              <p class="text-[11px] text-slate-500 mt-0.5" id="ana-kpi-dosen-count">0 / 0 Mahasiswa Tuntas</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold">🎓</div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Tuntas 100% & Rerata</p>
+              <div class="flex items-baseline gap-2 mt-0.5">
+                <span class="text-2xl font-black text-emerald-600" id="ana-kpi-full-pct">0%</span>
+                <span class="text-xs font-bold text-slate-500">(Rerata: <strong id="ana-kpi-avg" class="text-slate-900">0.00</strong>)</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5" id="ana-kpi-full-count">0 Mahasiswa Selesai Penuh</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">✓</div>
+          </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- BAGIAN 1: WAKTU & STATUS PENGUMPULAN NILAI (CI & DOSEN) -->
+        <!-- ========================================================== -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-slate-200 bg-slate-50/70">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-bold">Bagian 1</span>
+                  <span>⏱️ Waktu & Progres Pengumpulan Nilai (CI & Dosen)</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">
+                  Monitoring urutan penyerahan nilai dan status penyelesaian antara Pembimbing Lahan (CI) dan Dosen Pembimbing Lapangan (DPL).
+                </p>
+              </div>
+
+              <!-- STATS MINI -->
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200" id="ana-badge-complete">
+                  🟢 0 Selesai Penuh
+                </span>
+                <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200" id="ana-badge-partial">
+                  🟡 0 Masih Berproses
+                </span>
+              </div>
+            </div>
+
+            <!-- CONTROLS & FILTERS -->
+            <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Cari Mahasiswa</label>
+                <input type="text" id="ana-sub-search" placeholder="Ketik nama atau NIM..." oninput="renderSubmissionTracking()" class="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Filter Status Pengumpulan</label>
+                <select id="ana-sub-filter-status" onchange="renderSubmissionTracking()" class="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium">
+                  <option value="ALL">Semua Status</option>
+                  <option value="COMPLETE">🟢 Tuntas Penuh (CI & Dosen Selesai)</option>
+                  <option value="WAIT_DOSEN">🟡 Menunggu Penilaian Dosen DPL</option>
+                  <option value="WAIT_CI">🟡 Menunggu Penilaian CI Lahan</option>
+                  <option value="PENDING_BOTH">⚪ Belum Dinilai Keduanya</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Filter Lahan / Rumah Sakit</label>
+                <select id="ana-sub-filter-rs" onchange="renderSubmissionTracking()" class="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium">
+                  <option value="">Semua Lahan / RS</option>
+                  <!-- Populated by JS -->
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Urutan Waktu Selesai</label>
+                <select id="ana-sub-sort" onchange="renderSubmissionTracking()" class="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium">
+                  <option value="FASTEST">⏱️ Waktu Selesai Tercepat (Paling Awal)</option>
+                  <option value="LATEST">⏱️ Waktu Selesai Terkini (Paling Baru)</option>
+                  <option value="NAME_ASC">🔤 Nama Mahasiswa (A - Z)</option>
+                  <option value="HOSPITAL">🏥 Rumah Sakit / Lahan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200">
+                  <th class="p-3 text-center w-12">No</th>
+                  <th class="p-3">Nama Mahasiswa</th>
+                  <th class="p-3">Wahana / Lahan Praktik</th>
+                  <th class="p-3">Penyerahan Nilai CI (60%)</th>
+                  <th class="p-3">Penyerahan Nilai Dosen (40%)</th>
+                  <th class="p-3 text-center">Status Akhir</th>
+                  <th class="p-3 text-center">Nilai Sementara</th>
+                </tr>
+              </thead>
+              <tbody id="ana-sub-tbody" class="divide-y divide-slate-100">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- BAGIAN 2: TOP NILAI MAHASISWA (TERTINGGI KE TERENDAH) -->
+        <!-- ========================================================== -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-slate-200 bg-slate-50/70">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-xs font-bold">Bagian 2</span>
+                  <span>🏆 Peringkat & Top Nilai Mahasiswa Magang</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">
+                  Urutan capaian prestasi mahasiswa dari nilai tertinggi ke terendah lengkap dengan asal lahan praktik.
+                </p>
+              </div>
+
+              <!-- FILTER & SEARCH -->
+              <div class="flex flex-wrap items-center gap-2">
+                <input type="text" id="ana-top-search" placeholder="Cari nama/NIM di peringkat..." oninput="renderTopStudentsRanking()" class="text-xs px-3 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white w-48">
+                <select id="ana-top-filter-rs" onchange="renderTopStudentsRanking()" class="text-xs px-3 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium">
+                  <option value="">Semua Lahan / RS</option>
+                  <!-- Populated by JS -->
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- PODIUM TOP 3 VISUAL -->
+          <div class="p-5 border-b border-slate-200 bg-gradient-to-b from-slate-50/50 to-white">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <span>🌟 Podium Prestasi Tertinggi (Top 3)</span>
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="ana-podium-container">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- CHART CONTAINER: TOP 10 MAHASISWA -->
+          <div class="p-5 border-b border-slate-200">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>📊 Grafik 10 Mahasiswa dengan Nilai Tertinggi</span>
+              </h4>
+              <span class="text-[11px] text-slate-400">Skala Skor 0 - 100</span>
+            </div>
+            <div class="relative w-full" style="height: 260px;">
+              <canvas id="chart-top-students"></canvas>
+            </div>
+          </div>
+
+          <!-- LEADERBOARD TABLE -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200">
+                  <th class="p-3 text-center w-14">Peringkat</th>
+                  <th class="p-3">Nama Mahasiswa</th>
+                  <th class="p-3">Asal Wahana / Lahan Praktik</th>
+                  <th class="p-3">Dosen DPL & CI</th>
+                  <th class="p-3 text-center bg-blue-50/50">Nilai CI (60%)</th>
+                  <th class="p-3 text-center bg-indigo-50/50">Nilai Dosen (40%)</th>
+                  <th class="p-3 text-center bg-emerald-50 text-slate-900 font-black">Nilai Akhir (100%)</th>
+                  <th class="p-3 text-center">Mutu</th>
+                  <th class="p-3 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody id="ana-top-tbody" class="divide-y divide-slate-100">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- BAGIAN 3: RERATA NILAI BERDASARKAN LAHAN / WAHANA PRAKTIK -->
+        <!-- ========================================================== -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-slate-200 bg-slate-50/70">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold">Bagian 3</span>
+                <span>🏥 Analisis & Komparasi Rerata Nilai Berdasarkan Lahan Praktik</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Komparasi performa nilai mahasiswa di 9 Rumah Sakit mitra: perbandingan nilai akhir, nilai CI, dan nilai Dosen.
+              </p>
+            </div>
+          </div>
+
+          <!-- CHART CONTAINER: HOSPITAL COMPARISON -->
+          <div class="p-5 border-b border-slate-200">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>📈 Grafik Komparasi Rata-rata Nilai per Rumah Sakit</span>
+              </h4>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Rerata Akhir</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500"></span> Rerata CI</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-indigo-500"></span> Rerata Dosen</span>
+              </div>
+            </div>
+            <div class="relative w-full" style="height: 320px;">
+              <canvas id="chart-hospital-averages"></canvas>
+            </div>
+          </div>
+
+          <!-- HOSPITAL SUMMARY TABLE -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200">
+                  <th class="p-3 text-center w-14">Peringkat</th>
+                  <th class="p-3">Nama Wahana / Rumah Sakit Mitra</th>
+                  <th class="p-3 text-center">Jumlah Mahasiswa</th>
+                  <th class="p-3 text-center bg-blue-50/50">Rerata Nilai CI (60%)</th>
+                  <th class="p-3 text-center bg-indigo-50/50">Rerata Nilai Dosen (40%)</th>
+                  <th class="p-3 text-center bg-emerald-50 text-slate-900 font-black">Rerata Nilai Akhir</th>
+                  <th class="p-3">Ketuntasan Pengumpulan Nilai</th>
+                  <th class="p-3 text-center">Predikat Mutu</th>
+                </tr>
+              </thead>
+              <tbody id="ana-hosp-tbody" class="divide-y divide-slate-100">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </section>
 
       <!-- ============================================================== -->
@@ -2565,6 +2850,9 @@
         <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-button px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-blue-600 text-white shadow whitespace-nowrap">
           ${rekapLabel}
         </button>
+        <button onclick="switchTab('analytics')" id="tab-btn-analytics" class="tab-button px-4 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 whitespace-nowrap">
+          📈 Dashboard Analisis
+        </button>
       `;
 
       if (user.role === 'CI' || user.role === 'ADMIN') {
@@ -4730,6 +5018,10 @@
       rec.kehadiran = parseFloat(document.getElementById('ci-input-kehadiran').value) || 0;
       rec.signerCI = document.getElementById('ci-signer-name').value;
       rec.statusCI = isFinal ? 'SUBMITTED' : 'PENDING';
+      rec.ciUpdatedAt = new Date().toISOString();
+      if (isFinal && !rec.ciSubmittedAt) {
+        rec.ciSubmittedAt = new Date().toISOString();
+      }
       if (ciSigPad && ciSigPad.hasDrawn && ciSigPad.currentDataUrl) {
         rec.signatureCI = ciSigPad.currentDataUrl;
       } else if (ciSigPad && !ciSigPad.hasDrawn) {
@@ -5076,6 +5368,10 @@
 
       rec.signerDosen = document.getElementById('dosen-signer-name').value;
       rec.statusDosen = isFinal ? 'SUBMITTED' : 'PENDING';
+      rec.dosenUpdatedAt = new Date().toISOString();
+      if (isFinal && !rec.dosenSubmittedAt) {
+        rec.dosenSubmittedAt = new Date().toISOString();
+      }
       if (dosenSigPad && dosenSigPad.hasDrawn && dosenSigPad.currentDataUrl) {
         rec.signatureDosen = dosenSigPad.currentDataUrl;
       } else if (dosenSigPad && !dosenSigPad.hasDrawn) {
@@ -5497,6 +5793,679 @@
       if (tab === 'users') {
         renderUsersTable();
       }
+      if (tab === 'analytics') {
+        renderAnalyticsDashboard();
+      }
+    }
+
+    /* ============================================================== */
+    /* ANALYTICS & EXECUTIVE REPORTING ENGINE (CHART.JS INTEGRATED)   */
+    /* ============================================================== */
+    let chartTopStudentsInstance = null;
+    let chartHospitalAveragesInstance = null;
+
+    function formatSubmissionDate(isoStr) {
+      if (!isoStr) return null;
+      try {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return null;
+        return d.toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        }) + ', ' + d.toLocaleTimeString('id-ID', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function populateAnalyticsHospitalFilters() {
+      const hospitals = getHospitals();
+      const selSub = document.getElementById('ana-sub-filter-rs');
+      const selTop = document.getElementById('ana-top-filter-rs');
+
+      [selSub, selTop].forEach(sel => {
+        if (!sel) return;
+        const currentVal = sel.value;
+        sel.innerHTML = '<option value="">Semua Lahan / RS</option>';
+        hospitals.forEach(h => {
+          sel.innerHTML += `<option value="${h}">${h}</option>`;
+        });
+        if (currentVal && hospitals.includes(currentVal)) {
+          sel.value = currentVal;
+        }
+      });
+    }
+
+    function renderAnalyticsDashboard() {
+      populateAnalyticsHospitalFilters();
+      updateAnalyticsKPICards();
+      renderSubmissionTracking();
+      renderTopStudentsRanking();
+      renderHospitalAverages();
+    }
+
+    function updateAnalyticsKPICards() {
+      const students = getAccessibleStudents();
+      const data = getStoredData();
+      const totalMhs = students.length;
+
+      const hospitals = [...new Set(students.map(s => (s.hospital || '').trim()).filter(Boolean))];
+      const totalHosp = hospitals.length;
+
+      let ciCount = 0;
+      let dosenCount = 0;
+      let fullCount = 0;
+      let totalScores = 0;
+      let scoredCount = 0;
+
+      students.forEach(s => {
+        const rec = data[s.nim] || {};
+        const calc = calculateFinal(rec);
+
+        if (rec.statusCI === 'SUBMITTED') ciCount++;
+        if (rec.statusDosen === 'SUBMITTED') dosenCount++;
+        if (calc.isComplete) fullCount++;
+        if (calc.total > 0) {
+          totalScores += calc.total;
+          scoredCount++;
+        }
+      });
+
+      const ciPct = totalMhs > 0 ? Math.round((ciCount / totalMhs) * 100) : 0;
+      const dosenPct = totalMhs > 0 ? Math.round((dosenCount / totalMhs) * 100) : 0;
+      const fullPct = totalMhs > 0 ? Math.round((fullCount / totalMhs) * 100) : 0;
+      const avgScore = scoredCount > 0 ? (totalScores / scoredCount).toFixed(2) : '0.00';
+
+      const elMhs = document.getElementById('ana-kpi-mhs');
+      const elLahan = document.getElementById('ana-kpi-lahan');
+      const elCIPct = document.getElementById('ana-kpi-ci-pct');
+      const elCICount = document.getElementById('ana-kpi-ci-count');
+      const elDosPct = document.getElementById('ana-kpi-dosen-pct');
+      const elDosCount = document.getElementById('ana-kpi-dosen-count');
+      const elFullPct = document.getElementById('ana-kpi-full-pct');
+      const elFullCount = document.getElementById('ana-kpi-full-count');
+      const elAvg = document.getElementById('ana-kpi-avg');
+      const elBadgeComp = document.getElementById('ana-badge-complete');
+      const elBadgePart = document.getElementById('ana-badge-partial');
+
+      if (elMhs) elMhs.innerText = totalMhs;
+      if (elLahan) elLahan.innerText = `${totalHosp} Wahana / RS Mitra`;
+      if (elCIPct) elCIPct.innerText = `${ciPct}%`;
+      if (elCICount) elCICount.innerText = `${ciCount} / ${totalMhs} Mahasiswa Selesai`;
+      if (elDosPct) elDosPct.innerText = `${dosenPct}%`;
+      if (elDosCount) elDosCount.innerText = `${dosenCount} / ${totalMhs} Mahasiswa Selesai`;
+      if (elFullPct) elFullPct.innerText = `${fullPct}%`;
+      if (elFullCount) elFullCount.innerText = `${fullCount} Mahasiswa Tuntas Penuh`;
+      if (elAvg) elAvg.innerText = avgScore;
+      if (elBadgeComp) elBadgeComp.innerText = `🟢 ${fullCount} Selesai Penuh`;
+      if (elBadgePart) elBadgePart.innerText = `🟡 ${totalMhs - fullCount} Masih Berproses`;
+    }
+
+    function renderSubmissionTracking() {
+      const students = getAccessibleStudents();
+      const data = getStoredData();
+
+      const q = (document.getElementById('ana-sub-search')?.value || '').toLowerCase().trim();
+      const filterStatus = document.getElementById('ana-sub-filter-status')?.value || 'ALL';
+      const filterRS = (document.getElementById('ana-sub-filter-rs')?.value || '').toLowerCase().trim();
+      const sortBy = document.getElementById('ana-sub-sort')?.value || 'FASTEST';
+
+      const items = students.map(s => {
+        const rec = data[s.nim] || {};
+        const calc = calculateFinal(rec);
+
+        const isCISub = rec.statusCI === 'SUBMITTED';
+        const isDosSub = rec.statusDosen === 'SUBMITTED';
+        const isComplete = isCISub && isDosSub;
+
+        // Extract dates
+        const ciRawTime = rec.ciSubmittedAt || (isCISub ? rec.ciUpdatedAt : null);
+        const dosRawTime = rec.dosenSubmittedAt || (isDosSub ? rec.dosenUpdatedAt : null);
+
+        let latestCompletionTime = null;
+        if (ciRawTime && dosRawTime) {
+          latestCompletionTime = Math.max(new Date(ciRawTime).getTime(), new Date(dosRawTime).getTime());
+        } else if (ciRawTime) {
+          latestCompletionTime = new Date(ciRawTime).getTime();
+        } else if (dosRawTime) {
+          latestCompletionTime = new Date(dosRawTime).getTime();
+        }
+
+        return {
+          student: s,
+          rec,
+          calc,
+          isCISub,
+          isDosSub,
+          isComplete,
+          ciRawTime,
+          dosRawTime,
+          latestCompletionTime
+        };
+      });
+
+      // Filter
+      const filtered = items.filter(it => {
+        const s = it.student;
+        const matchQ = !q || (s.name || '').toLowerCase().includes(q) || (s.nim || '').toLowerCase().includes(q);
+        const sHosp = (s.hospital || '').toLowerCase().trim();
+        const matchRS = !filterRS || sHosp === filterRS || sHosp.includes(filterRS);
+
+        let matchStatus = true;
+        if (filterStatus === 'COMPLETE') matchStatus = it.isComplete;
+        else if (filterStatus === 'WAIT_DOSEN') matchStatus = it.isCISub && !it.isDosSub;
+        else if (filterStatus === 'WAIT_CI') matchStatus = !it.isCISub && it.isDosSub;
+        else if (filterStatus === 'PENDING_BOTH') matchStatus = !it.isCISub && !it.isDosSub;
+
+        return matchQ && matchRS && matchStatus;
+      });
+
+      // Sort
+      filtered.sort((a, b) => {
+        if (sortBy === 'FASTEST') {
+          // Both complete first, ordered by earliest completion time
+          if (a.isComplete && !b.isComplete) return -1;
+          if (!a.isComplete && b.isComplete) return 1;
+          const timeA = a.latestCompletionTime || Infinity;
+          const timeB = b.latestCompletionTime || Infinity;
+          return timeA - timeB;
+        } else if (sortBy === 'LATEST') {
+          const timeA = a.latestCompletionTime || -1;
+          const timeB = b.latestCompletionTime || -1;
+          return timeB - timeA;
+        } else if (sortBy === 'NAME_ASC') {
+          return (a.student.name || '').localeCompare(b.student.name || '');
+        } else if (sortBy === 'HOSPITAL') {
+          return (a.student.hospital || '').localeCompare(b.student.hospital || '');
+        }
+        return 0;
+      });
+
+      const tbody = document.getElementById('ana-sub-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 font-medium">Tidak ada data penilaian mahasiswa yang cocok dengan kriteria filter.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach((it, idx) => {
+        const s = it.student;
+        const rec = it.rec;
+        const calc = it.calc;
+
+        const ciDateFormatted = formatSubmissionDate(it.ciRawTime);
+        const dosDateFormatted = formatSubmissionDate(it.dosRawTime);
+
+        // Status Penilaian CI
+        let ciBadgeHtml = '';
+        if (it.isCISub) {
+          ciBadgeHtml = `
+            <div class="space-y-0.5">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                <span>✓ Tuntas Final</span>
+              </span>
+              <p class="text-[10px] text-slate-500 font-mono flex items-center gap-1">
+                <span>⏱️ ${ciDateFormatted || 'Tersimpan'}</span>
+              </p>
+              <p class="text-[10px] text-slate-600 truncate max-w-[170px]" title="Penilai: ${rec.signerCI || s.ci || 'CI'}">Penilai: ${rec.signerCI || s.ci || '-'}</p>
+            </div>
+          `;
+        } else {
+          const hasDraft = (rec.kehadiran > 0 || Object.keys(rec.kinerja || {}).length > 0 || Object.keys(rec.kompetensi || {}).length > 0);
+          ciBadgeHtml = hasDraft ? `
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              🟡 Draft / Belum Final
+            </span>
+          ` : `
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-500 border border-slate-200">
+              ⚪ Belum Dinilai
+            </span>
+          `;
+        }
+
+        // Status Penilaian Dosen
+        let dosBadgeHtml = '';
+        if (it.isDosSub) {
+          dosBadgeHtml = `
+            <div class="space-y-0.5">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                <span>✓ Tuntas Final</span>
+              </span>
+              <p class="text-[10px] text-slate-500 font-mono flex items-center gap-1">
+                <span>⏱️ ${dosDateFormatted || 'Tersimpan'}</span>
+              </p>
+              <p class="text-[10px] text-slate-600 truncate max-w-[170px]" title="Dosen: ${rec.signerDosen || s.lecturers || 'Dosen'}">Dosen: ${rec.signerDosen || s.lecturers || '-'}</p>
+            </div>
+          `;
+        } else {
+          const hasDraft = (Object.keys(rec.responsi || {}).length > 0 || Object.keys(rec.lapDosen || {}).length > 0);
+          dosBadgeHtml = hasDraft ? `
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              🟡 Draft / Belum Final
+            </span>
+          ` : `
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-500 border border-slate-200">
+              ⚪ Belum Dinilai
+            </span>
+          `;
+        }
+
+        // Status Akhir badge
+        let overallBadge = '';
+        if (it.isComplete) {
+          overallBadge = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">🟢 Lengkap (Tuntas)</span>`;
+        } else if (it.isCISub && !it.isDosSub) {
+          overallBadge = `<span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">🟡 Tunggu Dosen</span>`;
+        } else if (!it.isCISub && it.isDosSub) {
+          overallBadge = `<span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">🟡 Tunggu CI</span>`;
+        } else {
+          overallBadge = `<span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 text-slate-500 border border-slate-200">⚪ Belum Tuntas</span>`;
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/80 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center text-slate-400 font-semibold">${idx + 1}</td>
+          <td class="p-3">
+            <span class="font-bold text-slate-900 block">${s.name || '-'}</span>
+            <span class="text-[10px] text-slate-400 font-mono">${s.nim || '-'}</span>
+          </td>
+          <td class="p-3">
+            <span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">${s.hospital || '-'}</span>
+          </td>
+          <td class="p-3">${ciBadgeHtml}</td>
+          <td class="p-3">${dosBadgeHtml}</td>
+          <td class="p-3 text-center">${overallBadge}</td>
+          <td class="p-3 text-center">
+            <span class="font-bold text-slate-900 text-sm">${calc.total > 0 ? calc.total.toFixed(2) : '-'}</span>
+            ${calc.total > 0 ? `<span class="text-[10px] text-slate-500 font-bold block">Grade ${calc.grade}</span>` : ''}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderTopStudentsRanking() {
+      const students = getAccessibleStudents();
+      const data = getStoredData();
+
+      const q = (document.getElementById('ana-top-search')?.value || '').toLowerCase().trim();
+      const filterRS = (document.getElementById('ana-top-filter-rs')?.value || '').toLowerCase().trim();
+
+      const scoredList = students.map(s => {
+        const rec = data[s.nim] || {};
+        const calc = calculateFinal(rec);
+        return {
+          student: s,
+          rec,
+          calc,
+          total: calc.total || 0
+        };
+      });
+
+      // Filter
+      const filtered = scoredList.filter(item => {
+        const s = item.student;
+        const matchQ = !q || (s.name || '').toLowerCase().includes(q) || (s.nim || '').toLowerCase().includes(q);
+        const sHosp = (s.hospital || '').toLowerCase().trim();
+        const matchRS = !filterRS || sHosp === filterRS || sHosp.includes(filterRS);
+        return matchQ && matchRS;
+      });
+
+      // Sort descending by total score
+      filtered.sort((a, b) => b.total - a.total);
+
+      // 1. Render Podium Top 3
+      const podiumEl = document.getElementById('ana-podium-container');
+      if (podiumEl) {
+        podiumEl.innerHTML = '';
+        const top3 = filtered.slice(0, 3);
+
+        const podiumMeta = [
+          { rank: 1, medal: '🥇 Juara 1', color: 'from-amber-400/20 via-amber-200/10 to-transparent border-amber-300', badgeColor: 'bg-amber-100 text-amber-900 border-amber-300' },
+          { rank: 2, medal: '🥈 Juara 2', color: 'from-slate-300/30 via-slate-100/20 to-transparent border-slate-300', badgeColor: 'bg-slate-200 text-slate-800 border-slate-300' },
+          { rank: 3, medal: '🥉 Juara 3', color: 'from-orange-400/20 via-orange-200/10 to-transparent border-orange-300', badgeColor: 'bg-orange-100 text-orange-900 border-orange-300' }
+        ];
+
+        podiumMeta.forEach((meta, idx) => {
+          const item = top3[idx];
+          if (item) {
+            const s = item.student;
+            const calc = item.calc;
+            podiumEl.innerHTML += `
+              <div class="bg-gradient-to-b ${meta.color} p-4 rounded-xl border-2 flex flex-col justify-between shadow-xs">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-black ${meta.badgeColor} border shadow-2xs">
+                      ${meta.medal}
+                    </span>
+                    <span class="text-xs font-bold text-slate-500">Grade ${calc.grade}</span>
+                  </div>
+                  <h4 class="font-extrabold text-slate-900 text-sm leading-tight mt-1">${s.name || '-'}</h4>
+                  <p class="text-[11px] text-slate-500 font-mono mt-0.5">${s.nim || '-'}</p>
+                  <p class="text-[11px] text-slate-600 font-medium mt-1 truncate" title="${s.hospital}">🏥 ${s.hospital || '-'}</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-baseline justify-between">
+                  <span class="text-[11px] font-bold text-slate-500 uppercase">Skor Akhir:</span>
+                  <span class="text-2xl font-black text-slate-900">${calc.total.toFixed(2)}</span>
+                </div>
+              </div>
+            `;
+          } else {
+            podiumEl.innerHTML += `
+              <div class="bg-slate-50 p-4 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs font-semibold">
+                ${meta.medal} (Belum Tersedia)
+              </div>
+            `;
+          }
+        });
+      }
+
+      // 2. Render Chart.js: Top 10 Mahasiswa Horizontal Bar
+      const canvasTop = document.getElementById('chart-top-students');
+      if (canvasTop && typeof Chart !== 'undefined') {
+        const top10 = filtered.slice(0, 10);
+        const labels = top10.map(it => {
+          const shortName = (it.student.name || '').split(' ').slice(0, 2).join(' ');
+          return `${shortName} (${it.student.nim || ''})`;
+        });
+        const scores = top10.map(it => it.total);
+
+        if (chartTopStudentsInstance) {
+          chartTopStudentsInstance.destroy();
+        }
+
+        const ctx = canvasTop.getContext('2d');
+        chartTopStudentsInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Nilai Akhir Kumulatif',
+              data: scores,
+              backgroundColor: 'rgba(5, 150, 105, 0.85)',
+              borderColor: 'rgb(5, 150, 105)',
+              borderWidth: 1.5,
+              borderRadius: 6
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return ` Nilai Akhir: ${context.parsed.x.toFixed(2)} / 100`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                min: 0,
+                max: 100,
+                grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                ticks: { font: { family: 'Plus Jakarta Sans', size: 10 } }
+              },
+              y: {
+                grid: { display: false },
+                ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: 'bold' } }
+              }
+            }
+          }
+        });
+      }
+
+      // 3. Render Leaderboard Table
+      const tbody = document.getElementById('ana-top-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">Tidak ada data peringkat mahasiswa.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach((it, idx) => {
+        const s = it.student;
+        const calc = it.calc;
+        const rank = idx + 1;
+
+        let rankBadge = `<span class="font-bold text-slate-700">${rank}</span>`;
+        if (rank === 1) rankBadge = `<span class="px-2 py-0.5 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-300">🥇 1</span>`;
+        else if (rank === 2) rankBadge = `<span class="px-2 py-0.5 rounded-full text-xs font-black bg-slate-200 text-slate-800 border border-slate-300">🥈 2</span>`;
+        else if (rank === 3) rankBadge = `<span class="px-2 py-0.5 rounded-full text-xs font-black bg-orange-100 text-orange-900 border border-orange-300">🥉 3</span>`;
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/80 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center">${rankBadge}</td>
+          <td class="p-3">
+            <span class="font-bold text-slate-900 block">${s.name || '-'}</span>
+            <span class="text-[10px] text-slate-400 font-mono">${s.nim || '-'}</span>
+          </td>
+          <td class="p-3">
+            <span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">${s.hospital || '-'}</span>
+          </td>
+          <td class="p-3 text-slate-600">
+            <span class="block truncate max-w-[160px]" title="Dosen: ${s.lecturers || '-'}">🎓 ${s.lecturers || '-'}</span>
+            <span class="block truncate max-w-[160px] text-[10px] text-slate-400" title="CI: ${s.ci || '-'}">🏥 ${s.ci || '-'}</span>
+          </td>
+          <td class="p-3 text-center bg-blue-50/30 font-semibold text-blue-900">${calc.ciSubtotal.toFixed(2)}</td>
+          <td class="p-3 text-center bg-indigo-50/30 font-semibold text-indigo-900">${calc.dosenSubtotal.toFixed(2)}</td>
+          <td class="p-3 text-center bg-emerald-50 text-slate-900 font-black text-sm">${calc.total.toFixed(2)}</td>
+          <td class="p-3 text-center">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${
+              calc.grade === 'A' ? 'bg-emerald-100 text-emerald-800' :
+              calc.grade === 'AB' || calc.grade === 'B' ? 'bg-blue-100 text-blue-800' :
+              'bg-amber-100 text-amber-800'
+            }">${calc.grade}</span>
+          </td>
+          <td class="p-3 text-center">
+            ${calc.isComplete ? 
+              '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Lengkap</span>' : 
+              '<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800">Proses</span>'
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderHospitalAverages() {
+      const students = getAccessibleStudents();
+      const data = getStoredData();
+
+      // Aggregate stats per hospital
+      const hospMap = {};
+
+      students.forEach(s => {
+        const hospName = (s.hospital || 'Lainnya').trim();
+        if (!hospMap[hospName]) {
+          hospMap[hospName] = {
+            name: hospName,
+            studentCount: 0,
+            sumTotal: 0,
+            sumCI: 0,
+            sumDosen: 0,
+            scoredCount: 0,
+            completeCount: 0
+          };
+        }
+
+        const h = hospMap[hospName];
+        h.studentCount++;
+
+        const rec = data[s.nim] || {};
+        const calc = calculateFinal(rec);
+
+        if (calc.total > 0) {
+          h.sumTotal += calc.total;
+          h.sumCI += calc.ciSubtotal;
+          h.sumDosen += calc.dosenSubtotal;
+          h.scoredCount++;
+        }
+        if (calc.isComplete) {
+          h.completeCount++;
+        }
+      });
+
+      const hospList = Object.values(hospMap).map(h => {
+        const avgTotal = h.scoredCount > 0 ? (h.sumTotal / h.scoredCount) : 0;
+        const avgCI = h.scoredCount > 0 ? (h.sumCI / h.scoredCount) : 0;
+        const avgDosen = h.scoredCount > 0 ? (h.sumDosen / h.scoredCount) : 0;
+        const pctComplete = h.studentCount > 0 ? Math.round((h.completeCount / h.studentCount) * 100) : 0;
+
+        let predikat = 'Cukup';
+        if (avgTotal >= 85) predikat = 'Unggul (A)';
+        else if (avgTotal >= 78) predikat = 'Sangat Baik (AB)';
+        else if (avgTotal >= 70) predikat = 'Baik (B)';
+
+        return {
+          ...h,
+          avgTotal,
+          avgCI,
+          avgDosen,
+          pctComplete,
+          predikat
+        };
+      });
+
+      // Sort descending by avgTotal
+      hospList.sort((a, b) => b.avgTotal - a.avgTotal);
+
+      // 1. Render Grouped Bar Chart in Chart.js
+      const canvasHosp = document.getElementById('chart-hospital-averages');
+      if (canvasHosp && typeof Chart !== 'undefined') {
+        const labels = hospList.map(h => h.name);
+        const dataTotal = hospList.map(h => Number(h.avgTotal.toFixed(2)));
+        const dataCI = hospList.map(h => Number(h.avgCI.toFixed(2)));
+        const dataDosen = hospList.map(h => Number(h.avgDosen.toFixed(2)));
+
+        if (chartHospitalAveragesInstance) {
+          chartHospitalAveragesInstance.destroy();
+        }
+
+        const ctx = canvasHosp.getContext('2d');
+        chartHospitalAveragesInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Rerata Nilai Akhir (100%)',
+                data: dataTotal,
+                backgroundColor: 'rgba(5, 150, 105, 0.85)',
+                borderColor: 'rgb(5, 150, 105)',
+                borderWidth: 1.5,
+                borderRadius: 4
+              },
+              {
+                label: 'Rerata Nilai CI (60%)',
+                data: dataCI,
+                backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                borderColor: 'rgb(37, 99, 235)',
+                borderWidth: 1.5,
+                borderRadius: 4
+              },
+              {
+                label: 'Rerata Nilai Dosen (40%)',
+                data: dataDosen,
+                backgroundColor: 'rgba(79, 70, 229, 0.8)',
+                borderColor: 'rgb(79, 70, 229)',
+                borderWidth: 1.5,
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: { font: { family: 'Plus Jakarta Sans', size: 11, weight: 'bold' } }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return ` ${context.dataset.label}: ${context.parsed.y.toFixed(2)}`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: {
+                  font: { family: 'Plus Jakarta Sans', size: 10, weight: '600' },
+                  maxRotation: 25,
+                  minRotation: 0
+                }
+              },
+              y: {
+                min: 0,
+                max: 100,
+                grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                ticks: { font: { family: 'Plus Jakarta Sans', size: 10 } }
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Render Hospital Matrix Table
+      const tbody = document.getElementById('ana-hosp-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (hospList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400 font-medium">Tidak ada data wahana/rumah sakit.</td></tr>`;
+        return;
+      }
+
+      hospList.forEach((h, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/80 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center font-bold text-slate-500">${idx + 1}</td>
+          <td class="p-3">
+            <span class="font-bold text-slate-900 block">${h.name}</span>
+          </td>
+          <td class="p-3 text-center font-semibold text-slate-700">${h.studentCount} Mahasiswa</td>
+          <td class="p-3 text-center bg-blue-50/30 font-semibold text-blue-900">${h.avgCI > 0 ? h.avgCI.toFixed(2) : '-'}</td>
+          <td class="p-3 text-center bg-indigo-50/30 font-semibold text-indigo-900">${h.avgDosen > 0 ? h.avgDosen.toFixed(2) : '-'}</td>
+          <td class="p-3 text-center bg-emerald-50 font-black text-slate-900 text-sm">${h.avgTotal > 0 ? h.avgTotal.toFixed(2) : '-'}</td>
+          <td class="p-3">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between text-[10px] font-bold">
+                <span class="text-slate-600">${h.completeCount} / ${h.studentCount} Tuntas</span>
+                <span class="${h.pctComplete === 100 ? 'text-emerald-700' : 'text-slate-500'}">${h.pctComplete}%</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div class="h-full ${h.pctComplete === 100 ? 'bg-emerald-500' : 'bg-blue-500'} transition-all duration-300" style="width: ${h.pctComplete}%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-3 text-center">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${
+              h.predikat.startsWith('Unggul') ? 'bg-emerald-100 text-emerald-800' :
+              h.predikat.startsWith('Sangat') ? 'bg-blue-100 text-blue-800' :
+              'bg-amber-100 text-amber-800'
+            }">${h.predikat}</span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
