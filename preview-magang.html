@@ -490,12 +490,10 @@
             <div class="flex items-center gap-2">
               <h1 class="text-sm sm:text-base font-black text-slate-900 leading-tight tracking-tight">SIPINTER MAGANG</h1>
               
-              <!-- Badge Sesi Ringkas & Kompak (Tidak memenuhi header) -->
-              <button type="button" onclick="goToPortalHub()" title="Sesi aktif. Klik untuk kembali ke portal atau ganti sesi" class="cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100" id="header-session-btn">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" id="header-session-dot"></span>
-                <span id="header-session-badge">Magang 1</span>
-                <span class="text-[9px] text-slate-400 font-normal">↺ Ganti</span>
-              </button>
+              <!-- Badge Sesi Ringkas (Non-interaktif agar header tetap bersih) -->
+              <span id="header-session-badge" class="px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs">
+                Magang 1
+              </span>
 
               <span class="hidden md:inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-bold">D3 RMIK</span>
             </div>
@@ -505,11 +503,11 @@
 
         <!-- User Profile & Action Menu -->
         <div class="flex items-center space-x-2 sm:space-x-3">
-          <div onclick="openUserSettingsModal()" title="Klik untuk Pengaturan Akun" class="text-right hidden sm:block cursor-pointer hover:opacity-85 transition group">
-            <span id="current-user-name" class="text-xs font-bold text-slate-900 block leading-tight group-hover:text-indigo-600 transition">Nama Pengguna</span>
+          <div onclick="openUserSettingsModal()" title="Klik untuk Pengaturan Akun" class="text-right hidden sm:block cursor-pointer hover:opacity-85 transition group max-w-[210px] min-w-0">
+            <span id="current-user-name" class="text-xs font-bold text-slate-900 block leading-tight group-hover:text-indigo-600 transition truncate">Nama Pengguna</span>
             <div class="flex items-center justify-end gap-1.5 mt-0.5">
-              <span id="current-user-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-100 text-blue-800">PERAN</span>
-              <span id="current-user-scope" class="text-[10px] text-slate-500 font-medium">Semua RS</span>
+              <span id="current-user-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-100 text-blue-800 shrink-0">PERAN</span>
+              <span id="current-user-scope" class="text-[10px] text-slate-500 font-medium truncate max-w-[120px]">Semua RS</span>
             </div>
           </div>
 
@@ -3011,10 +3009,11 @@
       filtered.forEach(u => {
         const opt = document.createElement('option');
         opt.value = u.username;
+        let cleanName = (u.name || '').includes(';') ? u.name.split(';')[0].trim() : u.name;
         if (u.role === 'CI') {
-          opt.innerText = `${u.name} - ${u.hospital || 'Lahan'}`;
+          opt.innerText = `${cleanName} - ${u.hospital || 'Lahan'}`;
         } else {
-          opt.innerText = `${u.name} (${u.hospital || 'Bimbingan'})`;
+          opt.innerText = `${cleanName} (${u.hospital || 'Bimbingan'})`;
         }
         select.appendChild(opt);
       });
@@ -3084,13 +3083,8 @@
 
     function handleLogout() {
       localStorage.removeItem(SESSION_STORAGE_KEY);
-      const appEl = document.getElementById('app-screen');
-      const loginEl = document.getElementById('login-screen');
-      if (appEl) appEl.classList.add('hidden');
-      if (loginEl) loginEl.classList.remove('hidden');
-      const errEl = document.getElementById('login-error');
-      if (errEl) errEl.classList.add('hidden');
-      selectLoginRole('CI');
+      sessionStorage.removeItem('sipinter_active_magang_session');
+      goToPortalHub();
     }
 
     function applyUserSession() {
@@ -3108,11 +3102,21 @@
         if (loginEl) loginEl.classList.add('hidden');
         if (appEl) appEl.classList.remove('hidden');
 
-        // Update Header Info
+        // Update Header Info (Hanya tampilkan 1 nama individu akun yang login, bukan seluruh tim)
         const nameEl = document.getElementById('current-user-name');
         const avatarEl = document.getElementById('current-user-avatar');
-        const uName = user.name || user.username || 'Pengguna';
-        if (nameEl) nameEl.innerText = uName;
+        let rawName = user.name || user.username || 'Pengguna';
+        // Jika nama akun mengandung ';' karena penggabungan excel, ambil hanya nama penilai akun ini
+        let uName = rawName;
+        if (uName.includes(';')) {
+          uName = uName.split(';')[0].trim();
+        } else if (uName.includes('\n')) {
+          uName = uName.split('\n')[0].trim();
+        }
+        if (nameEl) {
+          nameEl.innerText = uName;
+          nameEl.title = rawName; // Tooltip tetap menampilkan nama lengkap jika dibutuhkan
+        }
         if (avatarEl) avatarEl.innerText = uName.charAt(0).toUpperCase();
 
         const badgeEl = document.getElementById('current-user-badge');
@@ -3731,13 +3735,17 @@
           }
         });
 
-        const ciName = (s.ci || '').trim();
-        if (ciName && ciName !== '-') {
-          const key = `${ciName.toLowerCase()}|${(s.hospital || '').toLowerCase()}`;
-          if (!ciMap.has(key)) {
-            ciMap.set(key, { name: ciName, hospital: s.hospital || 'Lahan Praktik' });
+        // Pecah CI jika dalam 1 sel terdapat beberapa nama dipisahkan titik koma (;) atau dan
+        const parsedCIs = parseLecturersField(s.ci);
+        parsedCIs.forEach(ciName => {
+          ciName = (ciName || '').trim();
+          if (ciName && ciName !== '-') {
+            const key = `${ciName.toLowerCase()}|${(s.hospital || '').toLowerCase()}`;
+            if (!ciMap.has(key)) {
+              ciMap.set(key, { name: ciName, hospital: s.hospital || 'Lahan Praktik' });
+            }
           }
-        }
+        });
       });
 
       const users = [
@@ -7813,21 +7821,16 @@
         else loginDot.className = 'w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse';
       }
 
-      // 2. Update Header Compact Badge
+      // 2. Update Header Static Badge (Kompak dan Sederhana)
       const headerBadge = document.getElementById('header-session-badge');
-      const headerBtn = document.getElementById('header-session-btn');
-      const headerDot = document.getElementById('header-session-dot');
-      if (headerBadge) headerBadge.innerText = label;
-      if (headerBtn && headerDot) {
+      if (headerBadge) {
+        headerBadge.innerText = label;
         if (currentMagangSession === 'magang1') {
-          headerBtn.className = 'cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100';
-          headerDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+          headerBadge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs';
         } else if (currentMagangSession === 'magang2') {
-          headerBtn.className = 'cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100';
-          headerDot.className = 'w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse';
+          headerBadge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-blue-100 text-blue-800 border border-blue-200 shadow-2xs';
         } else {
-          headerBtn.className = 'cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-purple-50 text-purple-800 border-purple-200 hover:bg-purple-100';
-          headerDot.className = 'w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse';
+          headerBadge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-purple-100 text-purple-800 border border-purple-200 shadow-2xs';
         }
       }
 
