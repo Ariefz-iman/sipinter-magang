@@ -2522,6 +2522,24 @@
       return EVALUATION_STORAGE_KEY;
     }
 
+    function getSessionStorageKey(session = currentMagangSession) {
+      if (session === 'magang2') return 'standalone_sep_session_magang2';
+      if (session === 'magang3') return 'standalone_sep_session_magang3';
+      return 'standalone_sep_session_magang1';
+    }
+
+    function getFirestoreConfigCol(session = currentMagangSession) {
+      if (session === 'magang2') return 'sipinter_config_magang2';
+      if (session === 'magang3') return 'sipinter_config_magang3';
+      return 'sipinter_config';
+    }
+
+    function getFirestoreEvaluationsCol(session = currentMagangSession) {
+      if (session === 'magang2') return 'sipinter_evaluations_magang2';
+      if (session === 'magang3') return 'sipinter_evaluations_magang3';
+      return 'sipinter_evaluations';
+    }
+
     // =============================================================
     // GOOGLE FIREBASE CLOUD FIRESTORE REAL-TIME SYNCHRONIZATION
     // =============================================================
@@ -2540,6 +2558,117 @@
     let isCloudOnline = false;
     let isWritingToCloud = false;
 
+    let unsubStudents = null;
+    let unsubUsers = null;
+    let unsubHospitals = null;
+    let unsubEvaluations = null;
+
+    function detachFirestoreListeners() {
+      if (unsubStudents) { try { unsubStudents(); } catch (e) {} unsubStudents = null; }
+      if (unsubUsers) { try { unsubUsers(); } catch (e) {} unsubUsers = null; }
+      if (unsubHospitals) { try { unsubHospitals(); } catch (e) {} unsubHospitals = null; }
+      if (unsubEvaluations) { try { unsubEvaluations(); } catch (e) {} unsubEvaluations = null; }
+    }
+
+    function setupFirestoreSessionListeners(session = currentMagangSession) {
+      if (!firestore) return;
+      detachFirestoreListeners();
+
+      const configCol = getFirestoreConfigCol(session);
+      const evalCol = getFirestoreEvaluationsCol(session);
+      const studentsKey = getStudentsStorageKey(session);
+      const usersKey = getUsersStorageKey(session);
+      const hospitalsKey = getHospitalsStorageKey(session);
+      const evalKey = getEvaluationStorageKey(session);
+
+      // 1. Sinkronisasi Data Mahasiswa Sesi Aktif
+      unsubStudents = firestore.collection(configCol).doc('students').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list) && !isWritingToCloud) {
+            localStorage.setItem(studentsKey, JSON.stringify(cloudData.list));
+            syncAllComponents();
+          }
+        } else if (session === 'magang1') {
+          const localStudents = getStudents('magang1');
+          firestore.collection(configCol).doc('students').set({
+            list: localStudents,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+        updateCloudStatus('online', 'Cloud Firestore Live ✓');
+      }, err => {
+        console.warn(`Listener students [${session}] error:`, err);
+      });
+
+      // 2. Sinkronisasi Akun Pengguna Sesi Aktif
+      unsubUsers = firestore.collection(configCol).doc('users').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list) && !isWritingToCloud) {
+            localStorage.setItem(usersKey, JSON.stringify(cloudData.list));
+            renderUsersTable();
+            if (typeof selectLoginRole === 'function') {
+              selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
+            }
+          }
+        } else if (session === 'magang1') {
+          const localUsers = getUsers('magang1');
+          firestore.collection(configCol).doc('users').set({
+            list: localUsers,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+      }, err => {
+        console.warn(`Listener users [${session}] error:`, err);
+      });
+
+      // 3. Sinkronisasi Lahan / Rumah Sakit Sesi Aktif
+      unsubHospitals = firestore.collection(configCol).doc('hospitals').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list) && !isWritingToCloud) {
+            localStorage.setItem(hospitalsKey, JSON.stringify(cloudData.list));
+          }
+        } else if (session === 'magang1') {
+          const localHosp = getHospitals('magang1');
+          firestore.collection(configCol).doc('hospitals').set({
+            list: localHosp,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+      }, err => {
+        console.warn(`Listener hospitals [${session}] error:`, err);
+      });
+
+      // 4. Sinkronisasi Penilaian (Evaluations) Sesi Aktif
+      unsubEvaluations = firestore.collection(evalCol).onSnapshot(snapshot => {
+        if (!snapshot.empty) {
+          const currentEvals = getStoredData(session);
+          let changed = false;
+          snapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            const nim = docSnap.id;
+            if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
+              currentEvals[nim] = data;
+              changed = true;
+            }
+          });
+
+          if (changed && !isWritingToCloud) {
+            localStorage.setItem(evalKey, JSON.stringify(currentEvals));
+            renderRekapTable();
+            if (typeof currentNIM !== 'undefined' && currentNIM) {
+              if (typeof populateStudentDataCI === 'function') populateStudentDataCI(currentNIM);
+              if (typeof populateStudentDataDosen === 'function') populateStudentDataDosen(currentNIM);
+            }
+          }
+        }
+      }, err => {
+        console.warn(`Listener evaluations [${session}] error:`, err);
+      });
+    }
+
     function initFirebaseSync() {
       if (typeof firebase === 'undefined') {
         updateCloudStatus('offline', 'Firebase SDK Offline');
@@ -2555,7 +2684,7 @@
         firestore = firebase.firestore();
 
         updateCloudStatus('connecting', 'Menghubungkan Cloud...');
-        setupFirestoreRealtimeListeners();
+        setupFirestoreSessionListeners(currentMagangSession);
       } catch (err) {
         console.warn('Inisialisasi Firebase gagal:', err);
         updateCloudStatus('error', 'Koneksi Cloud Terbatas');
@@ -2605,110 +2734,6 @@
       }
     }
 
-    function setupFirestoreRealtimeListeners() {
-      if (!firestore) return;
-
-      // 1. Sinkronisasi Data Mahasiswa
-      firestore.collection('sipinter_config').doc('students').onSnapshot(doc => {
-        if (doc.exists) {
-          const cloudData = doc.data();
-          if (Array.isArray(cloudData.list)) {
-            if (!isWritingToCloud) {
-              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(cloudData.list));
-              syncAllComponents();
-            }
-          }
-        } else {
-          // Auto-seed data lokal awal ke Cloud Firestore
-          const localStudents = getStudents();
-          firestore.collection('sipinter_config').doc('students').set({
-            list: localStudents,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(console.error);
-        }
-        updateCloudStatus('online', 'Cloud Firestore Live ✓');
-      }, err => {
-        console.warn('Listener students error:', err);
-        updateCloudStatus('error', err.code === 'permission-denied' ? 'Atur Rules Firestore' : 'Koneksi Terbatas');
-      });
-
-      // 2. Sinkronisasi Akun Pengguna (Users)
-      firestore.collection('sipinter_config').doc('users').onSnapshot(doc => {
-        if (doc.exists) {
-          const cloudData = doc.data();
-          if (Array.isArray(cloudData.list)) {
-            if (!isWritingToCloud) {
-              localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cloudData.list));
-              renderUsersTable();
-              if (typeof selectLoginRole === 'function') {
-                selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
-              }
-            }
-          }
-        } else {
-          const localUsers = getUsers();
-          firestore.collection('sipinter_config').doc('users').set({
-            list: localUsers,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(console.error);
-        }
-      }, err => {
-        console.warn('Listener users error:', err);
-      });
-
-      // 3. Sinkronisasi Lahan / Rumah Sakit
-      firestore.collection('sipinter_config').doc('hospitals').onSnapshot(doc => {
-        if (doc.exists) {
-          const cloudData = doc.data();
-          if (Array.isArray(cloudData.list)) {
-            if (!isWritingToCloud) {
-              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(cloudData.list));
-            }
-          }
-        } else {
-          const localHosp = getHospitals();
-          firestore.collection('sipinter_config').doc('hospitals').set({
-            list: localHosp,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(console.error);
-        }
-      }, err => {
-        console.warn('Listener hospitals error:', err);
-      });
-
-      // 4. Sinkronisasi Penilaian (Evaluations)
-      firestore.collection('sipinter_evaluations').onSnapshot(snapshot => {
-        if (!snapshot.empty) {
-          const currentEvals = getStoredData();
-          let changed = false;
-          snapshot.forEach(docSnap => {
-            const data = docSnap.data();
-            const nim = docSnap.id;
-            if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
-              currentEvals[nim] = data;
-              changed = true;
-            }
-          });
-
-          if (changed && !isWritingToCloud) {
-            localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(currentEvals));
-            renderRekapTable();
-            if (typeof currentNIM !== 'undefined' && currentNIM) {
-              if (typeof populateStudentDataCI === 'function') populateStudentDataCI(currentNIM);
-              if (typeof populateStudentDataDosen === 'function') populateStudentDataDosen(currentNIM);
-            }
-          }
-        } else {
-          const localEvals = getStoredData();
-          Object.keys(localEvals).forEach(nim => {
-            firestore.collection('sipinter_evaluations').doc(nim).set(localEvals[nim]).catch(console.error);
-          });
-        }
-      }, err => {
-        console.warn('Listener evaluations error:', err);
-      });
-    }
-
     function syncDocToCloud(collectionName, docId, data) {
       if (!firestore) return;
       isWritingToCloud = true;
@@ -2729,12 +2754,13 @@
       });
     }
 
-    function syncEvaluationToCloud(nim, evalRecord) {
+    function syncEvaluationToCloud(nim, evalRecord, session = currentMagangSession) {
       if (!firestore || !nim || !evalRecord) return;
+      const evalCol = getFirestoreEvaluationsCol(session);
       isWritingToCloud = true;
       updateCloudStatus('syncing', 'Menyimpan Nilai...');
 
-      firestore.collection('sipinter_evaluations').doc(nim).set({
+      firestore.collection(evalCol).doc(nim).set({
         ...evalRecord,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
@@ -2755,27 +2781,30 @@
         return;
       }
 
-      if (!confirm('🔄 Sinkronisasi Manual Cloud Database:\n\nUnggah seluruh data lokal saat ini (Mahasiswa, Akun Penilai, dan Nilai) ke Cloud Firestore sekarang?')) {
+      const label = getMagangLabel();
+      if (!confirm(`🔄 Sinkronisasi Manual Cloud Database (${label}):\n\nUnggah seluruh data lokal ${label} (Mahasiswa, Akun Penilai, dan Nilai) ke Cloud Firestore sekarang?`)) {
         return;
       }
 
-      updateCloudStatus('syncing', 'Mengunggah Semua Data...');
+      updateCloudStatus('syncing', `Mengunggah Semua Data ${label}...`);
       const students = getStudents();
       const users = getUsers();
       const hospitals = getHospitals();
       const evaluations = getStoredData();
+      const configCol = getFirestoreConfigCol();
+      const evalCol = getFirestoreEvaluationsCol();
 
       Promise.all([
-        firestore.collection('sipinter_config').doc('students').set({ list: students, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
-        firestore.collection('sipinter_config').doc('users').set({ list: users, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
-        firestore.collection('sipinter_config').doc('hospitals').set({ list: hospitals, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
-        ...Object.keys(evaluations).map(nim => firestore.collection('sipinter_evaluations').doc(nim).set(evaluations[nim]))
+        firestore.collection(configCol).doc('students').set({ list: students, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        firestore.collection(configCol).doc('users').set({ list: users, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        firestore.collection(configCol).doc('hospitals').set({ list: hospitals, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        ...Object.keys(evaluations).map(nim => firestore.collection(evalCol).doc(nim).set(evaluations[nim]))
       ]).then(() => {
         updateCloudStatus('online', 'Cloud Firestore Live ✓');
-        alert('✅ Sinkronisasi Berhasil!\n\nSeluruh data mahasiswa, akun, dan nilai telah terunggah ke Cloud Firestore.');
+        alert(`✅ Sinkronisasi Berhasil!\n\nSeluruh data mahasiswa, akun, dan nilai ${label} telah terunggah ke Cloud Firestore.`);
       }).catch(err => {
         console.error('Gagal sinkronisasi massal:', err);
-        alert('Gagal sinkronisasi ke cloud: ' + err.message + '\n\nPastikan aturan Firestore Rules Anda telah mengizinkan read/write (Test mode).');
+        alert('Gagal sinkronisasi ke cloud: ' + err.message);
         updateCloudStatus('error', 'Cek Izin Firestore');
       });
     }
@@ -2797,43 +2826,52 @@
       }
 
       if (list === null) {
-        list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
+        if (session === 'magang1') {
+          list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
+        } else {
+          // Magang 2 & 3: Dimulai kosong [] sampai file Excel diunggah oleh Admin
+          list = [];
+        }
         localStorage.setItem(storageKey, JSON.stringify(list));
       }
 
-      // Pastikan s.ci dan s.lecturers selalu aman dan valid jika ada data
-      let updated = false;
-      list.forEach(s => {
-        if (!s.ci) {
-          const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
-          if (def && def.ci) {
-            s.ci = def.ci;
-            updated = true;
-          } else {
-            s.ci = '-';
-          }
-        }
-        if (!Array.isArray(s.lecturers)) {
-          if (typeof s.lecturers === 'string' && s.lecturers.trim()) {
-            s.lecturers = parseLecturersField(s.lecturers);
-          } else {
+      // Pastikan s.ci dan s.lecturers selalu aman jika di Magang 1
+      if (session === 'magang1' && list.length > 0) {
+        let updated = false;
+        list.forEach(s => {
+          if (!s.ci) {
             const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
-            s.lecturers = def && Array.isArray(def.lecturers) ? [...def.lecturers] : ['Dosen Pembimbing Lapangan'];
+            if (def && def.ci) {
+              s.ci = def.ci;
+              updated = true;
+            } else {
+              s.ci = '-';
+            }
           }
-          updated = true;
-        }
-      });
+          if (!Array.isArray(s.lecturers)) {
+            if (typeof s.lecturers === 'string' && s.lecturers.trim()) {
+              s.lecturers = parseLecturersField(s.lecturers);
+            } else {
+              const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
+              s.lecturers = def && Array.isArray(def.lecturers) ? [...def.lecturers] : ['Dosen Pembimbing Lapangan'];
+            }
+            updated = true;
+          }
+        });
 
-      if (updated) {
-        localStorage.setItem(storageKey, JSON.stringify(list));
+        if (updated) {
+          localStorage.setItem(storageKey, JSON.stringify(list));
+        }
       }
       return list;
     }
 
     function saveStudents(list, session = currentMagangSession) {
       const storageKey = getStudentsStorageKey(session);
+      const configCol = getFirestoreConfigCol(session);
       localStorage.setItem(storageKey, JSON.stringify(list));
-      syncDocToCloud('sipinter_config_' + session, 'students', { list: list });
+      localStorage.setItem('sipinter_custom_students_' + session, 'true');
+      syncDocToCloud(configCol, 'students', { list: list });
       syncAllComponents();
     }
 
@@ -2848,21 +2886,25 @@
       }
     }
 
-    function getHospitals() {
-      const raw = localStorage.getItem(HOSPITALS_STORAGE_KEY);
+    function getHospitals(session = currentMagangSession) {
+      const storageKey = getHospitalsStorageKey(session);
+      const raw = localStorage.getItem(storageKey);
       if (raw !== null) {
         try {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed)) return parsed;
         } catch (e) {}
       }
-      localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
-      return HOSPITALS_DEFAULT;
+      const def = session === 'magang1' ? HOSPITALS_DEFAULT : [];
+      localStorage.setItem(storageKey, JSON.stringify(def));
+      return def;
     }
 
-    function saveHospitals(list) {
-      localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(list));
-      syncDocToCloud('sipinter_config', 'hospitals', { list: list });
+    function saveHospitals(list, session = currentMagangSession) {
+      const storageKey = getHospitalsStorageKey(session);
+      const configCol = getFirestoreConfigCol(session);
+      localStorage.setItem(storageKey, JSON.stringify(list));
+      syncDocToCloud(configCol, 'hospitals', { list: list });
       syncAllComponents();
     }
 
@@ -2897,8 +2939,9 @@
 
     const ADMIN_USER = { id: 'u1', username: 'admin', password: '123', name: 'Super Admin Pusbangdik', role: 'ADMIN', hospital: null, lecturerName: null };
 
-    function getUsers() {
-      const raw = localStorage.getItem(USERS_STORAGE_KEY);
+    function getUsers(session = currentMagangSession) {
+      const storageKey = getUsersStorageKey(session);
+      const raw = localStorage.getItem(storageKey);
       let users = [];
       if (raw) {
         try {
@@ -2909,29 +2952,31 @@
         } catch (e) {}
       }
 
-      // Pertama kali (belum ada data): pakai DEFAULT_USERS sebagai awal
       if (users.length === 0) {
-        users = JSON.parse(JSON.stringify(DEFAULT_USERS));
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        if (session === 'magang1') {
+          users = JSON.parse(JSON.stringify(DEFAULT_USERS));
+        } else {
+          users = [JSON.parse(JSON.stringify(ADMIN_USER))];
+        }
+        localStorage.setItem(storageKey, JSON.stringify(users));
         return users;
       }
 
-      // Pastikan akun admin selalu ada (tidak bisa dihapus)
       const hasAdmin = users.some(u => (u.username || '').toLowerCase() === 'admin');
       if (!hasAdmin) {
         users.unshift(JSON.parse(JSON.stringify(ADMIN_USER)));
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        localStorage.setItem(storageKey, JSON.stringify(users));
       }
-
       return users;
     }
 
-    function saveUsers(users) {
-      // Pastikan admin selalu ada
+    function saveUsers(users, session = currentMagangSession) {
+      const storageKey = getUsersStorageKey(session);
+      const configCol = getFirestoreConfigCol(session);
       const hasAdmin = users.some(u => (u.username || '').toLowerCase() === 'admin');
       if (!hasAdmin) users.unshift(JSON.parse(JSON.stringify(ADMIN_USER)));
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-      syncDocToCloud('sipinter_config', 'users', { list: users });
+      localStorage.setItem(storageKey, JSON.stringify(users));
+      syncDocToCloud(configCol, 'users', { list: users });
       renderUsersTable();
       if (typeof selectLoginRole === 'function') {
         selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
@@ -2950,17 +2995,22 @@
       }
     }
 
-    function getCurrentSession() {
-      const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+    function getCurrentSession(session = currentMagangSession) {
+      const key = getSessionStorageKey(session);
+      let raw = localStorage.getItem(key);
+      if (!raw && session === 'magang1') {
+        raw = localStorage.getItem('standalone_sep_current_session');
+      }
       if (raw) {
         try {
           const u = JSON.parse(raw);
           if (u) {
             if (u.role === 'DOSEN' && !u.hospital) {
-              const def = DEFAULT_USERS.find(d => d.username === u.username);
+              const allUsers = getUsers(session);
+              const def = allUsers.find(d => d.username === u.username);
               if (def && def.hospital) {
                 u.hospital = def.hospital;
-                setCurrentSession(u);
+                setCurrentSession(u, session);
               }
             }
             return u;
@@ -2970,8 +3020,19 @@
       return null;
     }
 
-    function setCurrentSession(user) {
-      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
+    function setCurrentSession(user, session = currentMagangSession) {
+      const key = getSessionStorageKey(session);
+      if (user) {
+        localStorage.setItem(key, JSON.stringify(user));
+        if (session === 'magang1') {
+          localStorage.setItem('standalone_sep_current_session', JSON.stringify(user));
+        }
+      } else {
+        localStorage.removeItem(key);
+        if (session === 'magang1') {
+          localStorage.removeItem('standalone_sep_current_session');
+        }
+      }
     }
 
     // -------------------------------------------------------------
@@ -3110,8 +3171,9 @@
     }
 
     function handleLogout() {
-      localStorage.removeItem(SESSION_STORAGE_KEY);
+      setCurrentSession(null, currentMagangSession);
       sessionStorage.removeItem('sipinter_active_magang_session');
+      detachFirestoreListeners();
       goToPortalHub();
     }
 
@@ -7828,24 +7890,28 @@
       const hub = document.getElementById('portal-hub-screen');
       if (hub) hub.classList.add('hidden');
 
-      // Update UI Header & Login Badge
+      // Pasang listener Cloud Firestore khusus untuk sesi ini
+      setupFirestoreSessionListeners(sessionKey);
+
+      // Update UI Header & Badge Sesi
       updateSessionUI();
       buildForms();
 
-      // Cek apakah user sudah login
-      const user = getCurrentSession();
+      // Cek apakah user sudah login di SESI INI
+      const user = getCurrentSession(sessionKey);
       if (user) {
         const loginScreen = document.getElementById('login-screen');
         if (loginScreen) loginScreen.classList.add('hidden');
         const appScreen = document.getElementById('app-screen');
         if (appScreen) appScreen.classList.remove('hidden');
+        applyUserSession();
         syncAllComponents();
       } else {
         const loginScreen = document.getElementById('login-screen');
         if (loginScreen) loginScreen.classList.remove('hidden');
         const appScreen = document.getElementById('app-screen');
         if (appScreen) appScreen.classList.add('hidden');
-        selectLoginRole(currentSelectedLoginRole || 'CI');
+        selectLoginRole('CI');
       }
     }
 
@@ -8089,7 +8155,64 @@
       XLSX.writeFile(wb, 'Transkrip_Kumulatif_Portofolio_Magang_RMIK.xlsx');
     }
 
+    function restoreAndSanitizeMagangData() {
+      try {
+        // 1. Pastikan Magang 1 utuh dengan 72 mahasiswa resmi
+        const m1Raw = localStorage.getItem('standalone_sep_students_2026');
+        let m1Students = null;
+        if (m1Raw) {
+          try { m1Students = JSON.parse(m1Raw); } catch (e) {}
+        }
+        if (!m1Students || !Array.isArray(m1Students) || m1Students.length === 0) {
+          localStorage.setItem('standalone_sep_students_2026', JSON.stringify(STUDENTS_DEFAULT));
+        }
+
+        // 2. Bersihkan evaluasi Magang 1 jika sempat kemasukan key OSCE s1_d1
+        const evalM1Raw = localStorage.getItem('standalone_sep_magang_2026');
+        if (evalM1Raw) {
+          try {
+            const evals = JSON.parse(evalM1Raw);
+            let cleaned = false;
+            Object.keys(evals).forEach(nim => {
+              const r = evals[nim];
+              if (r && r.responsi) {
+                ['s1_d1', 's1_d2', 's1_d3', 's2_d1', 's2_d2', 's2_d3'].forEach(sk => {
+                  if (r.responsi[sk] !== undefined) {
+                    delete r.responsi[sk];
+                    cleaned = true;
+                  }
+                });
+              }
+            });
+            if (cleaned) {
+              localStorage.setItem('standalone_sep_magang_2026', JSON.stringify(evals));
+            }
+          } catch (e) {}
+        }
+
+        // 3. Pastikan Magang 2 bersih dan tidak menjiplak Magang 1 jika belum diupload
+        const hasCustomM2 = localStorage.getItem('sipinter_custom_students_magang2');
+        if (!hasCustomM2) {
+          localStorage.setItem('standalone_sep_students_magang2', JSON.stringify([]));
+          localStorage.setItem('standalone_sep_hospitals_magang2', JSON.stringify([]));
+          localStorage.setItem('standalone_sep_users_magang2', JSON.stringify([JSON.parse(JSON.stringify(ADMIN_USER))]));
+          localStorage.setItem('standalone_sep_magang2_2026', JSON.stringify({}));
+        }
+
+        const hasCustomM3 = localStorage.getItem('sipinter_custom_students_magang3');
+        if (!hasCustomM3) {
+          localStorage.setItem('standalone_sep_students_magang3', JSON.stringify([]));
+          localStorage.setItem('standalone_sep_hospitals_magang3', JSON.stringify([]));
+          localStorage.setItem('standalone_sep_users_magang3', JSON.stringify([JSON.parse(JSON.stringify(ADMIN_USER))]));
+          localStorage.setItem('standalone_sep_magang3_2026', JSON.stringify({}));
+        }
+      } catch (err) {
+        console.warn('Sanitasi data error:', err);
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      restoreAndSanitizeMagangData();
       try {
         ciSigPad = new CanvasSignaturePad('ci-sig-canvas', 'ci-sig-placeholder', 'ci-sig-status');
         ciSigPad.onSigned = () => {
