@@ -1444,7 +1444,7 @@
                     <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0">1</div>
                     <div>
                       <div class="font-bold text-xs">Ujian Responsi Magang</div>
-                      <div class="text-[10px] text-slate-500">Bobot 25% • 21 Butir Soal</div>
+                      <div id="dosen-side-resp-subtext" class="text-[10px] text-slate-500">Bobot 25% • 21 Butir Soal</div>
                     </div>
                   </div>
                   <div class="flex items-center gap-1.5 shrink-0">
@@ -1511,7 +1511,7 @@
                       <span class="text-xs font-semibold text-slate-600">Bobot 25%</span>
                     </div>
                     <div class="flex items-center justify-between gap-2"><h3 class="font-bold text-base text-slate-900">1. Ujian Responsi Praktik Lapangan</h3><button type="button" onclick="openRubrikKriteriaModal('responsi')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200 transition shadow-2xs"><span>ℹ️ Kriteria Skor</span></button></div>
-                    <p class="text-xs text-slate-500">Bagian A: Pendaftaran Pasien Baru RJ (12 butir) + Bagian B: Koding Diagnosis & Tindakan (9 butir). Skala 1 s/d 5. Max Skor = 105.</p>
+                    <p id="dosen-responsi-subtext" class="text-xs text-slate-500">Bagian A: Pendaftaran Pasien Baru RJ (12 butir) + Bagian B: Koding Diagnosis & Tindakan (9 butir). Skala 1 s/d 5. Max Skor = 105.</p>
                   </div>
                   <div class="text-right shrink-0 bg-indigo-50 p-2.5 rounded-xl border border-indigo-100">
                     <span class="text-[10px] uppercase font-bold text-indigo-600 block">Skor Responsi:</span>
@@ -2490,11 +2490,37 @@
       'RS Permata Bunda Tasikmalaya'
     ];
 
+    let currentMagangSession = (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('sipinter_active_magang_session')) || 'magang1';
+
     const STUDENTS_STORAGE_KEY = 'standalone_sep_students_2026';
     const HOSPITALS_STORAGE_KEY = 'standalone_sep_hospitals_2026';
     const USERS_STORAGE_KEY = 'standalone_sep_users_2026';
     const SESSION_STORAGE_KEY = 'standalone_sep_current_session';
     const EVALUATION_STORAGE_KEY = 'standalone_sep_magang_2026';
+
+    function getStudentsStorageKey(session = currentMagangSession) {
+      if (session === 'magang2') return 'standalone_sep_students_magang2';
+      if (session === 'magang3') return 'standalone_sep_students_magang3';
+      return STUDENTS_STORAGE_KEY;
+    }
+
+    function getHospitalsStorageKey(session = currentMagangSession) {
+      if (session === 'magang2') return 'standalone_sep_hospitals_magang2';
+      if (session === 'magang3') return 'standalone_sep_hospitals_magang3';
+      return HOSPITALS_STORAGE_KEY;
+    }
+
+    function getUsersStorageKey(session = currentMagangSession) {
+      if (session === 'magang2') return 'standalone_sep_users_magang2';
+      if (session === 'magang3') return 'standalone_sep_users_magang3';
+      return USERS_STORAGE_KEY;
+    }
+
+    function getEvaluationStorageKey(session = currentMagangSession) {
+      if (session === 'magang2') return 'standalone_sep_magang2_2026';
+      if (session === 'magang3') return 'standalone_sep_magang3_2026';
+      return EVALUATION_STORAGE_KEY;
+    }
 
     // =============================================================
     // GOOGLE FIREBASE CLOUD FIRESTORE REAL-TIME SYNCHRONIZATION
@@ -2757,21 +2783,22 @@
     // -------------------------------------------------------------
     // GETTER & SETTER MASTER DATA MAHASISWA & LAHAN
     // -------------------------------------------------------------
-    function getStudents() {
-      const raw = localStorage.getItem(STUDENTS_STORAGE_KEY);
+    function getStudents(session = currentMagangSession) {
+      const storageKey = getStudentsStorageKey(session);
+      const raw = localStorage.getItem(storageKey);
       let list = null;
       if (raw !== null) {
         try {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed)) {
-            list = parsed; // bisa berupa [] (kosong total jika direset/dihapus)
+            list = parsed;
           }
         } catch (e) {}
       }
 
       if (list === null) {
         list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
-        localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
+        localStorage.setItem(storageKey, JSON.stringify(list));
       }
 
       // Pastikan s.ci dan s.lecturers selalu aman dan valid jika ada data
@@ -2798,14 +2825,15 @@
       });
 
       if (updated) {
-        localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
+        localStorage.setItem(storageKey, JSON.stringify(list));
       }
       return list;
     }
 
-    function saveStudents(list) {
-      localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
-      syncDocToCloud('sipinter_config', 'students', { list: list });
+    function saveStudents(list, session = currentMagangSession) {
+      const storageKey = getStudentsStorageKey(session);
+      localStorage.setItem(storageKey, JSON.stringify(list));
+      syncDocToCloud('sipinter_config_' + session, 'students', { list: list });
       syncAllComponents();
     }
 
@@ -4860,15 +4888,43 @@
       if (typeof refreshActiveMissingCounts === 'function') refreshActiveMissingCounts();
     }
 
-    function getStoredData() {
-      const raw = localStorage.getItem(EVALUATION_STORAGE_KEY);
+    function getStoredData(session = currentMagangSession) {
+      const storageKey = getEvaluationStorageKey(session);
+      const raw = localStorage.getItem(storageKey);
+      let parsed = null;
       if (raw) {
-        try { return JSON.parse(raw); } catch (e) {}
+        try { parsed = JSON.parse(raw); } catch (e) {}
       }
-      const students = getStudents();
+
+      const isStasiun = session === 'magang2' || session === 'magang3';
+
+      if (parsed) {
+        // Sanitize: Jika di Magang 2 atau 3 terdapat sisa responsi format lama r1..r21 (tanpa domain stasiun s1_d1), bersihkan responsi
+        if (isStasiun) {
+          let needsClean = false;
+          Object.keys(parsed).forEach(nim => {
+            const rec = parsed[nim];
+            if (rec && rec.responsi) {
+              if (rec.responsi.r1 !== undefined && rec.responsi.s1_d1 === undefined) {
+                rec.responsi = {};
+                if (rec.statusDosen === 'SUBMITTED' && (!rec.lapDosen || Object.keys(rec.lapDosen).length === 0)) {
+                  rec.statusDosen = 'PENDING';
+                }
+                needsClean = true;
+              }
+            }
+          });
+          if (needsClean) {
+            localStorage.setItem(storageKey, JSON.stringify(parsed));
+          }
+        }
+        return parsed;
+      }
+
+      const students = getStudents(session);
       const init = {};
       students.forEach((s, idx) => {
-        const isExample = idx === 0 || idx === 1;
+        const isExample = (session === 'magang1') && (idx === 0 || idx === 1);
         init[s.nim] = {
           nim: s.nim,
           kehadiran: isExample ? 100 : 0,
@@ -4880,15 +4936,16 @@
           statusCI: isExample ? 'SUBMITTED' : 'PENDING',
           statusDosen: isExample ? 'SUBMITTED' : 'PENDING',
           signerCI: isExample ? 'Ns. Dewi Sartika, S.Tr.Kes' : '',
-          signerDosen: isExample ? s.lecturers[0] : '',
+          signerDosen: isExample ? (Array.isArray(s.lecturers) ? s.lecturers[0] : s.lecturers) : '',
         };
       });
-      localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(init));
+      localStorage.setItem(storageKey, JSON.stringify(init));
       return init;
     }
 
-    function saveStoredData(data) {
-      localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(data));
+    function saveStoredData(data, session = currentMagangSession) {
+      const storageKey = getEvaluationStorageKey(session);
+      localStorage.setItem(storageKey, JSON.stringify(data));
       renderRekapTable();
     }
 
@@ -4908,9 +4965,28 @@
       const lapCIScore = (lapCISum / 100) * 100;
       const lapCIWt = (lapCIScore * 15) / 100;
 
-      const respSum = Object.values(record.responsi || {}).reduce((a, b) => a + (Number(b) || 0), 0);
       const isStasiun = session === 'magang2' || session === 'magang3';
+      let respSum = 0;
       const respMax = isStasiun ? 18 : 105;
+
+      if (isStasiun) {
+        // Magang 2 & 3: Hanya hitung 6 butir domain stasiun OSCE (s1_d1 s/d s2_d3, maks 18)
+        const stasiunKeys = ['s1_d1', 's1_d2', 's1_d3', 's2_d1', 's2_d2', 's2_d3'];
+        stasiunKeys.forEach(k => {
+          if (record.responsi && record.responsi[k] !== undefined) {
+            respSum += (Number(record.responsi[k]) || 0);
+          }
+        });
+      } else {
+        // Magang 1: Hitung 21 butir prosedur panjang (r1 s/d r21, maks 105)
+        for (let i = 1; i <= 21; i++) {
+          const k = 'r' + i;
+          if (record.responsi && record.responsi[k] !== undefined) {
+            respSum += (Number(record.responsi[k]) || 0);
+          }
+        }
+      }
+
       const respScore = respMax > 0 ? (respSum / respMax) * 100 : 0;
       const respWt = (respScore * 25) / 100;
 
@@ -7736,19 +7812,7 @@
     // =============================================================
     // SIPINTER UNIFIED PORTAL MAGANG (MAGANG 1, 2, 3) ENGINE
     // =============================================================
-    let currentMagangSession = 'magang1'; // 'magang1' | 'magang2' | 'magang3'
 
-    function getStudentsStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_students_magang2';
-      if (session === 'magang3') return 'standalone_sep_students_magang3';
-      return 'standalone_sep_students_2026'; // Magang 1 tetap 100% utuh
-    }
-
-    function getEvaluationStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_magang2_2026';
-      if (session === 'magang3') return 'standalone_sep_magang3_2026';
-      return 'standalone_sep_magang_2026'; // Magang 1 tetap 100% utuh
-    }
 
     function getMagangLabel(session = currentMagangSession) {
       if (session === 'magang2') return 'Magang 2';
@@ -7839,6 +7903,25 @@
       if (masterTitle) masterTitle.innerText = label;
       const rekapTitle = document.getElementById('rekap-session-title');
       if (rekapTitle) rekapTitle.innerText = label;
+
+      // 4. Update Responsi Labels based on Session
+      const sideRespSubtext = document.getElementById('dosen-side-resp-subtext');
+      const respSubtext = document.getElementById('dosen-responsi-subtext');
+      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
+
+      if (isStasiun) {
+        if (sideRespSubtext) sideRespSubtext.innerText = 'Bobot 25% • 6 Butir Soal (Max 18)';
+        if (respSubtext) {
+          respSubtext.innerText = '';
+          respSubtext.classList.add('hidden');
+        }
+      } else {
+        if (sideRespSubtext) sideRespSubtext.innerText = 'Bobot 25% • 21 Butir Soal';
+        if (respSubtext) {
+          respSubtext.innerText = 'Bagian A: Pendaftaran Pasien Baru RJ (12 butir) + Bagian B: Koding Diagnosis & Tindakan (9 butir). Skala 1 s/d 5. Max Skor = 105.';
+          respSubtext.classList.remove('hidden');
+        }
+      }
     }
 
     // Modal Rubrik Kriteria
