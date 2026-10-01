@@ -483,32 +483,23 @@
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        <!-- Logo & Title -->
-        <!-- Stase Selector Pill (Magang 1, Magang 2, Magang 3) -->
-        <div class="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80 shadow-2xs">
-          <button type="button" onclick="goToPortalHub()" title="Kembali ke Gerbang Portal Magang" class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-indigo-600 hover:bg-white transition flex items-center gap-1">
-            <span>🏠</span> <span class="hidden xl:inline">Portal</span>
-          </button>
-          <div class="h-4 w-px bg-slate-300 mx-0.5"></div>
-          <button type="button" id="btn-session-magang1" onclick="switchMagangSession('magang1')" class="session-nav-btn px-3 py-1 rounded-lg text-xs font-black bg-white text-emerald-800 shadow-2xs border border-emerald-200 transition">
-            Magang 1
-          </button>
-          <button type="button" id="btn-session-magang2" onclick="switchMagangSession('magang2')" class="session-nav-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-blue-700 hover:bg-white transition">
-            Magang 2
-          </button>
-          <button type="button" id="btn-session-magang3" onclick="switchMagangSession('magang3')" class="session-nav-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-purple-700 hover:bg-white transition">
-            Magang 3
-          </button>
-        </div>
-
-        <div class="flex items-center space-x-3">
+        <!-- Logo & Title dengan Badge Sesi Kompak -->
+        <div class="flex items-center space-x-3 shrink-0">
           <img src="logo.png" alt="Logo Kemenkes Poltekkes Tasikmalaya" class="h-9 sm:h-10 w-auto object-contain shrink-0" onerror="this.style.display='none'">
           <div class="border-l border-slate-200 pl-3">
             <div class="flex items-center gap-2">
               <h1 class="text-sm sm:text-base font-black text-slate-900 leading-tight tracking-tight">SIPINTER MAGANG</h1>
-              <span class="hidden sm:inline-block px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200/60 text-indigo-700 text-[10px] font-extrabold">D3 RMIK</span>
+              
+              <!-- Badge Sesi Ringkas & Kompak (Tidak memenuhi header) -->
+              <button type="button" onclick="goToPortalHub()" title="Sesi aktif. Klik untuk kembali ke portal atau ganti sesi" class="cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100" id="header-session-btn">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" id="header-session-dot"></span>
+                <span id="header-session-badge">Magang 1</span>
+                <span class="text-[9px] text-slate-400 font-normal">↺ Ganti</span>
+              </button>
+
+              <span class="hidden md:inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-bold">D3 RMIK</span>
             </div>
-            <p class="text-[11px] text-slate-500 font-medium leading-tight">Sistem Informasi Penilaian Terintegrasi Magang — Poltekkes Kemenkes Tasikmalaya</p>
+            <p class="text-[11px] text-slate-500 font-medium leading-tight hidden sm:block">Sistem Informasi Penilaian Terintegrasi Magang — Poltekkes Kemenkes Tasikmalaya</p>
           </div>
         </div>
 
@@ -7542,32 +7533,41 @@
     }
 
     function updateSessionUI() {
+      const label = getMagangLabel();
+
       // 1. Update Login Session Label
       const loginLabel = document.getElementById('login-session-label');
       const loginDot = document.getElementById('login-session-dot');
-      if (loginLabel) loginLabel.innerText = getMagangLabel();
-      const masterTitle = document.getElementById('master-session-title');
-      if (masterTitle) masterTitle.innerText = getMagangLabel();
-      const rekapTitle = document.getElementById('rekap-session-title');
-      if (rekapTitle) rekapTitle.innerText = getMagangLabel();
+      if (loginLabel) loginLabel.innerText = label;
       if (loginDot) {
         if (currentMagangSession === 'magang1') loginDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
         else if (currentMagangSession === 'magang2') loginDot.className = 'w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse';
         else loginDot.className = 'w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse';
       }
 
-      // 2. Update Header Buttons
-      ['magang1', 'magang2', 'magang3'].forEach(k => {
-        const btn = document.getElementById(`btn-session-${k}`);
-        if (!btn) return;
-        if (k === currentMagangSession) {
-          if (k === 'magang1') btn.className = 'session-nav-btn px-3 py-1 rounded-lg text-xs font-black bg-white text-emerald-800 shadow-2xs border border-emerald-200 transition';
-          else if (k === 'magang2') btn.className = 'session-nav-btn px-3 py-1 rounded-lg text-xs font-black bg-white text-blue-800 shadow-2xs border border-blue-200 transition';
-          else btn.className = 'session-nav-btn px-3 py-1 rounded-lg text-xs font-black bg-white text-purple-800 shadow-2xs border border-purple-200 transition';
+      // 2. Update Header Compact Badge
+      const headerBadge = document.getElementById('header-session-badge');
+      const headerBtn = document.getElementById('header-session-btn');
+      const headerDot = document.getElementById('header-session-dot');
+      if (headerBadge) headerBadge.innerText = label;
+      if (headerBtn && headerDot) {
+        if (currentMagangSession === 'magang1') {
+          headerBtn.className = 'cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100';
+          headerDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+        } else if (currentMagangSession === 'magang2') {
+          headerBtn.className = 'cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-blue-50 text-blue-800 border-blue-200 hover:bg-blue-100';
+          headerDot.className = 'w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse';
         } else {
-          btn.className = 'session-nav-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-white transition';
+          headerBtn.className = 'cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-black border transition shadow-2xs bg-purple-50 text-purple-800 border-purple-200 hover:bg-purple-100';
+          headerDot.className = 'w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse';
         }
-      });
+      }
+
+      // 3. Update Titles in Master & Rekap
+      const masterTitle = document.getElementById('master-session-title');
+      if (masterTitle) masterTitle.innerText = label;
+      const rekapTitle = document.getElementById('rekap-session-title');
+      if (rekapTitle) rekapTitle.innerText = label;
     }
 
     // Modal Rubrik Kriteria
