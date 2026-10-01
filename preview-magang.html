@@ -168,196 +168,7 @@
   <!-- ============================================================== -->
   <!-- 1. LOGIN SCREEN (PORTAL MASUK PENILAI) -->
   <!-- ============================================================== -->
-    <!-- ============================================================== -->
-  <!-- 0. PORTAL HUB (GERBANG UTAMA PILIH SESI MAGANG - PILIHAN A) -->
-  <!-- ============================================================== -->
-  <div id="portal-hub-screen" class="min-h-screen bg-slate-950 flex flex-col justify-between p-4 sm:p-6 lg:p-8 selection:bg-indigo-500 selection:text-white" style="background: radial-gradient(circle at 50% 15%, #1e1b4b 0%, #090d16 100%);">
-    
-    <!-- Top Branding -->
-    <div class="max-w-6xl w-full mx-auto pt-4 sm:pt-8 text-center space-y-3">
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <img src="logo.png" alt="Logo Kemenkes Poltekkes Tasikmalaya" class="h-14 sm:h-16 w-auto object-contain drop-shadow-md" onerror="this.style.display='none'">
-        <div class="text-left sm:border-l sm:border-slate-700 sm:pl-3.5">
-          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-indigo-950/80 border border-indigo-700/60 text-indigo-300 text-[10px] font-extrabold tracking-wider uppercase">
-            POLTEKKES KEMENKES TASIKMALAYA
-          </div>
-          <p class="text-xs text-slate-300 font-semibold mt-0.5">Jurusan Rekam Medis & Informasi Kesehatan (D3 RMIK)</p>
-        </div>
-      </div>
-
-      <div class="space-y-1.5 max-w-2xl mx-auto pt-2">
-        <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
-          SIPINTER <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">PORTAL MAGANG</span>
-        </h1>
-        <p class="text-xs sm:text-sm text-slate-400 font-medium">
-          Sistem Informasi Penilaian Terintegrasi Magang RMIK Berbasis Cloud & Validasi Digital
-        </p>
-        <p class="text-xs text-indigo-300/80 font-semibold pt-1">
-          Silakan pilih sesi magang di bawah ini untuk mengakses instrumen penilaian, draf, dan berita acara resmi:
-        </p>
-      </div>
-    </div>
-
-    <!-- 3 Cards: Magang 1, Magang 2, Magang 3 -->
-    <div class="max-w-6xl w-full mx-auto my-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        <!-- KARTU 1: MAGANG 1 -->
-        <div class="relative bg-slate-900/90 rounded-3xl border-2 border-emerald-500/60 hover:border-emerald-400 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-950/50 hover:-translate-y-1.5 group">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-black uppercase tracking-wider">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                🟢 Sedang Berjalan (Live)
-              </span>
-              <span class="text-xs font-bold text-slate-400">Sesi 1</span>
-            </div>
-
-            <div class="space-y-1.5">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-                🏥
-              </div>
-              <h2 class="text-2xl font-black text-white tracking-tight group-hover:text-emerald-300 transition">
-                Magang 1
-              </h2>
-              <p class="text-xs font-bold text-emerald-400">Praktik Rumah Sakit Dasar</p>
-              <p class="text-xs text-slate-400 leading-relaxed pt-1">
-                Fokus kompetensi pengelolaan berkas rekam medis manual & elektronik, registrasi, assembling, filing, statistik dasar fasyankes, dan etika profesi.
-              </p>
-            </div>
-
-            <div class="pt-2 border-t border-slate-800 space-y-1.5 text-xs text-slate-300">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Mahasiswa Peserta:</span>
-                <span class="font-bold text-white">72 Mahasiswa</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Wahana Praktik:</span>
-                <span class="font-bold text-white">9 Rumah Sakit</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Sinkronisasi Cloud:</span>
-                <span class="font-bold text-emerald-400 font-mono">Firestore Live ✓</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-6">
-            <button type="button" onclick="openMagangSession('magang1')" class="w-full py-3.5 px-4 rounded-2xl font-black text-xs text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-lg shadow-emerald-950 transition flex items-center justify-center gap-2 cursor-pointer">
-              <span>🚀 Masuk Magang 1</span>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- KARTU 2: MAGANG 2 -->
-        <div class="relative bg-slate-900/90 rounded-3xl border-2 border-blue-500/40 hover:border-blue-400 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-blue-950/50 hover:-translate-y-1.5 group">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[11px] font-black uppercase tracking-wider">
-                <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                🔵 Sesi 2 (Siap Plotting)
-              </span>
-              <span class="text-xs font-bold text-slate-400">Sesi 2</span>
-            </div>
-
-            <div class="space-y-1.5">
-              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-                📑
-              </div>
-              <h2 class="text-2xl font-black text-white tracking-tight group-hover:text-blue-300 transition">
-                Magang 2
-              </h2>
-              <p class="text-xs font-bold text-blue-400">Praktik Koding & Casemix</p>
-              <p class="text-xs text-slate-400 leading-relaxed pt-1">
-                Fokus kompetensi kodifikasi klinis morbiditas & tindakan (ICD-10, ICD-9-CM), grouper INA-CBGs, verifikasi kelayakan klaim BPJS, dan dispute klinis.
-              </p>
-            </div>
-
-            <div class="pt-2 border-t border-slate-800 space-y-1.5 text-xs text-slate-300">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Basis Data:</span>
-                <span class="font-bold text-white">Independen Sesi 2</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Plotting Lahan & CI:</span>
-                <span class="font-bold text-blue-400">Upload Excel Baru</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Rubrik Penilaian:</span>
-                <span class="font-bold text-white">Standar Diselaraskan</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-6">
-            <button type="button" onclick="openMagangSession('magang2')" class="w-full py-3.5 px-4 rounded-2xl font-black text-xs text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-950 transition flex items-center justify-center gap-2 cursor-pointer">
-              <span>🚀 Masuk Magang 2</span>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- KARTU 3: MAGANG 3 -->
-        <div class="relative bg-slate-900/90 rounded-3xl border-2 border-purple-500/40 hover:border-purple-400 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-purple-950/50 hover:-translate-y-1.5 group">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-[11px] font-black uppercase tracking-wider">
-                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                ⚪ Sesi 3 (Mendatang)
-              </span>
-              <span class="text-xs font-bold text-slate-400">Sesi 3</span>
-            </div>
-
-            <div class="space-y-1.5">
-              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-                💻
-              </div>
-              <h2 class="text-2xl font-black text-white tracking-tight group-hover:text-purple-300 transition">
-                Magang 3
-              </h2>
-              <p class="text-xs font-bold text-purple-400">Praktik SIMRS & Manajemen RMIK</p>
-              <p class="text-xs text-slate-400 leading-relaxed pt-1">
-                Fokus kompetensi analisis alur SIMRS/RME, audit kelengkapan berkas RM, statistik efisiensi fasyankes (BOR, LOS, TOI), dan manajemen unit kerja.
-              </p>
-            </div>
-
-            <div class="pt-2 border-t border-slate-800 space-y-1.5 text-xs text-slate-300">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Basis Data:</span>
-                <span class="font-bold text-white">Independen Sesi 3</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Plotting Lahan & CI:</span>
-                <span class="font-bold text-purple-400">Upload Excel Baru</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">Rubrik Penilaian:</span>
-                <span class="font-bold text-white">Standar Diselaraskan</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-6">
-            <button type="button" onclick="openMagangSession('magang3')" class="w-full py-3.5 px-4 rounded-2xl font-black text-xs text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-950 transition flex items-center justify-center gap-2 cursor-pointer">
-              <span>🚀 Masuk Magang 3</span>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Bottom Footer -->
-    <div class="max-w-6xl w-full mx-auto pb-4 text-center border-t border-slate-800/80 pt-4 space-y-1">
-      <p class="text-xs font-bold text-slate-400">SIPINTER MAGANG &copy; 2026 — Poltekkes Kemenkes Tasikmalaya</p>
-      <p class="text-[11px] text-slate-500 font-medium">Sistem Evaluasi Terpadu Berbasis Standar Akreditasi LAM-PTKes & Kurikulum Pendidikan Tenaga Medis Kemenkes RI</p>
-    </div>
-
-  </div>
-
-  <div id="login-screen" class="hidden min-h-screen bg-slate-950 flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white" style="background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #090d16 100%);">
+  <div id="login-screen" class="min-h-screen bg-slate-950 flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white" style="background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #090d16 100%);">
     <div class="max-w-[430px] w-full bg-white rounded-3xl shadow-2xl p-7 sm:p-8 space-y-6 text-center border border-slate-100/80 transition-all">
       
       <!-- Logo Kemenkes Poltekkes Tasikmalaya -->
@@ -373,17 +184,6 @@
         <h2 class="text-2xl font-black text-slate-900 tracking-tight">SIPINTER MAGANG</h2>
         <p class="text-xs text-slate-600 font-bold">Sistem Informasi Penilaian Terintegrasi Magang</p>
         <p class="text-[11px] text-slate-400 font-medium">Pilih peran penilai untuk mengakses instrumen penilaian</p>
-      </div>
-
-            <!-- Sesi Terpilih Banner -->
-      <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 border border-slate-200">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" id="login-session-dot"></span>
-          <span class="text-xs font-black text-slate-800" id="login-session-label">Magang 1</span>
-        </div>
-        <button type="button" onclick="goToPortalHub()" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 px-2.5 py-1 rounded-lg hover:bg-indigo-50 border border-indigo-100 transition flex items-center gap-1">
-          <span>🏠</span> Ganti Sesi
-        </button>
       </div>
 
       <!-- Cloud DB Status on Login -->
@@ -465,10 +265,18 @@
         </button>
       </form>
 
+      <!-- Navigasi ke Magang 2 -->
+      <div class="pt-3 border-t border-slate-100">
+        <a href="magang2.html" class="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl bg-slate-50 hover:bg-indigo-50 text-indigo-700 font-bold text-xs border border-slate-200 hover:border-indigo-200 transition">
+          <span>Portal Penilaian Magang 2</span>
+          <span>➔</span>
+        </a>
+      </div>
+
       <!-- Footer Info -->
       <div class="pt-2 border-t border-slate-100 space-y-0.5">
-        <p class="text-[11px] font-bold text-slate-700">SIPINTER MAGANG &copy; 2026</p>
-        <p class="text-[10px] text-slate-500 font-medium">Sistem Informasi Penilaian Terintegrasi Magang</p>
+        <p class="text-[11px] font-bold text-slate-700">SIPINTER MAGANG 1 &copy; 2026</p>
+        <p class="text-[10px] text-slate-500 font-medium">Sistem Informasi Penilaian Terintegrasi Magang 1</p>
         <p class="text-[10px] text-slate-400 font-medium">D3 RMIK — Poltekkes Kemenkes Tasikmalaya</p>
       </div>
     </div>
@@ -483,31 +291,26 @@
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        <!-- Logo & Title dengan Badge Sesi Kompak -->
-        <div class="flex items-center space-x-3 shrink-0">
+        <!-- Logo & Title -->
+        <div class="flex items-center space-x-3">
           <img src="logo.png" alt="Logo Kemenkes Poltekkes Tasikmalaya" class="h-9 sm:h-10 w-auto object-contain shrink-0" onerror="this.style.display='none'">
           <div class="border-l border-slate-200 pl-3">
             <div class="flex items-center gap-2">
               <h1 class="text-sm sm:text-base font-black text-slate-900 leading-tight tracking-tight">SIPINTER MAGANG</h1>
-              
-              <!-- Badge Sesi Ringkas (Non-interaktif agar header tetap bersih) -->
-              <span id="header-session-badge" class="px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs">
-                Magang 1
-              </span>
-
-              <span class="hidden md:inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-bold">D3 RMIK</span>
+              <span class="hidden sm:inline-block px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200/60 text-indigo-700 text-[10px] font-extrabold">D3 RMIK</span>
+              <span class="inline-block px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-300 text-emerald-800 text-[10px] font-extrabold">Magang 1</span>
             </div>
-            <p class="text-[11px] text-slate-500 font-medium leading-tight hidden sm:block">Sistem Informasi Penilaian Terintegrasi Magang — Poltekkes Kemenkes Tasikmalaya</p>
+            <p class="text-[11px] text-slate-500 font-medium leading-tight">Sistem Informasi Penilaian Terintegrasi Magang 1 — Poltekkes Kemenkes Tasikmalaya</p>
           </div>
         </div>
 
         <!-- User Profile & Action Menu -->
         <div class="flex items-center space-x-2 sm:space-x-3">
-          <div onclick="openUserSettingsModal()" title="Klik untuk Pengaturan Akun" class="text-right hidden sm:block cursor-pointer hover:opacity-85 transition group max-w-[210px] min-w-0">
-            <span id="current-user-name" class="text-xs font-bold text-slate-900 block leading-tight group-hover:text-indigo-600 transition truncate">Nama Pengguna</span>
+          <div onclick="openUserSettingsModal()" title="Klik untuk Pengaturan Akun" class="text-right hidden sm:block cursor-pointer hover:opacity-85 transition group">
+            <span id="current-user-name" class="text-xs font-bold text-slate-900 block leading-tight group-hover:text-indigo-600 transition">Nama Pengguna</span>
             <div class="flex items-center justify-end gap-1.5 mt-0.5">
-              <span id="current-user-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-100 text-blue-800 shrink-0">PERAN</span>
-              <span id="current-user-scope" class="text-[10px] text-slate-500 font-medium truncate max-w-[120px]">Semua RS</span>
+              <span id="current-user-badge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-100 text-blue-800">PERAN</span>
+              <span id="current-user-scope" class="text-[10px] text-slate-500 font-medium">Semua RS</span>
             </div>
           </div>
 
@@ -1155,7 +958,7 @@
                       <span class="text-xs text-slate-400">•</span>
                       <span class="text-xs font-semibold text-slate-600">Bobot 20%</span>
                     </div>
-                    <div class="flex items-center justify-between gap-2"><h3 class="font-bold text-base text-slate-900">2. Evaluasi Kinerja & Sikap Profesional</h3><button type="button" onclick="openRubrikKriteriaModal('kinerja')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold border border-blue-200 transition shadow-2xs"><span>ℹ️ Kriteria Skor</span></button></div>
+                    <h3 class="font-bold text-base text-slate-900">2. Evaluasi Kinerja & Sikap Profesional</h3>
                     <p class="text-xs text-slate-500">6 Aspek Penilaian, Skala 1 (Sangat Kurang) s/d 4 (Sangat Baik). Skor Maksimal = 24.</p>
                   </div>
                   <div class="text-right shrink-0 bg-blue-50 p-2.5 rounded-xl border border-blue-100">
@@ -1444,7 +1247,7 @@
                     <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0">1</div>
                     <div>
                       <div class="font-bold text-xs">Ujian Responsi Magang</div>
-                      <div id="dosen-side-resp-subtext" class="text-[10px] text-slate-500">Bobot 25% • 21 Butir Soal</div>
+                      <div class="text-[10px] text-slate-500">Bobot 25% • 21 Butir Soal</div>
                     </div>
                   </div>
                   <div class="flex items-center gap-1.5 shrink-0">
@@ -1510,8 +1313,8 @@
                       <span class="text-xs text-slate-400">•</span>
                       <span class="text-xs font-semibold text-slate-600">Bobot 25%</span>
                     </div>
-                    <div class="flex items-center justify-between gap-2"><h3 class="font-bold text-base text-slate-900">1. Ujian Responsi Praktik Lapangan</h3><button type="button" onclick="openRubrikKriteriaModal('responsi')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200 transition shadow-2xs"><span>ℹ️ Kriteria Skor</span></button></div>
-                    <p id="dosen-responsi-subtext" class="text-xs text-slate-500">Bagian A: Pendaftaran Pasien Baru RJ (12 butir) + Bagian B: Koding Diagnosis & Tindakan (9 butir). Skala 1 s/d 5. Max Skor = 105.</p>
+                    <h3 class="font-bold text-base text-slate-900">1. Ujian Responsi Praktik Lapangan</h3>
+                    <p class="text-xs text-slate-500">Bagian A: Pendaftaran Pasien Baru RJ (12 butir) + Bagian B: Koding Diagnosis & Tindakan (9 butir). Skala 1 s/d 5. Max Skor = 105.</p>
                   </div>
                   <div class="text-right shrink-0 bg-indigo-50 p-2.5 rounded-xl border border-indigo-100">
                     <span class="text-[10px] uppercase font-bold text-indigo-600 block">Skor Responsi:</span>
@@ -1545,7 +1348,7 @@
                       <span class="text-xs text-slate-400">•</span>
                       <span class="text-xs font-semibold text-slate-600">Bobot 15%</span>
                     </div>
-                    <div class="flex items-center justify-between gap-2"><h3 class="font-bold text-base text-slate-900">2. Ujian Laporan & Presentasi oleh Dosen</h3><button type="button" onclick="openRubrikKriteriaModal('laporan')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs font-bold border border-purple-200 transition shadow-2xs"><span>ℹ️ Kriteria Skor</span></button></div>
+                    <h3 class="font-bold text-base text-slate-900">2. Ujian Laporan & Presentasi oleh Dosen</h3>
                     <p class="text-xs text-slate-500">20 Aspek (Presentasi, Tanya Jawab, Isi Laporan), Skala 1 s/d 5. Skor Maksimal = 100.</p>
                   </div>
                   <div class="text-right shrink-0 bg-indigo-50 p-2.5 rounded-xl border border-indigo-100">
@@ -1669,7 +1472,7 @@
         <!-- HEADER & TOOLBAR -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
-            <h2 class="text-base font-bold text-slate-900">Master Data Mahasiswa, Lahan Praktik & Pembimbing (<span id="master-session-title" class="text-indigo-600 font-black">Magang 1</span>)</h2>
+            <h2 class="text-base font-bold text-slate-900">Master Data Mahasiswa, Lahan Praktik & Pembimbing</h2>
             <p class="text-xs text-slate-500">Kelola dan perbarui data penempatan mahasiswa, rumah sakit mitra, serta dosen pembimbing tanpa koding.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
@@ -2490,55 +2293,11 @@
       'RS Permata Bunda Tasikmalaya'
     ];
 
-    let currentMagangSession = (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('sipinter_active_magang_session')) || 'magang1';
-
     const STUDENTS_STORAGE_KEY = 'standalone_sep_students_2026';
     const HOSPITALS_STORAGE_KEY = 'standalone_sep_hospitals_2026';
     const USERS_STORAGE_KEY = 'standalone_sep_users_2026';
     const SESSION_STORAGE_KEY = 'standalone_sep_current_session';
     const EVALUATION_STORAGE_KEY = 'standalone_sep_magang_2026';
-
-    function getStudentsStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_students_magang2';
-      if (session === 'magang3') return 'standalone_sep_students_magang3';
-      return STUDENTS_STORAGE_KEY;
-    }
-
-    function getHospitalsStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_hospitals_magang2';
-      if (session === 'magang3') return 'standalone_sep_hospitals_magang3';
-      return HOSPITALS_STORAGE_KEY;
-    }
-
-    function getUsersStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_users_magang2';
-      if (session === 'magang3') return 'standalone_sep_users_magang3';
-      return USERS_STORAGE_KEY;
-    }
-
-    function getEvaluationStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_magang2_2026';
-      if (session === 'magang3') return 'standalone_sep_magang3_2026';
-      return EVALUATION_STORAGE_KEY;
-    }
-
-    function getSessionStorageKey(session = currentMagangSession) {
-      if (session === 'magang2') return 'standalone_sep_session_magang2';
-      if (session === 'magang3') return 'standalone_sep_session_magang3';
-      return 'standalone_sep_session_magang1';
-    }
-
-    function getFirestoreConfigCol(session = currentMagangSession) {
-      if (session === 'magang2') return 'sipinter_config_magang2';
-      if (session === 'magang3') return 'sipinter_config_magang3';
-      return 'sipinter_config';
-    }
-
-    function getFirestoreEvaluationsCol(session = currentMagangSession) {
-      if (session === 'magang2') return 'sipinter_evaluations_magang2';
-      if (session === 'magang3') return 'sipinter_evaluations_magang3';
-      return 'sipinter_evaluations';
-    }
 
     // =============================================================
     // GOOGLE FIREBASE CLOUD FIRESTORE REAL-TIME SYNCHRONIZATION
@@ -2558,117 +2317,6 @@
     let isCloudOnline = false;
     let isWritingToCloud = false;
 
-    let unsubStudents = null;
-    let unsubUsers = null;
-    let unsubHospitals = null;
-    let unsubEvaluations = null;
-
-    function detachFirestoreListeners() {
-      if (unsubStudents) { try { unsubStudents(); } catch (e) {} unsubStudents = null; }
-      if (unsubUsers) { try { unsubUsers(); } catch (e) {} unsubUsers = null; }
-      if (unsubHospitals) { try { unsubHospitals(); } catch (e) {} unsubHospitals = null; }
-      if (unsubEvaluations) { try { unsubEvaluations(); } catch (e) {} unsubEvaluations = null; }
-    }
-
-    function setupFirestoreSessionListeners(session = currentMagangSession) {
-      if (!firestore) return;
-      detachFirestoreListeners();
-
-      const configCol = getFirestoreConfigCol(session);
-      const evalCol = getFirestoreEvaluationsCol(session);
-      const studentsKey = getStudentsStorageKey(session);
-      const usersKey = getUsersStorageKey(session);
-      const hospitalsKey = getHospitalsStorageKey(session);
-      const evalKey = getEvaluationStorageKey(session);
-
-      // 1. Sinkronisasi Data Mahasiswa Sesi Aktif
-      unsubStudents = firestore.collection(configCol).doc('students').onSnapshot(doc => {
-        if (doc.exists) {
-          const cloudData = doc.data();
-          if (Array.isArray(cloudData.list) && !isWritingToCloud) {
-            localStorage.setItem(studentsKey, JSON.stringify(cloudData.list));
-            syncAllComponents();
-          }
-        } else if (session === 'magang1') {
-          const localStudents = getStudents('magang1');
-          firestore.collection(configCol).doc('students').set({
-            list: localStudents,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(console.error);
-        }
-        updateCloudStatus('online', 'Cloud Firestore Live ✓');
-      }, err => {
-        console.warn(`Listener students [${session}] error:`, err);
-      });
-
-      // 2. Sinkronisasi Akun Pengguna Sesi Aktif
-      unsubUsers = firestore.collection(configCol).doc('users').onSnapshot(doc => {
-        if (doc.exists) {
-          const cloudData = doc.data();
-          if (Array.isArray(cloudData.list) && !isWritingToCloud) {
-            localStorage.setItem(usersKey, JSON.stringify(cloudData.list));
-            renderUsersTable();
-            if (typeof selectLoginRole === 'function') {
-              selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
-            }
-          }
-        } else if (session === 'magang1') {
-          const localUsers = getUsers('magang1');
-          firestore.collection(configCol).doc('users').set({
-            list: localUsers,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(console.error);
-        }
-      }, err => {
-        console.warn(`Listener users [${session}] error:`, err);
-      });
-
-      // 3. Sinkronisasi Lahan / Rumah Sakit Sesi Aktif
-      unsubHospitals = firestore.collection(configCol).doc('hospitals').onSnapshot(doc => {
-        if (doc.exists) {
-          const cloudData = doc.data();
-          if (Array.isArray(cloudData.list) && !isWritingToCloud) {
-            localStorage.setItem(hospitalsKey, JSON.stringify(cloudData.list));
-          }
-        } else if (session === 'magang1') {
-          const localHosp = getHospitals('magang1');
-          firestore.collection(configCol).doc('hospitals').set({
-            list: localHosp,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(console.error);
-        }
-      }, err => {
-        console.warn(`Listener hospitals [${session}] error:`, err);
-      });
-
-      // 4. Sinkronisasi Penilaian (Evaluations) Sesi Aktif
-      unsubEvaluations = firestore.collection(evalCol).onSnapshot(snapshot => {
-        if (!snapshot.empty) {
-          const currentEvals = getStoredData(session);
-          let changed = false;
-          snapshot.forEach(docSnap => {
-            const data = docSnap.data();
-            const nim = docSnap.id;
-            if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
-              currentEvals[nim] = data;
-              changed = true;
-            }
-          });
-
-          if (changed && !isWritingToCloud) {
-            localStorage.setItem(evalKey, JSON.stringify(currentEvals));
-            renderRekapTable();
-            if (typeof currentNIM !== 'undefined' && currentNIM) {
-              if (typeof populateStudentDataCI === 'function') populateStudentDataCI(currentNIM);
-              if (typeof populateStudentDataDosen === 'function') populateStudentDataDosen(currentNIM);
-            }
-          }
-        }
-      }, err => {
-        console.warn(`Listener evaluations [${session}] error:`, err);
-      });
-    }
-
     function initFirebaseSync() {
       if (typeof firebase === 'undefined') {
         updateCloudStatus('offline', 'Firebase SDK Offline');
@@ -2684,7 +2332,7 @@
         firestore = firebase.firestore();
 
         updateCloudStatus('connecting', 'Menghubungkan Cloud...');
-        setupFirestoreSessionListeners(currentMagangSession);
+        setupFirestoreRealtimeListeners();
       } catch (err) {
         console.warn('Inisialisasi Firebase gagal:', err);
         updateCloudStatus('error', 'Koneksi Cloud Terbatas');
@@ -2734,6 +2382,127 @@
       }
     }
 
+    function setupFirestoreRealtimeListeners() {
+      if (!firestore) return;
+
+      // 1. Sinkronisasi Data Mahasiswa (Dengan Proteksi Purity Magang 1)
+      firestore.collection('sipinter_config').doc('students').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list)) {
+            // Purity check: jika terdeteksi data Bandung di Magang 1, bersihkan cloud dan pulihkan default 72 mhs
+            const hasForeign = cloudData.list.some(s => (s.hospital && s.hospital.toLowerCase().includes('bandung')) || (s.name && s.name.toLowerCase().includes('bandung')));
+            if (hasForeign) {
+              console.warn('[Purity Guard] Data asing terdeteksi di Magang 1 cloud. Memulihkan 72 mahasiswa Tasik & Ciamis...');
+              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
+              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+              firestore.collection('sipinter_config').doc('students').set({
+                list: STUDENTS_DEFAULT,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(console.error);
+              firestore.collection('sipinter_config').doc('hospitals').set({
+                list: HOSPITALS_DEFAULT,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(console.error);
+              syncAllComponents();
+              return;
+            }
+            if (!isWritingToCloud) {
+              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(cloudData.list));
+              syncAllComponents();
+            }
+          }
+        } else {
+          // Auto-seed data lokal awal ke Cloud Firestore
+          const localStudents = getStudents();
+          firestore.collection('sipinter_config').doc('students').set({
+            list: localStudents,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+        updateCloudStatus('online', 'Cloud Firestore Live ✓');
+      }, err => {
+        console.warn('Listener students error:', err);
+        updateCloudStatus('error', err.code === 'permission-denied' ? 'Atur Rules Firestore' : 'Koneksi Terbatas');
+      });
+
+      // 2. Sinkronisasi Akun Pengguna (Users)
+      firestore.collection('sipinter_config').doc('users').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list)) {
+            if (!isWritingToCloud) {
+              localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cloudData.list));
+              renderUsersTable();
+              if (typeof selectLoginRole === 'function') {
+                selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
+              }
+            }
+          }
+        } else {
+          const localUsers = getUsers();
+          firestore.collection('sipinter_config').doc('users').set({
+            list: localUsers,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+      }, err => {
+        console.warn('Listener users error:', err);
+      });
+
+      // 3. Sinkronisasi Lahan / Rumah Sakit
+      firestore.collection('sipinter_config').doc('hospitals').onSnapshot(doc => {
+        if (doc.exists) {
+          const cloudData = doc.data();
+          if (Array.isArray(cloudData.list)) {
+            if (!isWritingToCloud) {
+              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(cloudData.list));
+            }
+          }
+        } else {
+          const localHosp = getHospitals();
+          firestore.collection('sipinter_config').doc('hospitals').set({
+            list: localHosp,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(console.error);
+        }
+      }, err => {
+        console.warn('Listener hospitals error:', err);
+      });
+
+      // 4. Sinkronisasi Penilaian (Evaluations)
+      firestore.collection('sipinter_evaluations').onSnapshot(snapshot => {
+        if (!snapshot.empty) {
+          const currentEvals = getStoredData();
+          let changed = false;
+          snapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            const nim = docSnap.id;
+            if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
+              currentEvals[nim] = data;
+              changed = true;
+            }
+          });
+
+          if (changed && !isWritingToCloud) {
+            localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(currentEvals));
+            renderRekapTable();
+            if (typeof currentNIM !== 'undefined' && currentNIM) {
+              if (typeof populateStudentDataCI === 'function') populateStudentDataCI(currentNIM);
+              if (typeof populateStudentDataDosen === 'function') populateStudentDataDosen(currentNIM);
+            }
+          }
+        } else {
+          const localEvals = getStoredData();
+          Object.keys(localEvals).forEach(nim => {
+            firestore.collection('sipinter_evaluations').doc(nim).set(localEvals[nim]).catch(console.error);
+          });
+        }
+      }, err => {
+        console.warn('Listener evaluations error:', err);
+      });
+    }
+
     function syncDocToCloud(collectionName, docId, data) {
       if (!firestore) return;
       isWritingToCloud = true;
@@ -2754,13 +2523,12 @@
       });
     }
 
-    function syncEvaluationToCloud(nim, evalRecord, session = currentMagangSession) {
+    function syncEvaluationToCloud(nim, evalRecord) {
       if (!firestore || !nim || !evalRecord) return;
-      const evalCol = getFirestoreEvaluationsCol(session);
       isWritingToCloud = true;
       updateCloudStatus('syncing', 'Menyimpan Nilai...');
 
-      firestore.collection(evalCol).doc(nim).set({
+      firestore.collection('sipinter_evaluations').doc(nim).set({
         ...evalRecord,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
@@ -2781,30 +2549,27 @@
         return;
       }
 
-      const label = getMagangLabel();
-      if (!confirm(`🔄 Sinkronisasi Manual Cloud Database (${label}):\n\nUnggah seluruh data lokal ${label} (Mahasiswa, Akun Penilai, dan Nilai) ke Cloud Firestore sekarang?`)) {
+      if (!confirm('🔄 Sinkronisasi Manual Cloud Database:\n\nUnggah seluruh data lokal saat ini (Mahasiswa, Akun Penilai, dan Nilai) ke Cloud Firestore sekarang?')) {
         return;
       }
 
-      updateCloudStatus('syncing', `Mengunggah Semua Data ${label}...`);
+      updateCloudStatus('syncing', 'Mengunggah Semua Data...');
       const students = getStudents();
       const users = getUsers();
       const hospitals = getHospitals();
       const evaluations = getStoredData();
-      const configCol = getFirestoreConfigCol();
-      const evalCol = getFirestoreEvaluationsCol();
 
       Promise.all([
-        firestore.collection(configCol).doc('students').set({ list: students, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
-        firestore.collection(configCol).doc('users').set({ list: users, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
-        firestore.collection(configCol).doc('hospitals').set({ list: hospitals, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
-        ...Object.keys(evaluations).map(nim => firestore.collection(evalCol).doc(nim).set(evaluations[nim]))
+        firestore.collection('sipinter_config').doc('students').set({ list: students, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        firestore.collection('sipinter_config').doc('users').set({ list: users, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        firestore.collection('sipinter_config').doc('hospitals').set({ list: hospitals, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }),
+        ...Object.keys(evaluations).map(nim => firestore.collection('sipinter_evaluations').doc(nim).set(evaluations[nim]))
       ]).then(() => {
         updateCloudStatus('online', 'Cloud Firestore Live ✓');
-        alert(`✅ Sinkronisasi Berhasil!\n\nSeluruh data mahasiswa, akun, dan nilai ${label} telah terunggah ke Cloud Firestore.`);
+        alert('✅ Sinkronisasi Berhasil!\n\nSeluruh data mahasiswa, akun, dan nilai telah terunggah ke Cloud Firestore.');
       }).catch(err => {
         console.error('Gagal sinkronisasi massal:', err);
-        alert('Gagal sinkronisasi ke cloud: ' + err.message);
+        alert('Gagal sinkronisasi ke cloud: ' + err.message + '\n\nPastikan aturan Firestore Rules Anda telah mengizinkan read/write (Test mode).');
         updateCloudStatus('error', 'Cek Izin Firestore');
       });
     }
@@ -2812,66 +2577,61 @@
     // -------------------------------------------------------------
     // GETTER & SETTER MASTER DATA MAHASISWA & LAHAN
     // -------------------------------------------------------------
-    function getStudents(session = currentMagangSession) {
-      const storageKey = getStudentsStorageKey(session);
-      const raw = localStorage.getItem(storageKey);
+    function getStudents() {
+      const raw = localStorage.getItem(STUDENTS_STORAGE_KEY);
       let list = null;
       if (raw !== null) {
         try {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed)) {
-            list = parsed;
+            // Purity check: jika localStorage memiliki data Bandung, pulihkan default Magang 1
+            if (parsed.some(s => s.hospital && s.hospital.toLowerCase().includes('bandung'))) {
+              list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
+              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
+            } else {
+              list = parsed;
+            }
           }
         } catch (e) {}
       }
 
       if (list === null) {
-        if (session === 'magang1') {
-          list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
-        } else {
-          // Magang 2 & 3: Dimulai kosong [] sampai file Excel diunggah oleh Admin
-          list = [];
-        }
-        localStorage.setItem(storageKey, JSON.stringify(list));
+        list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
+        localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
       }
 
-      // Pastikan s.ci dan s.lecturers selalu aman jika di Magang 1
-      if (session === 'magang1' && list.length > 0) {
-        let updated = false;
-        list.forEach(s => {
-          if (!s.ci) {
-            const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
-            if (def && def.ci) {
-              s.ci = def.ci;
-              updated = true;
-            } else {
-              s.ci = '-';
-            }
-          }
-          if (!Array.isArray(s.lecturers)) {
-            if (typeof s.lecturers === 'string' && s.lecturers.trim()) {
-              s.lecturers = parseLecturersField(s.lecturers);
-            } else {
-              const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
-              s.lecturers = def && Array.isArray(def.lecturers) ? [...def.lecturers] : ['Dosen Pembimbing Lapangan'];
-            }
+      // Pastikan s.ci dan s.lecturers selalu aman dan valid jika ada data
+      let updated = false;
+      list.forEach(s => {
+        if (!s.ci) {
+          const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
+          if (def && def.ci) {
+            s.ci = def.ci;
             updated = true;
+          } else {
+            s.ci = '-';
           }
-        });
-
-        if (updated) {
-          localStorage.setItem(storageKey, JSON.stringify(list));
         }
+        if (!Array.isArray(s.lecturers)) {
+          if (typeof s.lecturers === 'string' && s.lecturers.trim()) {
+            s.lecturers = parseLecturersField(s.lecturers);
+          } else {
+            const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
+            s.lecturers = def && Array.isArray(def.lecturers) ? [...def.lecturers] : ['Dosen Pembimbing Lapangan'];
+          }
+          updated = true;
+        }
+      });
+
+      if (updated) {
+        localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
       }
       return list;
     }
 
-    function saveStudents(list, session = currentMagangSession) {
-      const storageKey = getStudentsStorageKey(session);
-      const configCol = getFirestoreConfigCol(session);
-      localStorage.setItem(storageKey, JSON.stringify(list));
-      localStorage.setItem('sipinter_custom_students_' + session, 'true');
-      syncDocToCloud(configCol, 'students', { list: list });
+    function saveStudents(list) {
+      localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
+      syncDocToCloud('sipinter_config', 'students', { list: list });
       syncAllComponents();
     }
 
@@ -2886,25 +2646,27 @@
       }
     }
 
-    function getHospitals(session = currentMagangSession) {
-      const storageKey = getHospitalsStorageKey(session);
-      const raw = localStorage.getItem(storageKey);
+    function getHospitals() {
+      const raw = localStorage.getItem(HOSPITALS_STORAGE_KEY);
       if (raw !== null) {
         try {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) return parsed;
+          if (Array.isArray(parsed)) {
+            if (parsed.some(h => typeof h === 'string' && h.toLowerCase().includes('bandung'))) {
+              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+              return HOSPITALS_DEFAULT;
+            }
+            return parsed;
+          }
         } catch (e) {}
       }
-      const def = session === 'magang1' ? HOSPITALS_DEFAULT : [];
-      localStorage.setItem(storageKey, JSON.stringify(def));
-      return def;
+      localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+      return HOSPITALS_DEFAULT;
     }
 
-    function saveHospitals(list, session = currentMagangSession) {
-      const storageKey = getHospitalsStorageKey(session);
-      const configCol = getFirestoreConfigCol(session);
-      localStorage.setItem(storageKey, JSON.stringify(list));
-      syncDocToCloud(configCol, 'hospitals', { list: list });
+    function saveHospitals(list) {
+      localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(list));
+      syncDocToCloud('sipinter_config', 'hospitals', { list: list });
       syncAllComponents();
     }
 
@@ -2939,9 +2701,8 @@
 
     const ADMIN_USER = { id: 'u1', username: 'admin', password: '123', name: 'Super Admin Pusbangdik', role: 'ADMIN', hospital: null, lecturerName: null };
 
-    function getUsers(session = currentMagangSession) {
-      const storageKey = getUsersStorageKey(session);
-      const raw = localStorage.getItem(storageKey);
+    function getUsers() {
+      const raw = localStorage.getItem(USERS_STORAGE_KEY);
       let users = [];
       if (raw) {
         try {
@@ -2952,31 +2713,29 @@
         } catch (e) {}
       }
 
+      // Pertama kali (belum ada data): pakai DEFAULT_USERS sebagai awal
       if (users.length === 0) {
-        if (session === 'magang1') {
-          users = JSON.parse(JSON.stringify(DEFAULT_USERS));
-        } else {
-          users = [JSON.parse(JSON.stringify(ADMIN_USER))];
-        }
-        localStorage.setItem(storageKey, JSON.stringify(users));
+        users = JSON.parse(JSON.stringify(DEFAULT_USERS));
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
         return users;
       }
 
+      // Pastikan akun admin selalu ada (tidak bisa dihapus)
       const hasAdmin = users.some(u => (u.username || '').toLowerCase() === 'admin');
       if (!hasAdmin) {
         users.unshift(JSON.parse(JSON.stringify(ADMIN_USER)));
-        localStorage.setItem(storageKey, JSON.stringify(users));
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
       }
+
       return users;
     }
 
-    function saveUsers(users, session = currentMagangSession) {
-      const storageKey = getUsersStorageKey(session);
-      const configCol = getFirestoreConfigCol(session);
+    function saveUsers(users) {
+      // Pastikan admin selalu ada
       const hasAdmin = users.some(u => (u.username || '').toLowerCase() === 'admin');
       if (!hasAdmin) users.unshift(JSON.parse(JSON.stringify(ADMIN_USER)));
-      localStorage.setItem(storageKey, JSON.stringify(users));
-      syncDocToCloud(configCol, 'users', { list: users });
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+      syncDocToCloud('sipinter_config', 'users', { list: users });
       renderUsersTable();
       if (typeof selectLoginRole === 'function') {
         selectLoginRole(typeof currentSelectedLoginRole !== 'undefined' ? currentSelectedLoginRole : 'CI');
@@ -2995,22 +2754,17 @@
       }
     }
 
-    function getCurrentSession(session = currentMagangSession) {
-      const key = getSessionStorageKey(session);
-      let raw = localStorage.getItem(key);
-      if (!raw && session === 'magang1') {
-        raw = localStorage.getItem('standalone_sep_current_session');
-      }
+    function getCurrentSession() {
+      const raw = localStorage.getItem(SESSION_STORAGE_KEY);
       if (raw) {
         try {
           const u = JSON.parse(raw);
           if (u) {
             if (u.role === 'DOSEN' && !u.hospital) {
-              const allUsers = getUsers(session);
-              const def = allUsers.find(d => d.username === u.username);
+              const def = DEFAULT_USERS.find(d => d.username === u.username);
               if (def && def.hospital) {
                 u.hospital = def.hospital;
-                setCurrentSession(u, session);
+                setCurrentSession(u);
               }
             }
             return u;
@@ -3020,19 +2774,8 @@
       return null;
     }
 
-    function setCurrentSession(user, session = currentMagangSession) {
-      const key = getSessionStorageKey(session);
-      if (user) {
-        localStorage.setItem(key, JSON.stringify(user));
-        if (session === 'magang1') {
-          localStorage.setItem('standalone_sep_current_session', JSON.stringify(user));
-        }
-      } else {
-        localStorage.removeItem(key);
-        if (session === 'magang1') {
-          localStorage.removeItem('standalone_sep_current_session');
-        }
-      }
+    function setCurrentSession(user) {
+      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
     }
 
     // -------------------------------------------------------------
@@ -3098,11 +2841,10 @@
       filtered.forEach(u => {
         const opt = document.createElement('option');
         opt.value = u.username;
-        let cleanName = (u.name || '').includes(';') ? u.name.split(';')[0].trim() : u.name;
         if (u.role === 'CI') {
-          opt.innerText = `${cleanName} - ${u.hospital || 'Lahan'}`;
+          opt.innerText = `${u.name} - ${u.hospital || 'Lahan'}`;
         } else {
-          opt.innerText = `${cleanName} (${u.hospital || 'Bimbingan'})`;
+          opt.innerText = `${u.name} (${u.hospital || 'Bimbingan'})`;
         }
         select.appendChild(opt);
       });
@@ -3171,10 +2913,14 @@
     }
 
     function handleLogout() {
-      setCurrentSession(null, currentMagangSession);
-      sessionStorage.removeItem('sipinter_active_magang_session');
-      detachFirestoreListeners();
-      goToPortalHub();
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+      const appEl = document.getElementById('app-screen');
+      const loginEl = document.getElementById('login-screen');
+      if (appEl) appEl.classList.add('hidden');
+      if (loginEl) loginEl.classList.remove('hidden');
+      const errEl = document.getElementById('login-error');
+      if (errEl) errEl.classList.add('hidden');
+      selectLoginRole('CI');
     }
 
     function applyUserSession() {
@@ -3192,21 +2938,11 @@
         if (loginEl) loginEl.classList.add('hidden');
         if (appEl) appEl.classList.remove('hidden');
 
-        // Update Header Info (Hanya tampilkan 1 nama individu akun yang login, bukan seluruh tim)
+        // Update Header Info
         const nameEl = document.getElementById('current-user-name');
         const avatarEl = document.getElementById('current-user-avatar');
-        let rawName = user.name || user.username || 'Pengguna';
-        // Jika nama akun mengandung ';' karena penggabungan excel, ambil hanya nama penilai akun ini
-        let uName = rawName;
-        if (uName.includes(';')) {
-          uName = uName.split(';')[0].trim();
-        } else if (uName.includes('\n')) {
-          uName = uName.split('\n')[0].trim();
-        }
-        if (nameEl) {
-          nameEl.innerText = uName;
-          nameEl.title = rawName; // Tooltip tetap menampilkan nama lengkap jika dibutuhkan
-        }
+        const uName = user.name || user.username || 'Pengguna';
+        if (nameEl) nameEl.innerText = uName;
         if (avatarEl) avatarEl.innerText = uName.charAt(0).toUpperCase();
 
         const badgeEl = document.getElementById('current-user-badge');
@@ -3825,17 +3561,13 @@
           }
         });
 
-        // Pecah CI jika dalam 1 sel terdapat beberapa nama dipisahkan titik koma (;) atau dan
-        const parsedCIs = parseLecturersField(s.ci);
-        parsedCIs.forEach(ciName => {
-          ciName = (ciName || '').trim();
-          if (ciName && ciName !== '-') {
-            const key = `${ciName.toLowerCase()}|${(s.hospital || '').toLowerCase()}`;
-            if (!ciMap.has(key)) {
-              ciMap.set(key, { name: ciName, hospital: s.hospital || 'Lahan Praktik' });
-            }
+        const ciName = (s.ci || '').trim();
+        if (ciName && ciName !== '-') {
+          const key = `${ciName.toLowerCase()}|${(s.hospital || '').toLowerCase()}`;
+          if (!ciMap.has(key)) {
+            ciMap.set(key, { name: ciName, hospital: s.hospital || 'Lahan Praktik' });
           }
-        });
+        }
       });
 
       const users = [
@@ -4618,129 +4350,6 @@
       }
     ];
 
-    const RESPONSI_STASIUN_GROUPS = [
-      {
-        stasiunId: 'stasiun_1',
-        stasiunName: 'STASIUN 1: PENERIMAAN PASIEN',
-        subtitle: 'Simulasi alur pelayanan pendaftaran & penerimaan pasien di fasyankes',
-        maxScore: 9,
-        domains: [
-          {
-            id: 's1_d1',
-            title: '1. Identifikasi dan pengumpulan data',
-            maxScore: 3,
-            steps: [
-              'Sambutlah & persilahkan pasien dengan Senyum, sapa, salam',
-              'Memperkenalkan diri kepada pasien/keluarga',
-              'Menanyakan kebutuhan pasien',
-              'Memastikan / konfirmasi pasien yang akan berobat',
-              'Menanyakan identitas pasien dan/atau meminjam kartu identitas pasien'
-            ],
-            criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (5) langkah dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3-4 dari 5 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 5 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
-            ]
-          },
-          {
-            id: 's1_d2',
-            title: '2. Seleksi data',
-            maxScore: 3,
-            steps: [
-              'Memastikan pasien belum pernah berobat dengan mengecek ke sistem',
-              'Meminta pasien mengisi formulir pasien baru dan menandatangani persetujuan awal',
-              'Mengkonfirmasi klinik tujuan pasien berobat',
-              'Mengkonfirmasi cara pembayaran pasien'
-            ],
-            criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (4) langkah dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
-            ]
-          },
-          {
-            id: 's1_d3',
-            title: '3. Perilaku Profesional',
-            maxScore: 3,
-            steps: [
-              'Berkomunikasi menggunakan bahasa mudah dipahami',
-              'Kejelasan intonasi/artikulasi',
-              'Mempertahankan kontak mata',
-              'Ketelitian',
-              'Kerapihan meja kerja'
-            ],
-            criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (5) item dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3-4 dari 5 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 5 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
-            ]
-          }
-        ]
-      },
-      {
-        stasiunId: 'stasiun_2',
-        stasiunName: 'STASIUN 2: KODIFIKASI KLINIS (Koding Morbiditas dan Tindakan)',
-        subtitle: 'Simulasi telaah dokumen rekam medis & kodifikasi klinis diagnosis dan tindakan medis',
-        maxScore: 9,
-        domains: [
-          {
-            id: 's2_d1',
-            title: '1. Identifikasi dan Seleksi data',
-            maxScore: 3,
-            steps: [
-              'Mengidentifikasi semua diagnosis pada rekam medis (lembar discharge summary/resume/ringkasan masuk dan keluar)',
-              'Mengidentifikasi semua tindakan medis (penunjang dan/atau operasi) pada rekam medis (lembar discharge summary/resume/ringkasan masuk dan keluar)',
-              'Memverifikasi keakuratan diagnosis dan/atau tindakan pada lembar-lembar rekam medis lain (laporan operasi, dsb)'
-            ],
-            criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (3) langkah dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 2 dari 3 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1 dari 3 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
-            ]
-          },
-          {
-            id: 's2_d2',
-            title: '2. Seleksi data (Prosedur Koding)',
-            maxScore: 3,
-            steps: [
-              'Melakukan reseleksi diagnosis utama berdasarkan aturan morbiditas (rule MB)',
-              'Menentukan lead term diagnosis utama dan/atau diagnosis sekunder',
-              'Menentukan lead term tindakan medis',
-              'Menentukan sistem klasifikasi yang sesuai (ICD-10/ICD 9 CM/ ICD O)'
-            ],
-            criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (4) langkah dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
-            ]
-          },
-          {
-            id: 's2_d3',
-            title: '3. Perilaku Profesional',
-            maxScore: 3,
-            steps: [
-              'Ketelitian / kecermatan',
-              'Kehati-hatian dalam menelaah rekam medis',
-              'Kerapihan meja kerja',
-              'Kejelasan informasi dan intonasi saat berkomunikasi dengan PS (DPJP/PPA lain)'
-            ],
-            criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (4) item dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
-            ]
-          }
-        ]
-      }
-    ];
-
-
     const LAPORAN_ITEMS = [
       { id: 'l1', group: 'I. Presentasi (Maks 25)', text: 'Sesuai alokasi waktu yang ditentukan' },
       { id: 'l2', group: 'I. Presentasi (Maks 25)', text: 'Ketepatan mengemukakan inti sari kasus magang' },
@@ -4950,43 +4559,15 @@
       if (typeof refreshActiveMissingCounts === 'function') refreshActiveMissingCounts();
     }
 
-    function getStoredData(session = currentMagangSession) {
-      const storageKey = getEvaluationStorageKey(session);
-      const raw = localStorage.getItem(storageKey);
-      let parsed = null;
+    function getStoredData() {
+      const raw = localStorage.getItem(EVALUATION_STORAGE_KEY);
       if (raw) {
-        try { parsed = JSON.parse(raw); } catch (e) {}
+        try { return JSON.parse(raw); } catch (e) {}
       }
-
-      const isStasiun = session === 'magang2' || session === 'magang3';
-
-      if (parsed) {
-        // Sanitize: Jika di Magang 2 atau 3 terdapat sisa responsi format lama r1..r21 (tanpa domain stasiun s1_d1), bersihkan responsi
-        if (isStasiun) {
-          let needsClean = false;
-          Object.keys(parsed).forEach(nim => {
-            const rec = parsed[nim];
-            if (rec && rec.responsi) {
-              if (rec.responsi.r1 !== undefined && rec.responsi.s1_d1 === undefined) {
-                rec.responsi = {};
-                if (rec.statusDosen === 'SUBMITTED' && (!rec.lapDosen || Object.keys(rec.lapDosen).length === 0)) {
-                  rec.statusDosen = 'PENDING';
-                }
-                needsClean = true;
-              }
-            }
-          });
-          if (needsClean) {
-            localStorage.setItem(storageKey, JSON.stringify(parsed));
-          }
-        }
-        return parsed;
-      }
-
-      const students = getStudents(session);
+      const students = getStudents();
       const init = {};
       students.forEach((s, idx) => {
-        const isExample = (session === 'magang1') && (idx === 0 || idx === 1);
+        const isExample = idx === 0 || idx === 1;
         init[s.nim] = {
           nim: s.nim,
           kehadiran: isExample ? 100 : 0,
@@ -4998,20 +4579,19 @@
           statusCI: isExample ? 'SUBMITTED' : 'PENDING',
           statusDosen: isExample ? 'SUBMITTED' : 'PENDING',
           signerCI: isExample ? 'Ns. Dewi Sartika, S.Tr.Kes' : '',
-          signerDosen: isExample ? (Array.isArray(s.lecturers) ? s.lecturers[0] : s.lecturers) : '',
+          signerDosen: isExample ? s.lecturers[0] : '',
         };
       });
-      localStorage.setItem(storageKey, JSON.stringify(init));
+      localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(init));
       return init;
     }
 
-    function saveStoredData(data, session = currentMagangSession) {
-      const storageKey = getEvaluationStorageKey(session);
-      localStorage.setItem(storageKey, JSON.stringify(data));
+    function saveStoredData(data) {
+      localStorage.setItem(EVALUATION_STORAGE_KEY, JSON.stringify(data));
       renderRekapTable();
     }
 
-    function calculateFinal(record, session = currentMagangSession) {
+    function calculateFinal(record) {
       const hScore = Math.min(100, Math.max(0, record.kehadiran || 0));
       const hWt = (hScore * 5) / 100;
 
@@ -5027,29 +4607,8 @@
       const lapCIScore = (lapCISum / 100) * 100;
       const lapCIWt = (lapCIScore * 15) / 100;
 
-      const isStasiun = session === 'magang2' || session === 'magang3';
-      let respSum = 0;
-      const respMax = isStasiun ? 18 : 105;
-
-      if (isStasiun) {
-        // Magang 2 & 3: Hanya hitung 6 butir domain stasiun OSCE (s1_d1 s/d s2_d3, maks 18)
-        const stasiunKeys = ['s1_d1', 's1_d2', 's1_d3', 's2_d1', 's2_d2', 's2_d3'];
-        stasiunKeys.forEach(k => {
-          if (record.responsi && record.responsi[k] !== undefined) {
-            respSum += (Number(record.responsi[k]) || 0);
-          }
-        });
-      } else {
-        // Magang 1: Hitung 21 butir prosedur panjang (r1 s/d r21, maks 105)
-        for (let i = 1; i <= 21; i++) {
-          const k = 'r' + i;
-          if (record.responsi && record.responsi[k] !== undefined) {
-            respSum += (Number(record.responsi[k]) || 0);
-          }
-        }
-      }
-
-      const respScore = respMax > 0 ? (respSum / respMax) * 100 : 0;
+      const respSum = Object.values(record.responsi || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+      const respScore = (respSum / 105) * 100;
       const respWt = (respScore * 25) / 100;
 
       const lapDosSum = Object.values(record.lapDosen || {}).reduce((a, b) => a + (Number(b) || 0), 0);
@@ -5076,7 +4635,6 @@
         ciSubtotal: hWt + kinWt + kompWt + lapCIWt,
         dosenSubtotal: respWt + lapDosWt,
         total,
-        finalScore: total,
         grade,
         isComplete: record.statusCI === 'SUBMITTED' && record.statusDosen === 'SUBMITTED'
       };
@@ -5181,111 +4739,34 @@
         `;
       });
 
-      // 4. Responsi Dosen (Dinamis: Stasiun OSCE untuk Magang 2 & 3, 21 Butir untuk Magang 1)
+      // 4. Responsi Dosen
       const respContainer = document.getElementById('dosen-responsi-container');
       respContainer.innerHTML = '';
-      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
-
-      if (isStasiun) {
-        // Model Stasiun OSCE (Stasiun 1: Penerimaan Pasien & Stasiun 2: Kodifikasi Klinis)
-        RESPONSI_STASIUN_GROUPS.forEach((st) => {
-          let domainsHtml = st.domains.map((d) => {
-            const stepsHtml = d.steps.map((stText, idx) => `
-              <li class="flex items-start gap-1.5 text-slate-700">
-                <span class="font-bold text-slate-400 shrink-0">${idx + 1}.</span>
-                <span>${stText}</span>
-              </li>
-            `).join('');
-
-            const criteriaHtml = d.criteria.map((c) => `
-              <div class="flex items-start gap-2 p-1.5 rounded bg-slate-50 border border-slate-200/80 text-[11px]">
-                <span class="w-4 h-4 rounded bg-indigo-100 text-indigo-800 font-bold flex items-center justify-center shrink-0 text-[10px] mt-0.5">${c.score}</span>
-                <span class="text-slate-600 leading-tight">${c.text}</span>
-              </div>
-            `).join('');
-
-            return `
-              <div id="row-resp-${d.id}" class="rubric-row p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs space-y-3 transition">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2">
-                  <div>
-                    <h5 class="font-bold text-xs text-indigo-950">${d.title}</h5>
-                    <span id="badge-resp-${d.id}"></span>
-                  </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <span class="text-[11px] font-bold text-slate-500">Skor (0 - 3):</span>
-                    <div class="flex items-center gap-1.5">
-                      ${[0, 1, 2, 3].map(val => `
-                        <label class="cursor-pointer select-none">
-                          <input type="radio" name="resp_${d.id}" value="${val}" onchange="onRubricScoreChange('resp', '${d.id}')" class="peer sr-only">
-                          <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded-lg border border-slate-300 bg-white text-xs font-black text-slate-700 hover:bg-slate-100 transition">${val}</span>
-                        </label>
-                      `).join('')}
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Panduan Langkah Mahasiswa & Kriteria Penskoran -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 pt-1">
-                  <div class="p-2.5 rounded-lg bg-slate-50/80 border border-slate-200/70">
-                    <p class="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">📋 Panduan Langkah Mahasiswa:</p>
-                    <ul class="space-y-1 text-xs">
-                      ${stepsHtml}
-                    </ul>
-                  </div>
-                  <div class="p-2.5 rounded-lg bg-indigo-50/40 border border-indigo-100">
-                    <p class="text-[10px] font-bold text-indigo-900 uppercase tracking-wider mb-1.5">⚖️ Kriteria Penskoran:</p>
-                    <div class="space-y-1">
-                      ${criteriaHtml}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `;
-          }).join('');
-
-          respContainer.innerHTML += `
-            <div class="bg-gradient-to-r from-indigo-50/60 to-slate-50 p-4 rounded-2xl border border-indigo-200/80 shadow-xs space-y-3">
-              <div class="flex items-center justify-between border-b border-indigo-100 pb-2.5">
-                <div>
-                  <h4 class="font-black text-xs sm:text-sm text-indigo-950 uppercase tracking-wide">${st.stasiunName}</h4>
-                  <p class="text-[11px] text-slate-500 font-medium">${st.subtitle}</p>
-                </div>
-                <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-md bg-indigo-600 text-white shadow-2xs shrink-0">
-                  Maks: ${st.maxScore} Poin
-                </span>
-              </div>
-              <div class="space-y-3">${domainsHtml}</div>
+      RESPONSI_GROUPS.forEach((g) => {
+        let itemsHtml = g.items.map((it, idx) => `
+          <div id="row-resp-${it.id}" class="rubric-row p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+            <span class="text-slate-800">
+              ${it.text}
+              <span id="badge-resp-${it.id}"></span>
+            </span>
+            <div class="flex items-center gap-1.5 shrink-0">
+              ${[1,2,3,4,5].map(val => `
+                <label class="cursor-pointer select-none">
+                  <input type="radio" name="resp_${it.id}" value="${val}" onchange="onRubricScoreChange('resp', '${it.id}')" class="peer sr-only">
+                  <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
+                </label>
+              `).join('')}
             </div>
-          `;
-        });
-      } else {
-        // Model 21 Prosedur Panjang (Khusus Magang 1 - Utuh)
-        RESPONSI_GROUPS.forEach((g) => {
-          let itemsHtml = g.items.map((it, idx) => `
-            <div id="row-resp-${it.id}" class="rubric-row p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
-              <span class="text-slate-800">
-                ${it.text}
-                <span id="badge-resp-${it.id}"></span>
-              </span>
-              <div class="flex items-center gap-1.5 shrink-0">
-                ${[1,2,3,4,5].map(val => `
-                  <label class="cursor-pointer select-none">
-                    <input type="radio" name="resp_${it.id}" value="${val}" onchange="onRubricScoreChange('resp', '${it.id}')" class="peer sr-only">
-                    <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-          `).join('');
+          </div>
+        `).join('');
 
-          respContainer.innerHTML += `
-            <div class="bg-indigo-50/40 p-3.5 rounded-lg border border-indigo-100">
-              <h4 class="font-bold text-xs text-indigo-900 uppercase tracking-wider mb-2.5">${g.name}</h4>
-              <div class="space-y-1.5">${itemsHtml}</div>
-            </div>
-          `;
-        });
-      }
+        respContainer.innerHTML += `
+          <div class="bg-indigo-50/40 p-3.5 rounded-lg border border-indigo-100">
+            <h4 class="font-bold text-xs text-indigo-900 uppercase tracking-wider mb-2.5">${g.name}</h4>
+            <div class="space-y-1.5">${itemsHtml}</div>
+          </div>
+        `;
+      });
 
       // 5. Laporan Dosen (Dibagi 3 Bagian: Romawi I, II, dan III)
       const lapDosContainer = document.getElementById('dosen-laporan-container');
@@ -5853,39 +5334,21 @@
       clearDosenValidationMarks();
       const missing = [];
 
-      // 1. Responsi (Stasiun OSCE untuk Magang 2 & 3, 21 Butir untuk Magang 1)
-      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
-      if (isStasiun) {
-        RESPONSI_STASIUN_GROUPS.forEach(st => {
-          st.domains.forEach(d => {
-            const checked = document.querySelector(`input[name="resp_${d.id}"]:checked`);
-            if (!checked) {
-              missing.push({
-                part: 'resp',
-                partName: '1. Ujian Responsi (Stasiun)',
-                rowId: `row-resp-${d.id}`,
-                badgeId: `badge-resp-${d.id}`,
-                label: `[${st.stasiunName}] ${d.title}`
-              });
-            }
-          });
+      // 1. Responsi (21 items)
+      RESPONSI_GROUPS.forEach(g => {
+        g.items.forEach(it => {
+          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+          if (!checked) {
+            missing.push({
+              part: 'resp',
+              partName: '1. Ujian Responsi',
+              rowId: `row-resp-${it.id}`,
+              badgeId: `badge-resp-${it.id}`,
+              label: `[${g.name}] ${it.text}`
+            });
+          }
         });
-      } else {
-        RESPONSI_GROUPS.forEach(g => {
-          g.items.forEach(it => {
-            const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
-            if (!checked) {
-              missing.push({
-                part: 'resp',
-                partName: '1. Ujian Responsi',
-                rowId: `row-resp-${it.id}`,
-                badgeId: `badge-resp-${it.id}`,
-                label: `[${g.name}] ${it.text}`
-              });
-            }
-          });
-        });
-      }
+      });
 
       // 2. Laporan Dosen (20 items)
       LAPORAN_ITEMS.forEach(it => {
@@ -6282,26 +5745,14 @@
         }
       }
 
-      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
-      if (isStasiun) {
-        RESPONSI_STASIUN_GROUPS.forEach(st => {
-          st.domains.forEach(d => {
-            const val = rec.responsi?.[d.id];
-            const rad = document.querySelector(`input[name="resp_${d.id}"][value="${val}"]`);
-            if (rad) rad.checked = true;
-            else document.querySelectorAll(`input[name="resp_${d.id}"]`).forEach(r => r.checked = false);
-          });
+      RESPONSI_GROUPS.forEach(g => {
+        g.items.forEach(it => {
+          const val = rec.responsi?.[it.id];
+          const rad = document.querySelector(`input[name="resp_${it.id}"][value="${val}"]`);
+          if (rad) rad.checked = true;
+          else document.querySelectorAll(`input[name="resp_${it.id}"]`).forEach(r => r.checked = false);
         });
-      } else {
-        RESPONSI_GROUPS.forEach(g => {
-          g.items.forEach(it => {
-            const val = rec.responsi?.[it.id];
-            const rad = document.querySelector(`input[name="resp_${it.id}"][value="${val}"]`);
-            if (rad) rad.checked = true;
-            else document.querySelectorAll(`input[name="resp_${it.id}"]`).forEach(r => r.checked = false);
-          });
-        });
-      }
+      });
 
       LAPORAN_ITEMS.forEach(it => {
         const val = rec.lapDosen?.[it.id];
@@ -6357,27 +5808,16 @@
     }
 
     function recalcDosen() {
-      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
-      const respMax = isStasiun ? 18 : 105;
       let respSum = 0;
-      if (isStasiun) {
-        RESPONSI_STASIUN_GROUPS.forEach(st => {
-          st.domains.forEach(d => {
-            const checked = document.querySelector(`input[name="resp_${d.id}"]:checked`);
-            if (checked) respSum += parseInt(checked.value);
-          });
+      RESPONSI_GROUPS.forEach(g => {
+        g.items.forEach(it => {
+          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+          if (checked) respSum += parseInt(checked.value);
         });
-      } else {
-        RESPONSI_GROUPS.forEach(g => {
-          g.items.forEach(it => {
-            const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
-            if (checked) respSum += parseInt(checked.value);
-          });
-        });
-      }
-      const respScore = respMax > 0 ? (respSum / respMax) * 100 : 0;
+      });
+      const respScore = (respSum / 105) * 100;
       const respWt = (respScore * 25) / 100;
-      document.getElementById('dosen-responsi-raw').innerText = `${respSum} / ${respMax} (${respScore.toFixed(1)})`;
+      document.getElementById('dosen-responsi-raw').innerText = `${respSum} / 105 (${respScore.toFixed(1)})`;
       document.getElementById('dosen-calc-responsi').innerText = respWt.toFixed(2) + ' / 25';
 
       let lapSum = 0;
@@ -6492,22 +5932,12 @@
       }
 
       rec.responsi = {};
-      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
-      if (isStasiun) {
-        RESPONSI_STASIUN_GROUPS.forEach(st => {
-          st.domains.forEach(d => {
-            const checked = document.querySelector(`input[name="resp_${d.id}"]:checked`);
-            if (checked) rec.responsi[d.id] = parseInt(checked.value);
-          });
+      RESPONSI_GROUPS.forEach(g => {
+        g.items.forEach(it => {
+          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+          if (checked) rec.responsi[it.id] = parseInt(checked.value);
         });
-      } else {
-        RESPONSI_GROUPS.forEach(g => {
-          g.items.forEach(it => {
-            const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
-            if (checked) rec.responsi[it.id] = parseInt(checked.value);
-          });
-        });
-      }
+      });
 
       rec.lapDosen = {};
       LAPORAN_ITEMS.forEach(it => {
@@ -6855,284 +6285,6 @@
   <div class="pdf-sheet">
     ${printContent.innerHTML}
   </div>
-
-  <!-- ============================================================== -->
-  <!-- MODAL: PEDOMAN & KRITERIA SKOR PENILAIAN (INFO POPUP) -->
-  <!-- ============================================================== -->
-  <div id="modal-rubrik-kriteria" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      
-      <!-- Modal Header -->
-      <div class="p-5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0">
-            ℹ️
-          </div>
-          <div>
-            <h3 class="text-base font-black tracking-tight" id="modal-rubrik-title">Pedoman & Kriteria Skor Penilaian</h3>
-            <p class="text-xs text-indigo-200/80 font-medium">Panduan deskriptif kriteria penskoran setiap komponen penilaian magang</p>
-          </div>
-        </div>
-        <button type="button" onclick="closeRubrikKriteriaModal()" class="text-white/70 hover:text-white p-2 rounded-xl hover:bg-white/10 transition text-lg leading-none cursor-pointer">
-          ✕
-        </button>
-      </div>
-
-      <!-- Navigation Tabs inside Modal -->
-      <div class="flex border-b border-slate-200 bg-slate-50 px-4 py-2 gap-2 overflow-x-auto shrink-0">
-        <button type="button" id="tab-modal-komp" onclick="switchModalRubrikTab('kompetensi')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-indigo-700 shadow-2xs border border-indigo-200">
-          Target Kompetensi (1-4)
-        </button>
-        <button type="button" id="tab-modal-kin" onclick="switchModalRubrikTab('kinerja')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
-          Kinerja & Sikap (1-4)
-        </button>
-        <button type="button" id="tab-modal-resp" onclick="switchModalRubrikTab('responsi')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
-          Ujian Responsi (1-5)
-        </button>
-        <button type="button" id="tab-modal-lap" onclick="switchModalRubrikTab('laporan')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
-          Ujian Laporan (0-100)
-        </button>
-      </div>
-
-      <!-- Modal Body (Scrollable) -->
-      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs text-slate-700 leading-relaxed">
-        
-        <!-- SECTION 1: TARGET KOMPETENSI (1-4) -->
-        <div id="content-modal-kompetensi" class="space-y-3">
-          <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 font-semibold">
-            📌 <strong>Evaluasi Target Capaian Kompetensi Klinis (Bobot 35%):</strong><br>
-            Dinilai oleh Pembimbing Lapangan (CI) berdasarkan 28 butir prosedur pengelolaan rekam medis di fasilitas pelayanan kesehatan.
-          </div>
-
-          <div class="grid grid-cols-1 gap-2.5">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center shrink-0">1</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 1: Belum Mampu / Kurang</h4>
-                <p class="text-slate-600 mt-0.5">Mahasiswa belum memahami prosedur, belum mampu melaksanakan prosedur secara mandiri, sering melakukan kesalahan teknis mendasar, dan belum menguasai SOP fasyankes.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center shrink-0">2</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 2: Cukup (Perlu Bimbingan Penuh)</h4>
-                <p class="text-slate-600 mt-0.5">Mahasiswa mampu melaksanakan prosedur dengan bimbingan dan arahan intensif dari Pembimbing Klinik (CI), terdapat beberapa kesalahan yang perlu diperbaiki.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center shrink-0">3</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 3: Baik (Bimbingan Minimal)</h4>
-                <p class="text-slate-600 mt-0.5">Mahasiswa mampu melaksanakan prosedur secara runtut, tepat, dan benar hanya dengan konfirmasi atau bimbingan minimal dari CI.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-emerald-200 bg-emerald-50/50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0">4</span>
-              <div>
-                <h4 class="font-bold text-emerald-950 text-xs">Skor 4: Sangat Baik / Mandiri & Teladan</h4>
-                <p class="text-emerald-900 mt-0.5">Mahasiswa melaksanakan prosedur secara mandiri, cekatan, akurat, teliti, tepat waktu, dan patuh penuh terhadap SOP rumah sakit serta regulasi kerahasiaan rekam medis.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 2: KINERJA & SIKAP (1-4) -->
-        <div id="content-modal-kinerja" class="space-y-3 hidden">
-          <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 text-blue-900 font-semibold">
-            📌 <strong>Evaluasi Kinerja & Sikap Profesional (Bobot 20%):</strong><br>
-            Dinilai oleh Pembimbing Lapangan (CI) mencakup etika profesi, kedisiplinan, komunikasi interprofesional, dan integritas rahasia pasien.
-          </div>
-
-          <div class="grid grid-cols-1 gap-2.5">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center shrink-0">1</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 1: Kurang</h4>
-                <p class="text-slate-600 mt-0.5">Pasif, kedisiplinan rendah/sering terlambat, kurang mematuhi etika profesi rekam medis, kesulitan bekerja sama dalam tim interprofesional.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center shrink-0">2</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 2: Cukup</h4>
-                <p class="text-slate-600 mt-0.5">Cukup disiplin namun masih memerlukan pengawasan dan dorongan rutin dari pembimbing, komunikasi kerja standar.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center shrink-0">3</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 3: Baik</h4>
-                <p class="text-slate-600 mt-0.5">Disiplin, berintegritas tinggi dalam menjaga kerahasiaan data medis pasien, aktif dan komunikatif dalam tim pelayanan kesehatan.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-blue-200 bg-blue-50/50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0">4</span>
-              <div>
-                <h4 class="font-bold text-indigo-950 text-xs">Skor 4: Sangat Baik / Unggul</h4>
-                <p class="text-indigo-900 mt-0.5">Menunjukkan kepemimpinan, inisiatif tinggi, problem solving mandiri, etika profesional sempurna, menjadi teladan di unit rekam medis.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 3: RESPONSI -->
-        <div id="content-modal-responsi" class="space-y-4 hidden">
-          <!-- Keterangan Magang 2 & 3: Stasiun OSCE -->
-          <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-200 text-indigo-950 font-semibold space-y-1">
-            <div class="flex items-center gap-1.5 font-bold text-xs text-indigo-900 uppercase">
-              <span>🏥 Khusus Magang 2 & Magang 3 (Model Stasiun Praktik / OSCE - Skala 0–3)</span>
-            </div>
-            <p class="text-[11px] text-indigo-900/90 font-normal">
-              Dinilai berdasarkan 2 Stasiun Ujian Praktik Lapangan (Total 6 Domain, Skor Maksimal 18):
-            </p>
-          </div>
-
-          <div class="space-y-3">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
-              <h5 class="font-bold text-xs text-slate-900">STASIUN 1: PENERIMAAN PASIEN (Maks: 9 Poin)</h5>
-              <div class="grid grid-cols-1 gap-1.5 text-[11px] text-slate-700">
-                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>1. Identifikasi & Pengumpulan Data:</strong> Skor 3 (5 langkah benar), Skor 2 (3-4 langkah), Skor 1 (1-2 langkah), Skor 0 (tidak melakukan).</div>
-                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>2. Seleksi Data:</strong> Skor 3 (4 langkah benar), Skor 2 (3 langkah), Skor 1 (1-2 langkah), Skor 0 (tidak melakukan).</div>
-                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>3. Perilaku Profesional:</strong> Skor 3 (5 item benar), Skor 2 (3-4 item), Skor 1 (1-2 item), Skor 0 (tidak melakukan).</div>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
-              <h5 class="font-bold text-xs text-slate-900">STASIUN 2: KODIFIKASI KLINIS (Maks: 9 Poin)</h5>
-              <div class="grid grid-cols-1 gap-1.5 text-[11px] text-slate-700">
-                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>1. Identifikasi & Seleksi Data:</strong> Skor 3 (3 langkah benar), Skor 2 (2 langkah), Skor 1 (1 langkah), Skor 0 (tidak melakukan).</div>
-                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>2. Seleksi Data (Rule MB & Koding):</strong> Skor 3 (4 langkah benar), Skor 2 (3 langkah), Skor 1 (1-2 langkah), Skor 0 (tidak melakukan).</div>
-                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>3. Perilaku Profesional:</strong> Skor 3 (4 item benar), Skor 2 (3 item), Skor 1 (1-2 item), Skor 0 (tidak melakukan).</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Keterangan Magang 1 -->
-          <div class="pt-2 border-t border-slate-200">
-            <div class="p-3 bg-slate-100 rounded-xl border border-slate-200 text-slate-800 text-xs">
-              <strong>📌 Khusus Magang 1 (Model 21 Prosedur Panjang - Skala 1–5):</strong>
-              <p class="text-[11px] text-slate-600 mt-1">
-                Dinilai pada 21 butir prosedur registrasi dan koding diagnosis/tindakan (Skor 1: Kurang, Skor 2: Cukup, Skor 3: Baik, Skor 4: Sangat Baik, Skor 5: Unggul). Maksimal 105 poin.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 4: LAPORAN (0-100) -->
-        <div id="content-modal-laporan" class="space-y-3 hidden">
-          <div class="p-3 bg-purple-50 rounded-xl border border-purple-200 text-purple-900 font-semibold">
-            📌 <strong>Ujian Laporan & Presentasi oleh Dosen (Bobot 20%):</strong><br>
-            Dinilai oleh Dosen DPL mencakup 3 aspek utama: Presentasi (25), Tanya Jawab (25), dan Isi Tulisan Laporan (50).
-          </div>
-
-          <div class="space-y-2">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
-              <h5 class="font-bold text-slate-900">I. Presentasi (Maksimal: 25 Poin)</h5>
-              <p class="text-slate-600">Teknik penyajian, ketepatan alokasi waktu, media slide presentasi yang efektif, dan etika berpenampilan.</p>
-            </div>
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
-              <h5 class="font-bold text-slate-900">II. Tanya Jawab (Maksimal: 25 Poin)</h5>
-              <p class="text-slate-600">Ketegasan menjawab, argumentasi ilmiah berbasis bukti, sikap, serta penguasaan materi dan prosedur lapangan.</p>
-            </div>
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
-              <h5 class="font-bold text-slate-900">III. Isi Tulisan Laporan (Maksimal: 50 Poin)</h5>
-              <p class="text-slate-600">Latar belakang masalah, rumusan masalah, kedalaman analisis fakta vs teori rekam medis, ketepatan rekomendasi solusi, serta kesimpulan.</p>
-            </div>
-          </div>
-
-          <div class="p-3 rounded-xl bg-slate-100 border border-slate-300">
-            <h5 class="font-bold text-slate-800 mb-1">Rentang Konversi Nilai Akhir:</h5>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-              <div class="p-2 rounded bg-emerald-100 text-emerald-900 font-bold">≥ 80.0 : Nilai A</div>
-              <div class="p-2 rounded bg-blue-100 text-blue-900 font-bold">70.0 - 79.9 : Nilai B</div>
-              <div class="p-2 rounded bg-amber-100 text-amber-900 font-bold">60.0 - 69.9 : Nilai C</div>
-              <div class="p-2 rounded bg-rose-100 text-rose-900 font-bold">&lt; 60.0 : Nilai D/E</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
-        <button type="button" onclick="closeRubrikKriteriaModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-900 text-white transition cursor-pointer">
-          Mengerti & Tutup
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ============================================================== -->
-  <!-- MODAL: TRANSKRIP PORTOFOLIO MAGANG (MAGANG 1, 2, 3) -->
-  <!-- ============================================================== -->
-  <div id="modal-transkrip-kumulatif" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[92vh] flex flex-col border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      
-      <!-- Modal Header -->
-      <div class="p-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 text-white flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0">
-            🎓
-          </div>
-          <div>
-            <h3 class="text-base font-black tracking-tight">Transkrip Kumulatif Portofolio Magang RMIK</h3>
-            <p class="text-xs text-indigo-200/80 font-medium">Rekapitulasi capaian nilai terpadu mahasiswa (Magang 1, Magang 2, dan Magang 3)</p>
-          </div>
-        </div>
-        <button type="button" onclick="closeTranskripKumulatifModal()" class="text-white/70 hover:text-white p-2 rounded-xl hover:bg-white/10 transition text-lg leading-none cursor-pointer">
-          ✕
-        </button>
-      </div>
-
-      <!-- Modal Action Bar -->
-      <div class="flex flex-col sm:flex-row items-center justify-between p-3.5 bg-slate-50 border-b border-slate-200 gap-2 shrink-0">
-        <input type="text" id="transkrip-search" placeholder="Cari nama atau NIM mahasiswa..." oninput="renderTranskripKumulatifTable()" class="text-xs px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white w-full sm:w-64 font-medium">
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="exportTranskripExcel()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1 shadow-2xs">
-            <span>📥 Ekspor Excel Transkrip</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Modal Table Container -->
-      <div class="p-4 overflow-y-auto flex-1">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-              <th class="p-2.5 text-center w-10">No</th>
-              <th class="p-2.5">Nama Mahasiswa</th>
-              <th class="p-2.5 font-mono">NIM</th>
-              <th class="p-2.5 text-center bg-emerald-50 text-emerald-900 border-x border-emerald-100">Magang 1</th>
-              <th class="p-2.5 text-center bg-blue-50 text-blue-900 border-r border-blue-100">Magang 2</th>
-              <th class="p-2.5 text-center bg-purple-50 text-purple-900 border-r border-purple-100">Magang 3</th>
-              <th class="p-2.5 text-center bg-indigo-50 text-indigo-950 font-black">Rerata Kumulatif</th>
-              <th class="p-2.5 text-center">Mutu</th>
-              <th class="p-2.5 text-center">Status</th>
-            </tr>
-          </thead>
-          <tbody id="transkrip-tbody" class="divide-y divide-slate-100">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
-        <button type="button" onclick="closeTranskripKumulatifModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-900 text-white transition cursor-pointer">
-          Tutup
-        </button>
-      </div>
-
-    </div>
-  </div>
-
 </body>
 </html>`;
 
@@ -7870,349 +7022,7 @@
       });
     }
 
-    
-    // =============================================================
-    // SIPINTER UNIFIED PORTAL MAGANG (MAGANG 1, 2, 3) ENGINE
-    // =============================================================
-
-
-    function getMagangLabel(session = currentMagangSession) {
-      if (session === 'magang2') return 'Magang 2';
-      if (session === 'magang3') return 'Magang 3';
-      return 'Magang 1';
-    }
-
-    function openMagangSession(sessionKey) {
-      currentMagangSession = sessionKey;
-      sessionStorage.setItem('sipinter_active_magang_session', sessionKey);
-
-      // Sembunyikan Portal Hub
-      const hub = document.getElementById('portal-hub-screen');
-      if (hub) hub.classList.add('hidden');
-
-      // Pasang listener Cloud Firestore khusus untuk sesi ini
-      setupFirestoreSessionListeners(sessionKey);
-
-      // Update UI Header & Badge Sesi
-      updateSessionUI();
-      buildForms();
-
-      // Cek apakah user sudah login di SESI INI
-      const user = getCurrentSession(sessionKey);
-      if (user) {
-        const loginScreen = document.getElementById('login-screen');
-        if (loginScreen) loginScreen.classList.add('hidden');
-        const appScreen = document.getElementById('app-screen');
-        if (appScreen) appScreen.classList.remove('hidden');
-        applyUserSession();
-        syncAllComponents();
-      } else {
-        const loginScreen = document.getElementById('login-screen');
-        if (loginScreen) loginScreen.classList.remove('hidden');
-        const appScreen = document.getElementById('app-screen');
-        if (appScreen) appScreen.classList.add('hidden');
-        selectLoginRole('CI');
-      }
-    }
-
-    function switchMagangSession(sessionKey) {
-      currentMagangSession = sessionKey;
-      sessionStorage.setItem('sipinter_active_magang_session', sessionKey);
-      updateSessionUI();
-      buildForms();
-      syncAllComponents();
-      renderUsersTable();
-      if (typeof currentNIM !== 'undefined' && currentNIM) {
-        if (typeof populateStudentDataCI === 'function') populateStudentDataCI(currentNIM);
-        if (typeof populateStudentDataDosen === 'function') populateStudentDataDosen(currentNIM);
-      }
-    }
-
-    function goToPortalHub() {
-      sessionStorage.removeItem('sipinter_active_magang_session');
-      const hub = document.getElementById('portal-hub-screen');
-      if (hub) hub.classList.remove('hidden');
-      const loginScreen = document.getElementById('login-screen');
-      if (loginScreen) loginScreen.classList.add('hidden');
-      const appScreen = document.getElementById('app-screen');
-      if (appScreen) appScreen.classList.add('hidden');
-    }
-
-    function updateSessionUI() {
-      const label = getMagangLabel();
-
-      // 1. Update Login Session Label
-      const loginLabel = document.getElementById('login-session-label');
-      const loginDot = document.getElementById('login-session-dot');
-      if (loginLabel) loginLabel.innerText = label;
-      if (loginDot) {
-        if (currentMagangSession === 'magang1') loginDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
-        else if (currentMagangSession === 'magang2') loginDot.className = 'w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse';
-        else loginDot.className = 'w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse';
-      }
-
-      // 2. Update Header Static Badge (Kompak dan Sederhana)
-      const headerBadge = document.getElementById('header-session-badge');
-      if (headerBadge) {
-        headerBadge.innerText = label;
-        if (currentMagangSession === 'magang1') {
-          headerBadge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs';
-        } else if (currentMagangSession === 'magang2') {
-          headerBadge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-blue-100 text-blue-800 border border-blue-200 shadow-2xs';
-        } else {
-          headerBadge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-purple-100 text-purple-800 border border-purple-200 shadow-2xs';
-        }
-      }
-
-      // 3. Update Titles in Master & Rekap
-      const masterTitle = document.getElementById('master-session-title');
-      if (masterTitle) masterTitle.innerText = label;
-      const rekapTitle = document.getElementById('rekap-session-title');
-      if (rekapTitle) rekapTitle.innerText = label;
-
-      // 4. Update Responsi Labels based on Session
-      const sideRespSubtext = document.getElementById('dosen-side-resp-subtext');
-      const respSubtext = document.getElementById('dosen-responsi-subtext');
-      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
-
-      if (isStasiun) {
-        if (sideRespSubtext) sideRespSubtext.innerText = 'Bobot 25% • 6 Butir Soal (Max 18)';
-        if (respSubtext) {
-          respSubtext.innerText = '';
-          respSubtext.classList.add('hidden');
-        }
-      } else {
-        if (sideRespSubtext) sideRespSubtext.innerText = 'Bobot 25% • 21 Butir Soal';
-        if (respSubtext) {
-          respSubtext.innerText = 'Bagian A: Pendaftaran Pasien Baru RJ (12 butir) + Bagian B: Koding Diagnosis & Tindakan (9 butir). Skala 1 s/d 5. Max Skor = 105.';
-          respSubtext.classList.remove('hidden');
-        }
-      }
-    }
-
-    // Modal Rubrik Kriteria
-    function openRubrikKriteriaModal(activeTab = 'kompetensi') {
-      const modal = document.getElementById('modal-rubrik-kriteria');
-      if (!modal) return;
-      modal.classList.remove('hidden');
-      switchModalRubrikTab(activeTab);
-    }
-
-    function closeRubrikKriteriaModal() {
-      const modal = document.getElementById('modal-rubrik-kriteria');
-      if (modal) modal.classList.add('hidden');
-    }
-
-    function switchModalRubrikTab(tabKey) {
-      const tabs = ['kompetensi', 'kinerja', 'responsi', 'laporan'];
-      tabs.forEach(t => {
-        const btn = document.getElementById(`tab-modal-${t === 'kompetensi' ? 'komp' : t === 'kinerja' ? 'kin' : t === 'responsi' ? 'resp' : 'lap'}`);
-        const content = document.getElementById(`content-modal-${t}`);
-        if (btn && content) {
-          if (t === tabKey) {
-            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-indigo-700 shadow-2xs border border-indigo-200';
-            content.classList.remove('hidden');
-          } else {
-            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900';
-            content.classList.add('hidden');
-          }
-        }
-      });
-    }
-
-    // Modal Transkrip Kumulatif
-    function openTranskripKumulatifModal() {
-      const modal = document.getElementById('modal-transkrip-kumulatif');
-      if (!modal) return;
-      modal.classList.remove('hidden');
-      renderTranskripKumulatifTable();
-    }
-
-    function closeTranskripKumulatifModal() {
-      const modal = document.getElementById('modal-transkrip-kumulatif');
-      if (modal) modal.classList.add('hidden');
-    }
-
-    function renderTranskripKumulatifTable() {
-      const tbody = document.getElementById('transkrip-tbody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      const searchInput = document.getElementById('transkrip-search');
-      const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
-
-      const stds = getStudents('magang1'); // Menggunakan daftar mahasiswa utama (Angkatan 2024)
-      const evals1 = getStoredData('magang1');
-      const evals2 = getStoredData('magang2');
-      const evals3 = getStoredData('magang3');
-
-      let list = stds;
-      if (q) {
-        list = list.filter(s => (s.name || '').toLowerCase().includes(q) || (s.nim || '').toLowerCase().includes(q));
-      }
-
-      list.forEach((s, idx) => {
-        const r1 = calculateFinal(evals1[s.nim] || {}, 'magang1');
-        const r2 = calculateFinal(evals2[s.nim] || {}, 'magang2');
-        const r3 = calculateFinal(evals3[s.nim] || {}, 'magang3');
-
-        const validScores = [];
-        if (r1.finalScore > 0) validScores.push(r1.finalScore);
-        if (r2.finalScore > 0) validScores.push(r2.finalScore);
-        if (r3.finalScore > 0) validScores.push(r3.finalScore);
-
-        const avgScore = validScores.length ? (validScores.reduce((a, b) => a + b, 0) / validScores.length) : 0;
-        let avgGrade = '-';
-        if (avgScore >= 80) avgGrade = 'A';
-        else if (avgScore >= 70) avgGrade = 'B';
-        else if (avgScore >= 60) avgGrade = 'C';
-        else if (avgScore > 0) avgGrade = 'D';
-
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
-        tr.innerHTML = `
-          <td class="p-2.5 text-center text-slate-400 font-medium">${idx + 1}</td>
-          <td class="p-2.5 font-bold text-slate-900">${s.name}</td>
-          <td class="p-2.5 font-mono text-slate-600 font-semibold">${s.nim}</td>
-          <td class="p-2.5 text-center bg-emerald-50/40 border-x border-emerald-100 font-bold ${r1.finalScore > 0 ? 'text-emerald-800' : 'text-slate-400'}">
-            ${r1.finalScore > 0 ? `${r1.finalScore.toFixed(1)} (${r1.grade})` : '-'}
-          </td>
-          <td class="p-2.5 text-center bg-blue-50/40 border-r border-blue-100 font-bold ${r2.finalScore > 0 ? 'text-blue-800' : 'text-slate-400'}">
-            ${r2.finalScore > 0 ? `${r2.finalScore.toFixed(1)} (${r2.grade})` : '-'}
-          </td>
-          <td class="p-2.5 text-center bg-purple-50/40 border-r border-purple-100 font-bold ${r3.finalScore > 0 ? 'text-purple-800' : 'text-slate-400'}">
-            ${r3.finalScore > 0 ? `${r3.finalScore.toFixed(1)} (${r3.grade})` : '-'}
-          </td>
-          <td class="p-2.5 text-center bg-indigo-50/80 font-black text-indigo-950 text-sm">
-            ${avgScore > 0 ? avgScore.toFixed(2) : '-'}
-          </td>
-          <td class="p-2.5 text-center font-bold">
-            ${avgGrade !== '-' ? `<span class="px-2 py-0.5 rounded text-xs ${avgGrade === 'A' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800'}">${avgGrade}</span>` : '-'}
-          </td>
-          <td class="p-2.5 text-center">
-            ${validScores.length === 3 ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Tuntas 3 Magang</span>' :
-              validScores.length > 0 ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">${validScores.length} / 3 Selesai</span>` :
-              '<span class="text-slate-400 text-[10px]">Belum Dinilai</span>'}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function exportTranskripExcel() {
-      if (typeof XLSX === 'undefined') {
-        alert('Library SheetJS belum selesai dimuat.');
-        return;
-      }
-      const stds = getStudents('magang1');
-      const evals1 = getStoredData('magang1');
-      const evals2 = getStoredData('magang2');
-      const evals3 = getStoredData('magang3');
-
-      const rows = [
-        ['TRANSKRIP KUMULATIF PORTOFOLIO EVALUASI MAGANG RMIK'],
-        ['POLTEKKES KEMENKES TASIKMALAYA - JURUSAN RMIK'],
-        [''],
-        ['No', 'Nama Mahasiswa', 'NIM', 'Nilai Magang 1', 'Grade M1', 'Nilai Magang 2', 'Grade M2', 'Nilai Magang 3', 'Grade M3', 'Rata-rata Kumulatif', 'Grade Akhir', 'Status']
-      ];
-
-      stds.forEach((s, idx) => {
-        const r1 = calculateFinal(evals1[s.nim] || {}, 'magang1');
-        const r2 = calculateFinal(evals2[s.nim] || {}, 'magang2');
-        const r3 = calculateFinal(evals3[s.nim] || {}, 'magang3');
-
-        const validScores = [];
-        if (r1.finalScore > 0) validScores.push(r1.finalScore);
-        if (r2.finalScore > 0) validScores.push(r2.finalScore);
-        if (r3.finalScore > 0) validScores.push(r3.finalScore);
-
-        const avgScore = validScores.length ? (validScores.reduce((a, b) => a + b, 0) / validScores.length) : 0;
-        let avgGrade = '-';
-        if (avgScore >= 80) avgGrade = 'A';
-        else if (avgScore >= 70) avgGrade = 'B';
-        else if (avgScore >= 60) avgGrade = 'C';
-        else if (avgScore > 0) avgGrade = 'D';
-
-        rows.push([
-          idx + 1,
-          s.name,
-          s.nim,
-          r1.finalScore > 0 ? r1.finalScore.toFixed(2) : '-',
-          r1.grade || '-',
-          r2.finalScore > 0 ? r2.finalScore.toFixed(2) : '-',
-          r2.grade || '-',
-          r3.finalScore > 0 ? r3.finalScore.toFixed(2) : '-',
-          r3.grade || '-',
-          avgScore > 0 ? avgScore.toFixed(2) : '-',
-          avgGrade,
-          validScores.length === 3 ? 'Tuntas Penuh' : `${validScores.length}/3 Magang`
-        ]);
-      });
-
-      const ws = XLSX.utils.aoa_to_sheet(rows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Transkrip Magang RMIK');
-      XLSX.writeFile(wb, 'Transkrip_Kumulatif_Portofolio_Magang_RMIK.xlsx');
-    }
-
-    function restoreAndSanitizeMagangData() {
-      try {
-        // 1. Pastikan Magang 1 utuh dengan 72 mahasiswa resmi
-        const m1Raw = localStorage.getItem('standalone_sep_students_2026');
-        let m1Students = null;
-        if (m1Raw) {
-          try { m1Students = JSON.parse(m1Raw); } catch (e) {}
-        }
-        if (!m1Students || !Array.isArray(m1Students) || m1Students.length === 0) {
-          localStorage.setItem('standalone_sep_students_2026', JSON.stringify(STUDENTS_DEFAULT));
-        }
-
-        // 2. Bersihkan evaluasi Magang 1 jika sempat kemasukan key OSCE s1_d1
-        const evalM1Raw = localStorage.getItem('standalone_sep_magang_2026');
-        if (evalM1Raw) {
-          try {
-            const evals = JSON.parse(evalM1Raw);
-            let cleaned = false;
-            Object.keys(evals).forEach(nim => {
-              const r = evals[nim];
-              if (r && r.responsi) {
-                ['s1_d1', 's1_d2', 's1_d3', 's2_d1', 's2_d2', 's2_d3'].forEach(sk => {
-                  if (r.responsi[sk] !== undefined) {
-                    delete r.responsi[sk];
-                    cleaned = true;
-                  }
-                });
-              }
-            });
-            if (cleaned) {
-              localStorage.setItem('standalone_sep_magang_2026', JSON.stringify(evals));
-            }
-          } catch (e) {}
-        }
-
-        // 3. Pastikan Magang 2 bersih dan tidak menjiplak Magang 1 jika belum diupload
-        const hasCustomM2 = localStorage.getItem('sipinter_custom_students_magang2');
-        if (!hasCustomM2) {
-          localStorage.setItem('standalone_sep_students_magang2', JSON.stringify([]));
-          localStorage.setItem('standalone_sep_hospitals_magang2', JSON.stringify([]));
-          localStorage.setItem('standalone_sep_users_magang2', JSON.stringify([JSON.parse(JSON.stringify(ADMIN_USER))]));
-          localStorage.setItem('standalone_sep_magang2_2026', JSON.stringify({}));
-        }
-
-        const hasCustomM3 = localStorage.getItem('sipinter_custom_students_magang3');
-        if (!hasCustomM3) {
-          localStorage.setItem('standalone_sep_students_magang3', JSON.stringify([]));
-          localStorage.setItem('standalone_sep_hospitals_magang3', JSON.stringify([]));
-          localStorage.setItem('standalone_sep_users_magang3', JSON.stringify([JSON.parse(JSON.stringify(ADMIN_USER))]));
-          localStorage.setItem('standalone_sep_magang3_2026', JSON.stringify({}));
-        }
-      } catch (err) {
-        console.warn('Sanitasi data error:', err);
-      }
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
-      restoreAndSanitizeMagangData();
       try {
         ciSigPad = new CanvasSignaturePad('ci-sig-canvas', 'ci-sig-placeholder', 'ci-sig-status');
         ciSigPad.onSigned = () => {
@@ -8244,25 +7054,8 @@
         buildForms();
         getStudents();
         getUsers();
-        
-        // Cek apakah ada sesi aktif di sessionStorage atau query param
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlSesi = urlParams.get('sesi');
-        const savedSesi = sessionStorage.getItem('sipinter_active_magang_session');
-        const activeSesi = urlSesi || savedSesi;
-
-        if (activeSesi && ['magang1', 'magang2', 'magang3'].includes(activeSesi)) {
-          openMagangSession(activeSesi);
-        } else {
-          // Tampilkan Gerbang Utama (Landing Portal Hub)
-          const hub = document.getElementById('portal-hub-screen');
-          if (hub) hub.classList.remove('hidden');
-          const loginScreen = document.getElementById('login-screen');
-          if (loginScreen) loginScreen.classList.add('hidden');
-          const appScreen = document.getElementById('app-screen');
-          if (appScreen) appScreen.classList.add('hidden');
-        }
-
+        selectLoginRole('CI');
+        applyUserSession();
         switchCIPart('hadir');
         switchDosenPart('resp');
         initFirebaseSync();
