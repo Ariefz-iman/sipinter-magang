@@ -4520,6 +4520,129 @@
       }
     ];
 
+    const RESPONSI_STASIUN_GROUPS = [
+      {
+        stasiunId: 'stasiun_1',
+        stasiunName: 'STASIUN 1: PENERIMAAN PASIEN',
+        subtitle: 'Simulasi alur pelayanan pendaftaran & penerimaan pasien di fasyankes',
+        maxScore: 9,
+        domains: [
+          {
+            id: 's1_d1',
+            title: '1. Identifikasi dan pengumpulan data',
+            maxScore: 3,
+            steps: [
+              'Sambutlah & persilahkan pasien dengan Senyum, sapa, salam',
+              'Memperkenalkan diri kepada pasien/keluarga',
+              'Menanyakan kebutuhan pasien',
+              'Memastikan / konfirmasi pasien yang akan berobat',
+              'Menanyakan identitas pasien dan/atau meminjam kartu identitas pasien'
+            ],
+            criteria: [
+              { score: 3, text: 'Jika mahasiswa melakukan semua (5) langkah dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 3-4 dari 5 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 5 item dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+            ]
+          },
+          {
+            id: 's1_d2',
+            title: '2. Seleksi data',
+            maxScore: 3,
+            steps: [
+              'Memastikan pasien belum pernah berobat dengan mengecek ke sistem',
+              'Meminta pasien mengisi formulir pasien baru dan menandatangani persetujuan awal',
+              'Mengkonfirmasi klinik tujuan pasien berobat',
+              'Mengkonfirmasi cara pembayaran pasien'
+            ],
+            criteria: [
+              { score: 3, text: 'Jika mahasiswa melakukan semua (4) langkah dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+            ]
+          },
+          {
+            id: 's1_d3',
+            title: '3. Perilaku Profesional',
+            maxScore: 3,
+            steps: [
+              'Berkomunikasi menggunakan bahasa mudah dipahami',
+              'Kejelasan intonasi/artikulasi',
+              'Mempertahankan kontak mata',
+              'Ketelitian',
+              'Kerapihan meja kerja'
+            ],
+            criteria: [
+              { score: 3, text: 'Jika mahasiswa melakukan semua (5) item dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 3-4 dari 5 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 5 item dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+            ]
+          }
+        ]
+      },
+      {
+        stasiunId: 'stasiun_2',
+        stasiunName: 'STASIUN 2: KODIFIKASI KLINIS (Koding Morbiditas dan Tindakan)',
+        subtitle: 'Simulasi telaah dokumen rekam medis & kodifikasi klinis diagnosis dan tindakan medis',
+        maxScore: 9,
+        domains: [
+          {
+            id: 's2_d1',
+            title: '1. Identifikasi dan Seleksi data',
+            maxScore: 3,
+            steps: [
+              'Mengidentifikasi semua diagnosis pada rekam medis (lembar discharge summary/resume/ringkasan masuk dan keluar)',
+              'Mengidentifikasi semua tindakan medis (penunjang dan/atau operasi) pada rekam medis (lembar discharge summary/resume/ringkasan masuk dan keluar)',
+              'Memverifikasi keakuratan diagnosis dan/atau tindakan pada lembar-lembar rekam medis lain (laporan operasi, dsb)'
+            ],
+            criteria: [
+              { score: 3, text: 'Jika mahasiswa melakukan semua (3) langkah dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 2 dari 3 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1 dari 3 item dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+            ]
+          },
+          {
+            id: 's2_d2',
+            title: '2. Seleksi data (Prosedur Koding)',
+            maxScore: 3,
+            steps: [
+              'Melakukan reseleksi diagnosis utama berdasarkan aturan morbiditas (rule MB)',
+              'Menentukan lead term diagnosis utama dan/atau diagnosis sekunder',
+              'Menentukan lead term tindakan medis',
+              'Menentukan sistem klasifikasi yang sesuai (ICD-10/ICD 9 CM/ ICD O)'
+            ],
+            criteria: [
+              { score: 3, text: 'Jika mahasiswa melakukan semua (4) langkah dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+            ]
+          },
+          {
+            id: 's2_d3',
+            title: '3. Perilaku Profesional',
+            maxScore: 3,
+            steps: [
+              'Ketelitian / kecermatan',
+              'Kehati-hatian dalam menelaah rekam medis',
+              'Kerapihan meja kerja',
+              'Kejelasan informasi dan intonasi saat berkomunikasi dengan PS (DPJP/PPA lain)'
+            ],
+            criteria: [
+              { score: 3, text: 'Jika mahasiswa melakukan semua (4) item dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+            ]
+          }
+        ]
+      }
+    ];
+
+
     const LAPORAN_ITEMS = [
       { id: 'l1', group: 'I. Presentasi (Maks 25)', text: 'Sesuai alokasi waktu yang ditentukan' },
       { id: 'l2', group: 'I. Presentasi (Maks 25)', text: 'Ketepatan mengemukakan inti sari kasus magang' },
@@ -4761,7 +4884,7 @@
       renderRekapTable();
     }
 
-    function calculateFinal(record) {
+    function calculateFinal(record, session = currentMagangSession) {
       const hScore = Math.min(100, Math.max(0, record.kehadiran || 0));
       const hWt = (hScore * 5) / 100;
 
@@ -4778,7 +4901,9 @@
       const lapCIWt = (lapCIScore * 15) / 100;
 
       const respSum = Object.values(record.responsi || {}).reduce((a, b) => a + (Number(b) || 0), 0);
-      const respScore = (respSum / 105) * 100;
+      const isStasiun = session === 'magang2' || session === 'magang3';
+      const respMax = isStasiun ? 18 : 105;
+      const respScore = respMax > 0 ? (respSum / respMax) * 100 : 0;
       const respWt = (respScore * 25) / 100;
 
       const lapDosSum = Object.values(record.lapDosen || {}).reduce((a, b) => a + (Number(b) || 0), 0);
@@ -4805,6 +4930,7 @@
         ciSubtotal: hWt + kinWt + kompWt + lapCIWt,
         dosenSubtotal: respWt + lapDosWt,
         total,
+        finalScore: total,
         grade,
         isComplete: record.statusCI === 'SUBMITTED' && record.statusDosen === 'SUBMITTED'
       };
@@ -4909,34 +5035,111 @@
         `;
       });
 
-      // 4. Responsi Dosen
+      // 4. Responsi Dosen (Dinamis: Stasiun OSCE untuk Magang 2 & 3, 21 Butir untuk Magang 1)
       const respContainer = document.getElementById('dosen-responsi-container');
       respContainer.innerHTML = '';
-      RESPONSI_GROUPS.forEach((g) => {
-        let itemsHtml = g.items.map((it, idx) => `
-          <div id="row-resp-${it.id}" class="rubric-row p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
-            <span class="text-slate-800">
-              ${it.text}
-              <span id="badge-resp-${it.id}"></span>
-            </span>
-            <div class="flex items-center gap-1.5 shrink-0">
-              ${[1,2,3,4,5].map(val => `
-                <label class="cursor-pointer select-none">
-                  <input type="radio" name="resp_${it.id}" value="${val}" onchange="onRubricScoreChange('resp', '${it.id}')" class="peer sr-only">
-                  <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
-                </label>
-              `).join('')}
-            </div>
-          </div>
-        `).join('');
+      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
 
-        respContainer.innerHTML += `
-          <div class="bg-indigo-50/40 p-3.5 rounded-lg border border-indigo-100">
-            <h4 class="font-bold text-xs text-indigo-900 uppercase tracking-wider mb-2.5">${g.name}</h4>
-            <div class="space-y-1.5">${itemsHtml}</div>
-          </div>
-        `;
-      });
+      if (isStasiun) {
+        // Model Stasiun OSCE (Stasiun 1: Penerimaan Pasien & Stasiun 2: Kodifikasi Klinis)
+        RESPONSI_STASIUN_GROUPS.forEach((st) => {
+          let domainsHtml = st.domains.map((d) => {
+            const stepsHtml = d.steps.map((stText, idx) => `
+              <li class="flex items-start gap-1.5 text-slate-700">
+                <span class="font-bold text-slate-400 shrink-0">${idx + 1}.</span>
+                <span>${stText}</span>
+              </li>
+            `).join('');
+
+            const criteriaHtml = d.criteria.map((c) => `
+              <div class="flex items-start gap-2 p-1.5 rounded bg-slate-50 border border-slate-200/80 text-[11px]">
+                <span class="w-4 h-4 rounded bg-indigo-100 text-indigo-800 font-bold flex items-center justify-center shrink-0 text-[10px] mt-0.5">${c.score}</span>
+                <span class="text-slate-600 leading-tight">${c.text}</span>
+              </div>
+            `).join('');
+
+            return `
+              <div id="row-resp-${d.id}" class="rubric-row p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs space-y-3 transition">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                  <div>
+                    <h5 class="font-bold text-xs text-indigo-950">${d.title}</h5>
+                    <span id="badge-resp-${d.id}"></span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500">Skor (0 - 3):</span>
+                    <div class="flex items-center gap-1.5">
+                      ${[0, 1, 2, 3].map(val => `
+                        <label class="cursor-pointer select-none">
+                          <input type="radio" name="resp_${d.id}" value="${val}" onchange="onRubricScoreChange('resp', '${d.id}')" class="peer sr-only">
+                          <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded-lg border border-slate-300 bg-white text-xs font-black text-slate-700 hover:bg-slate-100 transition">${val}</span>
+                        </label>
+                      `).join('')}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panduan Langkah Mahasiswa & Kriteria Penskoran -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 pt-1">
+                  <div class="p-2.5 rounded-lg bg-slate-50/80 border border-slate-200/70">
+                    <p class="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">📋 Panduan Langkah Mahasiswa:</p>
+                    <ul class="space-y-1 text-xs">
+                      ${stepsHtml}
+                    </ul>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-indigo-50/40 border border-indigo-100">
+                    <p class="text-[10px] font-bold text-indigo-900 uppercase tracking-wider mb-1.5">⚖️ Kriteria Penskoran:</p>
+                    <div class="space-y-1">
+                      ${criteriaHtml}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          respContainer.innerHTML += `
+            <div class="bg-gradient-to-r from-indigo-50/60 to-slate-50 p-4 rounded-2xl border border-indigo-200/80 shadow-xs space-y-3">
+              <div class="flex items-center justify-between border-b border-indigo-100 pb-2.5">
+                <div>
+                  <h4 class="font-black text-xs sm:text-sm text-indigo-950 uppercase tracking-wide">${st.stasiunName}</h4>
+                  <p class="text-[11px] text-slate-500 font-medium">${st.subtitle}</p>
+                </div>
+                <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-md bg-indigo-600 text-white shadow-2xs shrink-0">
+                  Maks: ${st.maxScore} Poin
+                </span>
+              </div>
+              <div class="space-y-3">${domainsHtml}</div>
+            </div>
+          `;
+        });
+      } else {
+        // Model 21 Prosedur Panjang (Khusus Magang 1 - Utuh)
+        RESPONSI_GROUPS.forEach((g) => {
+          let itemsHtml = g.items.map((it, idx) => `
+            <div id="row-resp-${it.id}" class="rubric-row p-2.5 rounded border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+              <span class="text-slate-800">
+                ${it.text}
+                <span id="badge-resp-${it.id}"></span>
+              </span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                ${[1,2,3,4,5].map(val => `
+                  <label class="cursor-pointer select-none">
+                    <input type="radio" name="resp_${it.id}" value="${val}" onchange="onRubricScoreChange('resp', '${it.id}')" class="peer sr-only">
+                    <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 transition">${val}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `).join('');
+
+          respContainer.innerHTML += `
+            <div class="bg-indigo-50/40 p-3.5 rounded-lg border border-indigo-100">
+              <h4 class="font-bold text-xs text-indigo-900 uppercase tracking-wider mb-2.5">${g.name}</h4>
+              <div class="space-y-1.5">${itemsHtml}</div>
+            </div>
+          `;
+        });
+      }
 
       // 5. Laporan Dosen (Dibagi 3 Bagian: Romawi I, II, dan III)
       const lapDosContainer = document.getElementById('dosen-laporan-container');
@@ -5504,21 +5707,39 @@
       clearDosenValidationMarks();
       const missing = [];
 
-      // 1. Responsi (21 items)
-      RESPONSI_GROUPS.forEach(g => {
-        g.items.forEach(it => {
-          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
-          if (!checked) {
-            missing.push({
-              part: 'resp',
-              partName: '1. Ujian Responsi',
-              rowId: `row-resp-${it.id}`,
-              badgeId: `badge-resp-${it.id}`,
-              label: `[${g.name}] ${it.text}`
-            });
-          }
+      // 1. Responsi (Stasiun OSCE untuk Magang 2 & 3, 21 Butir untuk Magang 1)
+      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
+      if (isStasiun) {
+        RESPONSI_STASIUN_GROUPS.forEach(st => {
+          st.domains.forEach(d => {
+            const checked = document.querySelector(`input[name="resp_${d.id}"]:checked`);
+            if (!checked) {
+              missing.push({
+                part: 'resp',
+                partName: '1. Ujian Responsi (Stasiun)',
+                rowId: `row-resp-${d.id}`,
+                badgeId: `badge-resp-${d.id}`,
+                label: `[${st.stasiunName}] ${d.title}`
+              });
+            }
+          });
         });
-      });
+      } else {
+        RESPONSI_GROUPS.forEach(g => {
+          g.items.forEach(it => {
+            const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+            if (!checked) {
+              missing.push({
+                part: 'resp',
+                partName: '1. Ujian Responsi',
+                rowId: `row-resp-${it.id}`,
+                badgeId: `badge-resp-${it.id}`,
+                label: `[${g.name}] ${it.text}`
+              });
+            }
+          });
+        });
+      }
 
       // 2. Laporan Dosen (20 items)
       LAPORAN_ITEMS.forEach(it => {
@@ -5915,14 +6136,26 @@
         }
       }
 
-      RESPONSI_GROUPS.forEach(g => {
-        g.items.forEach(it => {
-          const val = rec.responsi?.[it.id];
-          const rad = document.querySelector(`input[name="resp_${it.id}"][value="${val}"]`);
-          if (rad) rad.checked = true;
-          else document.querySelectorAll(`input[name="resp_${it.id}"]`).forEach(r => r.checked = false);
+      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
+      if (isStasiun) {
+        RESPONSI_STASIUN_GROUPS.forEach(st => {
+          st.domains.forEach(d => {
+            const val = rec.responsi?.[d.id];
+            const rad = document.querySelector(`input[name="resp_${d.id}"][value="${val}"]`);
+            if (rad) rad.checked = true;
+            else document.querySelectorAll(`input[name="resp_${d.id}"]`).forEach(r => r.checked = false);
+          });
         });
-      });
+      } else {
+        RESPONSI_GROUPS.forEach(g => {
+          g.items.forEach(it => {
+            const val = rec.responsi?.[it.id];
+            const rad = document.querySelector(`input[name="resp_${it.id}"][value="${val}"]`);
+            if (rad) rad.checked = true;
+            else document.querySelectorAll(`input[name="resp_${it.id}"]`).forEach(r => r.checked = false);
+          });
+        });
+      }
 
       LAPORAN_ITEMS.forEach(it => {
         const val = rec.lapDosen?.[it.id];
@@ -5978,16 +6211,27 @@
     }
 
     function recalcDosen() {
+      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
+      const respMax = isStasiun ? 18 : 105;
       let respSum = 0;
-      RESPONSI_GROUPS.forEach(g => {
-        g.items.forEach(it => {
-          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
-          if (checked) respSum += parseInt(checked.value);
+      if (isStasiun) {
+        RESPONSI_STASIUN_GROUPS.forEach(st => {
+          st.domains.forEach(d => {
+            const checked = document.querySelector(`input[name="resp_${d.id}"]:checked`);
+            if (checked) respSum += parseInt(checked.value);
+          });
         });
-      });
-      const respScore = (respSum / 105) * 100;
+      } else {
+        RESPONSI_GROUPS.forEach(g => {
+          g.items.forEach(it => {
+            const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+            if (checked) respSum += parseInt(checked.value);
+          });
+        });
+      }
+      const respScore = respMax > 0 ? (respSum / respMax) * 100 : 0;
       const respWt = (respScore * 25) / 100;
-      document.getElementById('dosen-responsi-raw').innerText = `${respSum} / 105 (${respScore.toFixed(1)})`;
+      document.getElementById('dosen-responsi-raw').innerText = `${respSum} / ${respMax} (${respScore.toFixed(1)})`;
       document.getElementById('dosen-calc-responsi').innerText = respWt.toFixed(2) + ' / 25';
 
       let lapSum = 0;
@@ -6102,12 +6346,22 @@
       }
 
       rec.responsi = {};
-      RESPONSI_GROUPS.forEach(g => {
-        g.items.forEach(it => {
-          const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
-          if (checked) rec.responsi[it.id] = parseInt(checked.value);
+      const isStasiun = currentMagangSession === 'magang2' || currentMagangSession === 'magang3';
+      if (isStasiun) {
+        RESPONSI_STASIUN_GROUPS.forEach(st => {
+          st.domains.forEach(d => {
+            const checked = document.querySelector(`input[name="resp_${d.id}"]:checked`);
+            if (checked) rec.responsi[d.id] = parseInt(checked.value);
+          });
         });
-      });
+      } else {
+        RESPONSI_GROUPS.forEach(g => {
+          g.items.forEach(it => {
+            const checked = document.querySelector(`input[name="resp_${it.id}"]:checked`);
+            if (checked) rec.responsi[it.id] = parseInt(checked.value);
+          });
+        });
+      }
 
       rec.lapDosen = {};
       LAPORAN_ITEMS.forEach(it => {
@@ -6581,33 +6835,45 @@
           </div>
         </div>
 
-        <!-- SECTION 3: RESPONSI (1-5) -->
-        <div id="content-modal-responsi" class="space-y-3 hidden">
-          <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-200 text-indigo-900 font-semibold">
-            📌 <strong>Ujian Responsi Praktik Lapangan (Bobot 20%):</strong><br>
-            Dinilai oleh Dosen Pembimbing Lapangan (DPL) mencakup 21 butir prosedur registrasi dan koding diagnosis/tindakan klinis.
+        <!-- SECTION 3: RESPONSI -->
+        <div id="content-modal-responsi" class="space-y-4 hidden">
+          <!-- Keterangan Magang 2 & 3: Stasiun OSCE -->
+          <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-200 text-indigo-950 font-semibold space-y-1">
+            <div class="flex items-center gap-1.5 font-bold text-xs text-indigo-900 uppercase">
+              <span>🏥 Khusus Magang 2 & Magang 3 (Model Stasiun Praktik / OSCE - Skala 0–3)</span>
+            </div>
+            <p class="text-[11px] text-indigo-900/90 font-normal">
+              Dinilai berdasarkan 2 Stasiun Ujian Praktik Lapangan (Total 6 Domain, Skor Maksimal 18):
+            </p>
           </div>
 
-          <div class="grid grid-cols-1 gap-2.5">
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-rose-500 text-white font-bold text-xs flex items-center justify-center shrink-0">1</span>
-              <div><strong class="text-slate-900">Skor 1:</strong> Tidak menguasai alur kerja, tidak mampu menjawab pertanyaan responsi.</div>
+          <div class="space-y-3">
+            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+              <h5 class="font-bold text-xs text-slate-900">STASIUN 1: PENERIMAAN PASIEN (Maks: 9 Poin)</h5>
+              <div class="grid grid-cols-1 gap-1.5 text-[11px] text-slate-700">
+                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>1. Identifikasi & Pengumpulan Data:</strong> Skor 3 (5 langkah benar), Skor 2 (3-4 langkah), Skor 1 (1-2 langkah), Skor 0 (tidak melakukan).</div>
+                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>2. Seleksi Data:</strong> Skor 3 (4 langkah benar), Skor 2 (3 langkah), Skor 1 (1-2 langkah), Skor 0 (tidak melakukan).</div>
+                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>3. Perilaku Profesional:</strong> Skor 3 (5 item benar), Skor 2 (3-4 item), Skor 1 (1-2 item), Skor 0 (tidak melakukan).</div>
+              </div>
             </div>
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-amber-500 text-white font-bold text-xs flex items-center justify-center shrink-0">2</span>
-              <div><strong class="text-slate-900">Skor 2:</strong> Menguasai sebagian langkah, jawaban memerlukan banyak arahan/koreksi penguji.</div>
+
+            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+              <h5 class="font-bold text-xs text-slate-900">STASIUN 2: KODIFIKASI KLINIS (Maks: 9 Poin)</h5>
+              <div class="grid grid-cols-1 gap-1.5 text-[11px] text-slate-700">
+                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>1. Identifikasi & Seleksi Data:</strong> Skor 3 (3 langkah benar), Skor 2 (2 langkah), Skor 1 (1 langkah), Skor 0 (tidak melakukan).</div>
+                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>2. Seleksi Data (Rule MB & Koding):</strong> Skor 3 (4 langkah benar), Skor 2 (3 langkah), Skor 1 (1-2 langkah), Skor 0 (tidak melakukan).</div>
+                <div class="p-1.5 rounded bg-white border border-slate-200"><strong>3. Perilaku Profesional:</strong> Skor 3 (4 item benar), Skor 2 (3 item), Skor 1 (1-2 item), Skor 0 (tidak melakukan).</div>
+              </div>
             </div>
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-blue-500 text-white font-bold text-xs flex items-center justify-center shrink-0">3</span>
-              <div><strong class="text-slate-900">Skor 3:</strong> Menguasai prosedur dengan baik, mampu menjawab pertanyaan penguji secara memadai.</div>
-            </div>
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">4</span>
-              <div><strong class="text-slate-900">Skor 4:</strong> Menjelaskan dan mempraktikkan prosedur secara runtut, memahami landasan teori/regulasi dengan benar.</div>
-            </div>
-            <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">5</span>
-              <div><strong class="text-emerald-950">Skor 5:</strong> Penguasaan komprehensif, argumentasi ilmiah sangat kuat, analisis mendalam terhadap kasus klinis fasyankes.</div>
+          </div>
+
+          <!-- Keterangan Magang 1 -->
+          <div class="pt-2 border-t border-slate-200">
+            <div class="p-3 bg-slate-100 rounded-xl border border-slate-200 text-slate-800 text-xs">
+              <strong>📌 Khusus Magang 1 (Model 21 Prosedur Panjang - Skala 1–5):</strong>
+              <p class="text-[11px] text-slate-600 mt-1">
+                Dinilai pada 21 butir prosedur registrasi dan koding diagnosis/tindakan (Skor 1: Kurang, Skor 2: Cukup, Skor 3: Baik, Skor 4: Sangat Baik, Skor 5: Unggul). Maksimal 105 poin.
+              </p>
             </div>
           </div>
         </div>
@@ -7492,6 +7758,7 @@
 
       // Update UI Header & Login Badge
       updateSessionUI();
+      buildForms();
 
       // Cek apakah user sudah login
       const user = getCurrentSession();
@@ -7514,6 +7781,7 @@
       currentMagangSession = sessionKey;
       sessionStorage.setItem('sipinter_active_magang_session', sessionKey);
       updateSessionUI();
+      buildForms();
       syncAllComponents();
       renderUsersTable();
       if (typeof currentNIM !== 'undefined' && currentNIM) {
@@ -7632,9 +7900,9 @@
       }
 
       list.forEach((s, idx) => {
-        const r1 = calculateStudentFinalScore(s.nim, evals1[s.nim] || {});
-        const r2 = calculateStudentFinalScore(s.nim, evals2[s.nim] || {});
-        const r3 = calculateStudentFinalScore(s.nim, evals3[s.nim] || {});
+        const r1 = calculateFinal(evals1[s.nim] || {}, 'magang1');
+        const r2 = calculateFinal(evals2[s.nim] || {}, 'magang2');
+        const r3 = calculateFinal(evals3[s.nim] || {}, 'magang3');
 
         const validScores = [];
         if (r1.finalScore > 0) validScores.push(r1.finalScore);
@@ -7697,9 +7965,9 @@
       ];
 
       stds.forEach((s, idx) => {
-        const r1 = calculateStudentFinalScore(s.nim, evals1[s.nim] || {});
-        const r2 = calculateStudentFinalScore(s.nim, evals2[s.nim] || {});
-        const r3 = calculateStudentFinalScore(s.nim, evals3[s.nim] || {});
+        const r1 = calculateFinal(evals1[s.nim] || {}, 'magang1');
+        const r2 = calculateFinal(evals2[s.nim] || {}, 'magang2');
+        const r3 = calculateFinal(evals3[s.nim] || {}, 'magang3');
 
         const validScores = [];
         if (r1.finalScore > 0) validScores.push(r1.finalScore);
@@ -7807,271 +8075,5 @@
       }
     });
   </script>
-
-  <!-- ============================================================== -->
-  <!-- MODAL: PEDOMAN & KRITERIA SKOR PENILAIAN (INFO POPUP) -->
-  <!-- ============================================================== -->
-  <div id="modal-rubrik-kriteria" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      
-      <!-- Modal Header -->
-      <div class="p-5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0">
-            ℹ️
-          </div>
-          <div>
-            <h3 class="text-base font-black tracking-tight" id="modal-rubrik-title">Pedoman & Kriteria Skor Penilaian</h3>
-            <p class="text-xs text-indigo-200/80 font-medium">Panduan deskriptif kriteria penskoran setiap komponen penilaian magang</p>
-          </div>
-        </div>
-        <button type="button" onclick="closeRubrikKriteriaModal()" class="text-white/70 hover:text-white p-2 rounded-xl hover:bg-white/10 transition text-lg leading-none cursor-pointer">
-          ✕
-        </button>
-      </div>
-
-      <!-- Navigation Tabs inside Modal -->
-      <div class="flex border-b border-slate-200 bg-slate-50 px-4 py-2 gap-2 overflow-x-auto shrink-0">
-        <button type="button" id="tab-modal-komp" onclick="switchModalRubrikTab('kompetensi')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-indigo-700 shadow-2xs border border-indigo-200">
-          Target Kompetensi (1-4)
-        </button>
-        <button type="button" id="tab-modal-kin" onclick="switchModalRubrikTab('kinerja')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
-          Kinerja & Sikap (1-4)
-        </button>
-        <button type="button" id="tab-modal-resp" onclick="switchModalRubrikTab('responsi')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
-          Ujian Responsi (1-5)
-        </button>
-        <button type="button" id="tab-modal-lap" onclick="switchModalRubrikTab('laporan')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
-          Ujian Laporan (0-100)
-        </button>
-      </div>
-
-      <!-- Modal Body (Scrollable) -->
-      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs text-slate-700 leading-relaxed">
-        
-        <!-- SECTION 1: TARGET KOMPETENSI (1-4) -->
-        <div id="content-modal-kompetensi" class="space-y-3">
-          <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 font-semibold">
-            📌 <strong>Evaluasi Target Capaian Kompetensi Klinis (Bobot 35%):</strong><br>
-            Dinilai oleh Pembimbing Lapangan (CI) berdasarkan 28 butir prosedur pengelolaan rekam medis di fasilitas pelayanan kesehatan.
-          </div>
-
-          <div class="grid grid-cols-1 gap-2.5">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center shrink-0">1</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 1: Belum Mampu / Kurang</h4>
-                <p class="text-slate-600 mt-0.5">Mahasiswa belum memahami prosedur, belum mampu melaksanakan prosedur secara mandiri, sering melakukan kesalahan teknis mendasar, dan belum menguasai SOP fasyankes.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center shrink-0">2</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 2: Cukup (Perlu Bimbingan Penuh)</h4>
-                <p class="text-slate-600 mt-0.5">Mahasiswa mampu melaksanakan prosedur dengan bimbingan dan arahan intensif dari Pembimbing Klinik (CI), terdapat beberapa kesalahan yang perlu diperbaiki.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center shrink-0">3</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 3: Baik (Bimbingan Minimal)</h4>
-                <p class="text-slate-600 mt-0.5">Mahasiswa mampu melaksanakan prosedur secara runtut, tepat, dan benar hanya dengan konfirmasi atau bimbingan minimal dari CI.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-emerald-200 bg-emerald-50/50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0">4</span>
-              <div>
-                <h4 class="font-bold text-emerald-950 text-xs">Skor 4: Sangat Baik / Mandiri & Teladan</h4>
-                <p class="text-emerald-900 mt-0.5">Mahasiswa melaksanakan prosedur secara mandiri, cekatan, akurat, teliti, tepat waktu, dan patuh penuh terhadap SOP rumah sakit serta regulasi kerahasiaan rekam medis.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 2: KINERJA & SIKAP (1-4) -->
-        <div id="content-modal-kinerja" class="space-y-3 hidden">
-          <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 text-blue-900 font-semibold">
-            📌 <strong>Evaluasi Kinerja & Sikap Profesional (Bobot 20%):</strong><br>
-            Dinilai oleh Pembimbing Lapangan (CI) mencakup etika profesi, kedisiplinan, komunikasi interprofesional, dan integritas rahasia pasien.
-          </div>
-
-          <div class="grid grid-cols-1 gap-2.5">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center shrink-0">1</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 1: Kurang</h4>
-                <p class="text-slate-600 mt-0.5">Pasif, kedisiplinan rendah/sering terlambat, kurang mematuhi etika profesi rekam medis, kesulitan bekerja sama dalam tim interprofesional.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-amber-500 text-white font-black text-xs flex items-center justify-center shrink-0">2</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 2: Cukup</h4>
-                <p class="text-slate-600 mt-0.5">Cukup disiplin namun masih memerlukan pengawasan dan dorongan rutin dari pembimbing, komunikasi kerja standar.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center shrink-0">3</span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-xs">Skor 3: Baik</h4>
-                <p class="text-slate-600 mt-0.5">Disiplin, berintegritas tinggi dalam menjaga kerahasiaan data medis pasien, aktif dan komunikatif dalam tim pelayanan kesehatan.</p>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-xl border border-blue-200 bg-blue-50/50 flex items-start gap-3">
-              <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0">4</span>
-              <div>
-                <h4 class="font-bold text-indigo-950 text-xs">Skor 4: Sangat Baik / Unggul</h4>
-                <p class="text-indigo-900 mt-0.5">Menunjukkan kepemimpinan, inisiatif tinggi, problem solving mandiri, etika profesional sempurna, menjadi teladan di unit rekam medis.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 3: RESPONSI (1-5) -->
-        <div id="content-modal-responsi" class="space-y-3 hidden">
-          <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-200 text-indigo-900 font-semibold">
-            📌 <strong>Ujian Responsi Praktik Lapangan (Bobot 20%):</strong><br>
-            Dinilai oleh Dosen Pembimbing Lapangan (DPL) mencakup 21 butir prosedur registrasi dan koding diagnosis/tindakan klinis.
-          </div>
-
-          <div class="grid grid-cols-1 gap-2.5">
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-rose-500 text-white font-bold text-xs flex items-center justify-center shrink-0">1</span>
-              <div><strong class="text-slate-900">Skor 1:</strong> Tidak menguasai alur kerja, tidak mampu menjawab pertanyaan responsi.</div>
-            </div>
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-amber-500 text-white font-bold text-xs flex items-center justify-center shrink-0">2</span>
-              <div><strong class="text-slate-900">Skor 2:</strong> Menguasai sebagian langkah, jawaban memerlukan banyak arahan/koreksi penguji.</div>
-            </div>
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-blue-500 text-white font-bold text-xs flex items-center justify-center shrink-0">3</span>
-              <div><strong class="text-slate-900">Skor 3:</strong> Menguasai prosedur dengan baik, mampu menjawab pertanyaan penguji secara memadai.</div>
-            </div>
-            <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">4</span>
-              <div><strong class="text-slate-900">Skor 4:</strong> Menjelaskan dan mempraktikkan prosedur secara runtut, memahami landasan teori/regulasi dengan benar.</div>
-            </div>
-            <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-center gap-3">
-              <span class="w-6 h-6 rounded bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">5</span>
-              <div><strong class="text-emerald-950">Skor 5:</strong> Penguasaan komprehensif, argumentasi ilmiah sangat kuat, analisis mendalam terhadap kasus klinis fasyankes.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 4: LAPORAN (0-100) -->
-        <div id="content-modal-laporan" class="space-y-3 hidden">
-          <div class="p-3 bg-purple-50 rounded-xl border border-purple-200 text-purple-900 font-semibold">
-            📌 <strong>Ujian Laporan & Presentasi oleh Dosen (Bobot 20%):</strong><br>
-            Dinilai oleh Dosen DPL mencakup 3 aspek utama: Presentasi (25), Tanya Jawab (25), dan Isi Tulisan Laporan (50).
-          </div>
-
-          <div class="space-y-2">
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
-              <h5 class="font-bold text-slate-900">I. Presentasi (Maksimal: 25 Poin)</h5>
-              <p class="text-slate-600">Teknik penyajian, ketepatan alokasi waktu, media slide presentasi yang efektif, dan etika berpenampilan.</p>
-            </div>
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
-              <h5 class="font-bold text-slate-900">II. Tanya Jawab (Maksimal: 25 Poin)</h5>
-              <p class="text-slate-600">Ketegasan menjawab, argumentasi ilmiah berbasis bukti, sikap, serta penguasaan materi dan prosedur lapangan.</p>
-            </div>
-            <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
-              <h5 class="font-bold text-slate-900">III. Isi Tulisan Laporan (Maksimal: 50 Poin)</h5>
-              <p class="text-slate-600">Latar belakang masalah, rumusan masalah, kedalaman analisis fakta vs teori rekam medis, ketepatan rekomendasi solusi, serta kesimpulan.</p>
-            </div>
-          </div>
-
-          <div class="p-3 rounded-xl bg-slate-100 border border-slate-300">
-            <h5 class="font-bold text-slate-800 mb-1">Rentang Konversi Nilai Akhir:</h5>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-              <div class="p-2 rounded bg-emerald-100 text-emerald-900 font-bold">≥ 80.0 : Nilai A</div>
-              <div class="p-2 rounded bg-blue-100 text-blue-900 font-bold">70.0 - 79.9 : Nilai B</div>
-              <div class="p-2 rounded bg-amber-100 text-amber-900 font-bold">60.0 - 69.9 : Nilai C</div>
-              <div class="p-2 rounded bg-rose-100 text-rose-900 font-bold">&lt; 60.0 : Nilai D/E</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
-        <button type="button" onclick="closeRubrikKriteriaModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-900 text-white transition cursor-pointer">
-          Mengerti & Tutup
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ============================================================== -->
-  <!-- MODAL: TRANSKRIP PORTOFOLIO MAGANG (MAGANG 1, 2, 3) -->
-  <!-- ============================================================== -->
-  <div id="modal-transkrip-kumulatif" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[92vh] flex flex-col border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      
-      <!-- Modal Header -->
-      <div class="p-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 text-white flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0">
-            🎓
-          </div>
-          <div>
-            <h3 class="text-base font-black tracking-tight">Transkrip Kumulatif Portofolio Magang RMIK</h3>
-            <p class="text-xs text-indigo-200/80 font-medium">Rekapitulasi capaian nilai terpadu mahasiswa (Magang 1, Magang 2, dan Magang 3)</p>
-          </div>
-        </div>
-        <button type="button" onclick="closeTranskripKumulatifModal()" class="text-white/70 hover:text-white p-2 rounded-xl hover:bg-white/10 transition text-lg leading-none cursor-pointer">
-          ✕
-        </button>
-      </div>
-
-      <!-- Modal Action Bar -->
-      <div class="flex flex-col sm:flex-row items-center justify-between p-3.5 bg-slate-50 border-b border-slate-200 gap-2 shrink-0">
-        <input type="text" id="transkrip-search" placeholder="Cari nama atau NIM mahasiswa..." oninput="renderTranskripKumulatifTable()" class="text-xs px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white w-full sm:w-64 font-medium">
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="exportTranskripExcel()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1 shadow-2xs">
-            <span>📥 Ekspor Excel Transkrip</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Modal Table Container -->
-      <div class="p-4 overflow-y-auto flex-1">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-              <th class="p-2.5 text-center w-10">No</th>
-              <th class="p-2.5">Nama Mahasiswa</th>
-              <th class="p-2.5 font-mono">NIM</th>
-              <th class="p-2.5 text-center bg-emerald-50 text-emerald-900 border-x border-emerald-100">Magang 1</th>
-              <th class="p-2.5 text-center bg-blue-50 text-blue-900 border-r border-blue-100">Magang 2</th>
-              <th class="p-2.5 text-center bg-purple-50 text-purple-900 border-r border-purple-100">Magang 3</th>
-              <th class="p-2.5 text-center bg-indigo-50 text-indigo-950 font-black">Rerata Kumulatif</th>
-              <th class="p-2.5 text-center">Mutu</th>
-              <th class="p-2.5 text-center">Status</th>
-            </tr>
-          </thead>
-          <tbody id="transkrip-tbody" class="divide-y divide-slate-100">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
-        <button type="button" onclick="closeTranskripKumulatifModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-900 text-white transition cursor-pointer">
-          Tutup
-        </button>
-      </div>
-
-    </div>
-  </div>
-
 </body>
 </html>
