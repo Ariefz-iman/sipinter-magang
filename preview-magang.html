@@ -525,6 +525,14 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closePanduanModal();
     });
+
+    // Otomatis buka jika parameter ?pedoman=1 atau #pedoman diberikan
+    window.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('pedoman') === '1' || window.location.hash === '#pedoman') {
+        openPanduanModal('alur');
+      }
+    });
   </script>
 
 </body>
