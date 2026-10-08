@@ -327,6 +327,12 @@
             <span class="sm:hidden text-[10px]">Cloud</span>
           </button>
 
+          <button type="button" onclick="openPanduanModal('alur')" title="Buku Pedoman Pengisian & Kriteria Skor" class="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
+            <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+            <span class="hidden md:inline">Pedoman</span>
+          </button>
           <button type="button" onclick="openUserSettingsModal()" title="Pengaturan Akun & Kata Sandi" class="text-xs px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1.5 shadow-2xs">
             <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -6281,6 +6287,320 @@
   <div class="pdf-sheet">
     ${printContent.innerHTML}
   </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL BUKU PEDOMAN PENGISIAN & RUBRIK PENILAIAN -->
+  <!-- ============================================================== -->
+  <div id="modal-panduan" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto no-print">
+    <div class="bg-white rounded-3xl max-w-4xl w-full shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[92vh] flex flex-col text-slate-800 animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white flex items-center justify-between border-b border-indigo-700/50 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-xl shadow-inner">
+            📖
+          </div>
+          <div>
+            <h3 class="text-base font-black text-white leading-tight">Pedoman & Panduan Pengisian Penilaian</h3>
+            <p class="text-xs text-indigo-200 font-medium">SIPINTER MAGANG — Jurusan Rekam Medis & Informasi Kesehatan (D3 RMIK)</p>
+          </div>
+        </div>
+        <button type="button" onclick="closePanduanModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg font-bold transition">&times;</button>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="px-6 py-2.5 bg-slate-100 border-b border-slate-200 flex flex-wrap gap-2 text-xs font-bold shrink-0">
+        <button type="button" onclick="switchPanduanTab('alur')" id="tab-btn-panduan-alur" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white shadow-xs transition">
+          1. Alur & Bobot Nilai
+        </button>
+        <button type="button" onclick="switchPanduanTab('ci')" id="tab-btn-panduan-ci" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 hover:text-slate-900 border border-slate-200 transition">
+          2. Panduan CI Lapangan (60%)
+        </button>
+        <button type="button" onclick="switchPanduanTab('dosen')" id="tab-btn-panduan-dosen" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 hover:text-slate-900 border border-slate-200 transition">
+          3. Panduan Dosen DPL (40%)
+        </button>
+        <button type="button" onclick="switchPanduanTab('skala')" id="tab-btn-panduan-skala" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 hover:text-slate-900 border border-slate-200 transition">
+          4. Skala & Kriteria Skor
+        </button>
+        <button type="button" onclick="switchPanduanTab('admin')" id="tab-btn-panduan-admin" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 hover:text-slate-900 border border-slate-200 transition">
+          5. Admin & Koordinator
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-6 text-sm flex-1">
+        
+        <!-- PANEL 1: ALUR & BOBOT NILAI -->
+        <div id="panel-panduan-alur" class="space-y-4">
+          <div class="bg-indigo-50/80 border border-indigo-200 rounded-2xl p-4 space-y-2">
+            <h4 class="font-extrabold text-indigo-950 text-sm flex items-center gap-2">
+              <span>🎯</span> Struktur Komposisi Penilaian Terintegrasi (100%)
+            </h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Penilaian magang terbagi atas dua entitas penilai utama: <strong>Clinical Instructor (CI Lahan RS)</strong> sebesar <strong>60%</strong> dan <strong>Dosen Pembimbing Lapangan (DPL)</strong> sebesar <strong>40%</strong>. Nilai akhir dihitung otomatis oleh sistem secara transparan dan tervalidasi digital.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Porsi CI -->
+            <div class="p-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 space-y-3">
+              <div class="flex items-center justify-between border-b border-emerald-200/60 pb-2">
+                <span class="font-black text-emerald-900 text-xs uppercase tracking-wider">Porsi CI Lapangan (RS)</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-black text-xs">Bobot 60%</span>
+              </div>
+              <ul class="space-y-2 text-xs text-slate-700">
+                <li class="flex items-center justify-between bg-white p-2 rounded-lg border border-emerald-100">
+                  <span>1. Kehadiran Mahasiswa</span>
+                  <strong class="text-emerald-800">5%</strong>
+                </li>
+                <li class="flex items-center justify-between bg-white p-2 rounded-lg border border-emerald-100">
+                  <span>2. Sikap & Kinerja (6 Butir)</span>
+                  <strong class="text-emerald-800">15%</strong>
+                </li>
+                <li class="flex items-center justify-between bg-white p-2 rounded-lg border border-emerald-100">
+                  <span>3. Keterampilan / Kompetensi (28 Butir)</span>
+                  <strong class="text-emerald-800">25%</strong>
+                </li>
+                <li class="flex items-center justify-between bg-white p-2 rounded-lg border border-emerald-100">
+                  <span>4. Laporan Magang CI (20 Butir)</span>
+                  <strong class="text-emerald-800">15%</strong>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Porsi Dosen -->
+            <div class="p-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 space-y-3">
+              <div class="flex items-center justify-between border-b border-indigo-200/60 pb-2">
+                <span class="font-black text-indigo-900 text-xs uppercase tracking-wider">Porsi Dosen DPL</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-indigo-600 text-white font-black text-xs">Bobot 40%</span>
+              </div>
+              <ul class="space-y-2 text-xs text-slate-700">
+                <li class="flex items-center justify-between bg-white p-2 rounded-lg border border-indigo-100">
+                  <span>1. Ujian Responsi Praktik Lapangan</span>
+                  <strong class="text-indigo-800">25%</strong>
+                </li>
+                <li class="flex items-center justify-between bg-white p-2 rounded-lg border border-indigo-100">
+                  <span>2. Ujian Laporan & Presentasi Dosen</span>
+                  <strong class="text-indigo-800">15%</strong>
+                </li>
+                <li class="p-2 rounded-lg bg-indigo-100/60 text-[11px] text-indigo-950">
+                  📌 <strong>Magang 1:</strong> 21 Butir Prosedur (Skala 1–5, Maks 105)<br>
+                  📌 <strong>Magang 2:</strong> Model 2 Stasiun OSCE (6 Domain, Skala 0–3, Maks 18)
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Tabel Konversi Nilai -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <h5 class="font-bold text-xs text-slate-800 uppercase tracking-wider">Tabel Konversi Mutu & Huruf Mutu:</h5>
+            <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 text-center text-xs">
+              <div class="p-2 rounded-lg bg-emerald-100 text-emerald-900 font-bold border border-emerald-200">
+                <div class="text-sm">A</div>
+                <div class="text-[10px]">&ge; 79.0</div>
+              </div>
+              <div class="p-2 rounded-lg bg-blue-100 text-blue-900 font-bold border border-blue-200">
+                <div class="text-sm">AB</div>
+                <div class="text-[10px]">74.0 - 78.9</div>
+              </div>
+              <div class="p-2 rounded-lg bg-blue-100 text-blue-900 font-bold border border-blue-200">
+                <div class="text-sm">B</div>
+                <div class="text-[10px]">68.0 - 73.9</div>
+              </div>
+              <div class="p-2 rounded-lg bg-amber-100 text-amber-900 font-bold border border-amber-200">
+                <div class="text-sm">BC</div>
+                <div class="text-[10px]">62.0 - 67.9</div>
+              </div>
+              <div class="p-2 rounded-lg bg-amber-100 text-amber-900 font-bold border border-amber-200">
+                <div class="text-sm">C</div>
+                <div class="text-[10px]">56.0 - 61.9</div>
+              </div>
+              <div class="p-2 rounded-lg bg-rose-100 text-rose-900 font-bold border border-rose-200">
+                <div class="text-sm">D</div>
+                <div class="text-[10px]">41.0 - 55.9</div>
+              </div>
+              <div class="p-2 rounded-lg bg-rose-200 text-rose-950 font-bold border border-rose-300">
+                <div class="text-sm">E</div>
+                <div class="text-[10px]">&lt; 41.0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 2: PANDUAN CI -->
+        <div id="panel-panduan-ci" class="hidden space-y-4">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-slate-900 text-sm">Petunjuk Pengisian bagi Clinical Instructor (CI Lapangan):</h4>
+            <ol class="space-y-2.5 text-xs text-slate-700 list-decimal pl-4 leading-relaxed">
+              <li>
+                <strong>Masuk ke Akun CI:</strong> Pada layar login, pilih tab <strong>CI Lapangan</strong>, lalu pilih nama Anda / nama Rumah Sakit tempat praktik dari daftar drop-down. Masukkan kata sandi akun (default: <code>123</code>).
+              </li>
+              <li>
+                <strong>Pilih Mahasiswa:</strong> Buka tab <strong>Penilaian CI</strong> pada bilah menu atas. Pilih nama mahasiswa yang sedang Anda bimbing dari daftar bimbingan aktif.
+              </li>
+              <li>
+                <strong>Isi Bagian 1 — Kehadiran (5%):</strong> Masukkan persentase kehadiran mahasiswa selama praktik (misal: <code>100</code>).
+              </li>
+              <li>
+                <strong>Isi Bagian 2 — Sikap & Kinerja (15%):</strong> Berikan skor pada 6 butir aspek perilaku profesional (skala 1 s/d 4).
+              </li>
+              <li>
+                <strong>Isi Bagian 3 — Keterampilan / Kompetensi (25%):</strong> Berikan skor pada 28 butir prosedur operasional rekam medis (skala 1 s/d 4).
+              </li>
+              <li>
+                <strong>Isi Bagian 4 — Laporan Magang CI (15%):</strong> Nilai format sistematika laporan, kelengkapan data, dan analisis kasus (20 butir, skala 1 s/d 5).
+              </li>
+              <li>
+                <strong>Bagian 5 — Konfirmasi & Tanda Tangan:</strong> Periksa nama lengkap dan gelar Anda, lalu bubuhkan goresan tanda tangan digital langsung pada kotak kanvas bertuliskan <em>Tanda Tangan Digital</em>.
+              </li>
+              <li>
+                <strong>Simpan & Sahkan:</strong> Klik tombol hijau <strong>"Sahkan & Finalisasi Nilai CI"</strong>. Setelah disimpan, status penilaian mahasiswa akan berubah menjadi <strong>SUBMITTED</strong> dan tersinkronisasi langsung ke Cloud.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- PANEL 3: PANDUAN DOSEN -->
+        <div id="panel-panduan-dosen" class="hidden space-y-4">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-slate-900 text-sm">Petunjuk Pengisian bagi Dosen Pembimbing Lapangan (DPL):</h4>
+            <ol class="space-y-2.5 text-xs text-slate-700 list-decimal pl-4 leading-relaxed">
+              <li>
+                <strong>Masuk ke Akun Dosen:</strong> Pada layar login, pilih tab <strong>Dosen DPL</strong>, lalu pilih nama dosen Anda dari daftar drop-down. Masukkan kata sandi akun (default: <code>123</code>).
+              </li>
+              <li>
+                <strong>Pilih Mahasiswa:</strong> Buka tab <strong>Penilaian Dosen</strong> pada bilah menu. Pilih mahasiswa bimbingan Anda.
+              </li>
+              <li>
+                <strong>Isi Bagian 1 — Ujian Responsi (25%):</strong>
+                <ul class="list-disc pl-4 mt-1 space-y-1 text-slate-600">
+                  <li><strong>Pada Magang 1:</strong> Berikan skor 1 s/d 5 pada 21 butir prosedur panjang (Bagian A: Pendaftaran 12 butir + Bagian B: Koding 9 butir). Maksimal 105 poin.</li>
+                  <li><strong>Pada Magang 2:</strong> Berikan skor 0 s/d 3 pada 2 Stasiun OSCE (Stasiun 1: Penerimaan Pasien [3 domain] & Stasiun 2: Kodifikasi Klinis [3 domain]). Maksimal 18 poin.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Isi Bagian 2 — Laporan & Presentasi Dosen (15%):</strong> Nilai pelaksanaan presentasi (5 butir) dan sesi tanya jawab (5 butir) dengan skala skor 1 s/d 5.
+              </li>
+              <li>
+                <strong>Bagian 3 — Konfirmasi & Tanda Tangan:</strong> Verifikasi nama penguji, bubuhkan tanda tangan digital pada kotak kanvas.
+              </li>
+              <li>
+                <strong>Simpan & Sahkan:</strong> Klik tombol <strong>"Sahkan & Finalisasi Nilai Dosen"</strong>. Nilai otomatis terakumulasi dengan nilai CI untuk menghasilkan Nilai Akhir & Huruf Mutu resmi.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- PANEL 4: SKALA & KRITERIA SKOR -->
+        <div id="panel-panduan-skala" class="hidden space-y-4">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-slate-900 text-sm">Penjelasan Skala Skor & Makna Penilaian:</h4>
+            
+            <div class="space-y-2">
+              <h5 class="font-bold text-xs text-indigo-900 uppercase">A. Rubrik Skala 1 s/d 4 (Kinerja & Kompetensi):</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-rose-700">Skor 1 (Kurang):</strong> Belum menguasai prosedur, pasif, atau membutuhkan bimbingan intensif penuh.</div>
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-amber-700">Skor 2 (Cukup):</strong> Mampu melakukan sebagian prosedur dengan supervisi dan arahan.</div>
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-blue-700">Skor 3 (Baik):</strong> Mampu melakukan prosedur dengan benar, mandiri, dan teliti.</div>
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-emerald-700">Skor 4 (Sangat Baik):</strong> Sangat menguasai, tanggap, teliti, efisien, dan menunjukkan inisiatif tinggi.</div>
+              </div>
+            </div>
+
+            <div class="space-y-2 pt-2 border-t border-slate-200">
+              <h5 class="font-bold text-xs text-indigo-900 uppercase">B. Rubrik Skala 1 s/d 5 (Laporan Magang & Responsi Magang 1):</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50"><strong>Skor 1:</strong> Sangat Kurang / Tidak sesuai standar</div>
+                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50"><strong>Skor 2:</strong> Kurang / Sesuai sebagian kecil</div>
+                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50"><strong>Skor 3:</strong> Cukup / Memenuhi standar dasar</div>
+                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50"><strong>Skor 4:</strong> Baik / Analisis tepat & runtut</div>
+                <div class="p-2 rounded-lg border border-slate-200 bg-slate-50 sm:col-span-2"><strong>Skor 5:</strong> Sangat Baik / Sempurna, argumentasi kritis & referensi akurat</div>
+              </div>
+            </div>
+
+            <div class="space-y-2 pt-2 border-t border-slate-200">
+              <h5 class="font-bold text-xs text-indigo-900 uppercase">C. Rubrik OSCE Skala 0 s/d 3 (Responsi Magang 2):</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-rose-700">Skor 0:</strong> Mahasiswa tidak melakukan tindakan sama sekali.</div>
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-amber-700">Skor 1:</strong> Mahasiswa hanya melakukan 1-2 langkah dengan benar.</div>
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-blue-700">Skor 2:</strong> Mahasiswa melakukan mayoritas langkah (3-4 langkah) dengan benar.</div>
+                <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50"><strong class="text-emerald-700">Skor 3:</strong> Mahasiswa melakukan seluruh langkah prosedur dengan lengkap & benar.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 5: PANDUAN ADMIN -->
+        <div id="panel-panduan-admin" class="hidden space-y-4">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-slate-900 text-sm">Petunjuk Penggunaan bagi Super Admin & Koordinator Magang:</h4>
+            <ul class="space-y-2.5 text-xs text-slate-700 list-disc pl-4 leading-relaxed">
+              <li>
+                <strong>Monitoring Rekapitulasi:</strong> Buka tab <strong>Rekapitulasi Nilai</strong> untuk melihat tabel menyeluruh nilai seluruh mahasiswa. Gunakan fitur filter pencarian, filter Rumah Sakit, dan filter kelengkapan nilai (Lengkap / Belum Lengkap).
+              </li>
+              <li>
+                <strong>Unduh Berita Acara & Lembar PDF:</strong> Pada tabel rekapitulasi, klik tombol <strong>"📄 Pratinjau & Unduh PDF"</strong> pada mahasiswa terkait untuk menghasilkan Lembar Penilaian Resmi lengkap dengan tanda tangan digital CI dan Dosen DPL.
+              </li>
+              <li>
+                <strong>Kelola Master Data Mahasiswa:</strong> Buka tab <strong>Master Mahasiswa</strong> untuk menambah, mengedit penempatan, atau mengunggah data plotting massal dari berkas Excel (.xlsx / .csv).
+              </li>
+              <li>
+                <strong>Kelola Pengguna (Akun):</strong> Buka tab <strong>Kelola Pengguna</strong> untuk mengatur kata sandi atau menambahkan akun CI baru sesuai penugasan rumah sakit mitra.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0 text-xs">
+        <span class="text-slate-500 font-medium">Buku Pedoman Resmi Evaluasi Magang RMIK 2026</span>
+        <button type="button" onclick="closePanduanModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold transition">
+          Tutup Panduan
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function openPanduanModal(tab = 'alur') {
+      const modal = document.getElementById('modal-panduan');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      switchPanduanTab(tab);
+    }
+
+    function closePanduanModal() {
+      const modal = document.getElementById('modal-panduan');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function switchPanduanTab(tabKey) {
+      const tabs = ['alur', 'ci', 'dosen', 'skala', 'admin'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-btn-panduan-${t}`);
+        const panel = document.getElementById(`panel-panduan-${t}`);
+        if (btn) {
+          if (t === tabKey) {
+            btn.className = 'px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white shadow-xs transition';
+          } else {
+            btn.className = 'px-3.5 py-1.5 rounded-xl bg-white text-slate-600 hover:text-slate-900 border border-slate-200 transition';
+          }
+        }
+        if (panel) {
+          if (t === tabKey) panel.classList.remove('hidden');
+          else panel.classList.add('hidden');
+        }
+      });
+    }
+
+    // Tutup dengan ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePanduanModal();
+    });
+  </script>
+
 </body>
 </html>`;
 
