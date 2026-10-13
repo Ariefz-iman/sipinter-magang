@@ -1326,7 +1326,7 @@
                       <span class="text-xs font-semibold text-slate-600">Bobot 25%</span>
                     </div>
                     <h3 class="font-bold text-base text-slate-900">1. Ujian Responsi Praktik Lapangan (OSCE)</h3>
-                    <p class="text-xs text-slate-500">Ujian Responsi Model 2 Stasiun OSCE (Stasiun 1: Penerimaan Pasien & Stasiun 2: Kodifikasi Klinis). Skala Skor 0 s/d 3. Max Skor = 18.</p>
+                    <p class="text-xs text-slate-500">Ujian Responsi Model 2 Stasiun OSCE (Stasiun 1: Pengolahan Data Statistik RS & Stasiun 2: Kodifikasi Klinis). Skala Skor 0 s/d 3. Max Skor = 18.</p>
                   </div>
                   <div class="text-right shrink-0 bg-indigo-50 p-2.5 rounded-xl border border-indigo-100">
                     <span class="text-[10px] uppercase font-bold text-indigo-600 block">Skor Responsi:</span>
@@ -4325,61 +4325,61 @@
     const RESPONSI_STASIUN_GROUPS = [
       {
         stasiunId: 'stasiun_1',
-        stasiunName: 'STASIUN 1: PENERIMAAN PASIEN',
-        subtitle: 'Simulasi alur pelayanan pendaftaran & penerimaan pasien di fasyankes',
+        stasiunName: 'STASIUN 1: PENGOLAHAN DATA STATISTIK RS',
+        subtitle: 'Perhitungan indikator efisiensi rumah sakit (BOR, BTO, TOI, AvLOS) & pembuatan Grafik Barber Johnson',
         maxScore: 9,
         domains: [
           {
             id: 's1_d1',
-            title: '1. Identifikasi dan pengumpulan data',
+            title: '1. Pengolahan data',
             maxScore: 3,
             steps: [
-              'Sambutlah & persilahkan pasien dengan Senyum, sapa, salam',
-              'Memperkenalkan diri kepada pasien/keluarga',
-              'Menanyakan kebutuhan pasien',
-              'Memastikan / konfirmasi pasien yang akan berobat',
-              'Menanyakan identitas pasien dan/atau meminjam kartu identitas pasien'
+              'Menjumlahkan pasien (masuk, keluar, dipindahkan, pindahan, pasien meninggal <48 jam, pasien meninggal > 48 jam, dan hari perawatan)',
+              'Melakukan perhitungan rekapitulasi berdasarkan periode (bulanan, triwulan dan tahunan)',
+              'Melakukan perhitungan berdasarkan rumus indikator (BOR, BTO, TOI, AvLOS)',
+              'Melakukan perhitungan titik koordinat garis Bed Occupancy Rate (BOR) 50%, 70%, 80% dan 90%',
+              'Melakukan perhitungan titik koordinat AvLOS dan TOI pada Grafik Barber Johnson',
+              'Menentukan nilai ideal indikator Grafik BARBER JOHNSON menurut standar Kemenkes',
+              'Membuat gambar sumbu X Garis (absis) sebagai garis TOI',
+              'Membuat gambar sumbu Y Garis (ordinat) sebagai garis ALOS',
+              'Membuat garis Bed Occupancy Rate (BOR) 50%, 70%, 80% dan 90%',
+              'Membuat garis BTO 30, 20, 15, dan 12,5 serta membuat daerah efisien',
+              'Menentukan keempat titik temu empat parameter Bed Occupancy Rate (BOR), Bed Turn Over (BTO), Average Length of Stay (AvLOS) dan Turn Over Interval (TOI)'
             ],
             criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (5) langkah dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3-4 dari 5 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 5 item dengan benar' },
+              { score: 3, text: 'Jika mahasiswa melakukan semua (11) langkah dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 6 dari 11 item dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 4 dari 11 item dengan benar' },
               { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
             ]
           },
           {
             id: 's1_d2',
-            title: '2. Seleksi data',
+            title: '2. Validasi',
             maxScore: 3,
+            allowedScores: [0, 3],
             steps: [
-              'Memastikan pasien belum pernah berobat dengan mengecek ke sistem',
-              'Meminta pasien mengisi formulir pasien baru dan menandatangani persetujuan awal',
-              'Mengkonfirmasi klinik tujuan pasien berobat',
-              'Mengkonfirmasi cara pembayaran pasien'
+              'Memastikan ketepatan titik temu dari empat parameter di dalam Grafik Barber Johnson'
             ],
             criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (4) langkah dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3 dari 4 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 4 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+              { score: 3, text: 'Jika mahasiswa melakukan semua (1) langkah dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun (Tidak ada nilai 1 & 2)' }
             ]
           },
           {
             id: 's1_d3',
-            title: '3. Perilaku Profesional',
+            title: '3. Perilaku profesional',
             maxScore: 3,
             steps: [
-              'Berkomunikasi menggunakan bahasa mudah dipahami',
-              'Kejelasan intonasi/artikulasi',
-              'Mempertahankan kontak mata',
-              'Ketelitian',
-              'Kerapihan meja kerja'
+              'Ketelitian / kecermatan',
+              'Kejelasan dalam memberikan informasi',
+              'Mempertahankan kontak mata dengan penguji'
             ],
             criteria: [
-              { score: 3, text: 'Jika mahasiswa melakukan semua (5) item dengan benar' },
-              { score: 2, text: 'Jika mahasiswa melakukan 3-4 dari 5 item dengan benar' },
-              { score: 1, text: 'Jika mahasiswa melakukan 1-2 dari 5 item dengan benar' },
-              { score: 0, text: 'Jika mahasiswa tidak melakukan apapun' }
+              { score: 3, text: 'Jika mahasiswa melakukan semua (3) langkah dengan benar' },
+              { score: 2, text: 'Jika mahasiswa melakukan 2 dari 3 langkah dengan benar' },
+              { score: 1, text: 'Jika mahasiswa melakukan 1 dari 3 langkah dengan benar' },
+              { score: 0, text: 'Jika mahasiswa tidak melakukan langkah apapun' }
             ]
           }
         ]
@@ -4866,9 +4866,9 @@
                   <span id="badge-resp-${d.id}"></span>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                  <span class="text-[11px] font-bold text-slate-500">Skor (0 - 3):</span>
+                  <span class="text-[11px] font-bold text-slate-500">${d.allowedScores ? 'Skor (0 / 3):' : 'Skor (0 - 3):'}</span>
                   <div class="flex items-center gap-1.5">
-                    ${[0, 1, 2, 3].map(val => `
+                    ${(d.allowedScores || [0, 1, 2, 3]).map(val => `
                       <label class="cursor-pointer select-none">
                         <input type="radio" name="resp_${d.id}" value="${val}" onchange="onRubricScoreChange('resp', '${d.id}')" class="peer sr-only">
                         <span class="rating-btn inline-flex h-7 w-7 items-center justify-center rounded-lg border border-slate-300 bg-white text-xs font-black text-slate-700 hover:bg-slate-100 transition">${val}</span>
