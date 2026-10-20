@@ -2216,93 +2216,91 @@
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
     // -------------------------------------------------------------
-    // DATA DEFAULT 72 MAHASISWA & RUMAH SAKIT MITRA (EXCEL ASLI)
+    // DATA DEFAULT 72 MAHASISWA & RUMAH SAKIT MITRA MAGANG 2 (BANDUNG & CIMAHI)
     // -------------------------------------------------------------
     const STUDENTS_DEFAULT = [
-      { no: 1, nim: 'P20637024032', name: 'SITI ZHARIFAH DWITA RAHMADHANI', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 2, nim: 'P20637024068', name: 'NEISHA AYU LESTARI', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 3, nim: 'P20637024065', name: 'NAYLA ZAHIRA SALSABILA RAMADHANI', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 4, nim: 'P20637024012', name: 'INTANIA PUTRI KURNIAWAN', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 5, nim: 'P20637024009', name: 'GINNA FEBRIANA SUBEKTHY', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 6, nim: 'P20637024004', name: 'ASTI GEA AUZIA', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 7, nim: 'P20637024060', name: 'MUHAMMAD SABIQ THORIQ AL-GHIFARY', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 8, nim: 'P20637024067', name: 'NAZWA NAZIA', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 9, nim: 'P20637024061', name: 'NABELA APRILLANITA', hospital: 'RS Prasetya Bunda', lecturers: ['Ida Wahyuni, SKM, MHPM', 'Neli puspitasari, SKM'], ci: 'Hj. Rina Marlina, Amd.PK' },
-      { no: 10, nim: 'P20637024033', name: 'SOLEHA QORIATIN', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 11, nim: 'P20637024005', name: 'AZKA HIJRAN HASYA', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 12, nim: 'P20637024037', name: 'TIARA ROSANDA PRAMESTI', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 13, nim: 'P20637024008', name: 'GILANG SETYO NUGROHO', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 14, nim: 'P20637024042', name: 'ALEA PUTRI MANDELLA', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 15, nim: 'P20637024070', name: 'RAIDAH ADLA KUSUMANINGRUM', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 16, nim: 'P20637024054', name: 'IJMA HALIZA WAHDAH', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 17, nim: 'P20637024062', name: 'NADHIRA PUTRI ERDIANSYAH', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 18, nim: 'P20637024055', name: 'KHAERANI NURMALA RAHMAT', hospital: 'RSUD Ciamis', lecturers: ['Dr. Ida Sugiarti, S.Kep, MH.Kes', 'Fajar Yunita Sari, SKM'], ci: 'Dadang Hidayat, A.Md.RMIK' },
-      { no: 19, nim: 'P20637024016', name: 'LORENA FUZIYANTI', hospital: 'RS TMC', lecturers: ['Dewi Lena SK, SKM, MPH'], ci: 'Yulianti, Amd.PK' },
-      { no: 20, nim: 'P20637024021', name: 'NAILA HANUM MUTIARA', hospital: 'RS TMC', lecturers: ['Dewi Lena SK, SKM, MPH'], ci: 'Yulianti, Amd.PK' },
-      { no: 21, nim: 'P20637024003', name: 'APRISA LUTFI', hospital: 'RS TMC', lecturers: ['Dewi Lena SK, SKM, MPH'], ci: 'Yulianti, Amd.PK' },
-      { no: 22, nim: 'P20637024034', name: 'SOPIATUL KAMILAH', hospital: 'RS TMC', lecturers: ['Dewi Lena SK, SKM, MPH'], ci: 'Yulianti, Amd.PK' },
-      { no: 23, nim: 'P20637024046', name: 'ANESTIA SUKMANINGRASYA', hospital: 'RS TMC', lecturers: ['Dewi Lena SK, SKM, MPH'], ci: 'Yulianti, Amd.PK' },
-      { no: 24, nim: 'P20637024064', name: 'NAYLA SATRIANDINI SAPUTRA', hospital: 'RS TMC', lecturers: ['Dewi Lena SK, SKM, MPH'], ci: 'Yulianti, Amd.PK' },
-      { no: 25, nim: 'P20637024039', name: 'ZAHRA NABILIA LY', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 26, nim: 'P20637024017', name: 'MUHAMMAD DICKA SETYA ATMADJA', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 27, nim: 'P20637024020', name: 'NABILLA RAHMANIAR', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 28, nim: 'P20637024035', name: 'SYAHLA MAULIDA NURULFADILAH', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 29, nim: 'P20637024075', name: 'SHELA AGUSTINA', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 30, nim: 'P20637024026', name: 'RIFA JALALUDDIN', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 31, nim: 'P20637024076', name: 'TIARA NURSYIFA', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 32, nim: 'P20637024058', name: 'MEZZALUNA NURUL MAULIDA', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 33, nim: 'P20637024078', name: 'ZENI PUTRI', hospital: 'RS Dadi Keluarga Ciamis', lecturers: ['Andi Suhenda, S.Kep, MPH', 'Ulfah Fauziah, SST, M.MKes'], ci: 'Asep Saepuloh, A.Md.Kes' },
-      { no: 34, nim: 'P20637024040', name: 'ZAHWA ALIYA KEYSA', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 35, nim: 'P20637024071', name: 'RAIHAN LESTARI', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 36, nim: 'P20637024028', name: 'RISA AZZAHRA', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 37, nim: 'P20637024024', name: 'QEILLA FUJI ANNISA', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 38, nim: 'P20637024050', name: 'MUHAMMAD YUSUF FIRDAUS', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 39, nim: 'P20637024031', name: 'SELLY AULIA QURROTU\'AIN', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 40, nim: 'P20637024057', name: 'MEIRA NASYWA MUAWIYAH', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 41, nim: 'P20637024072', name: 'RAYA HERAWAN', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 42, nim: 'P20637024010', name: 'HANIIFA ZEMI \'AAQILAH', hospital: 'RS JHC Tsm', lecturers: ['Gugun Priyadi, SAP, M.Kes'], ci: 'Fitri Handayani, S.Tr.Kes' },
-      { no: 43, nim: 'P20637024047', name: 'BILSA AERADIRADJA HAEZAMANA', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 44, nim: 'P20637024023', name: 'PUTRI NABILA SALMA', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 45, nim: 'P20637024073', name: 'SALMA AZKIA AGUSTINNISA', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 46, nim: 'P20637024056', name: 'MARYAM SYA', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 47, nim: 'P20637024069', name: 'NIZAR SYAHRUR RAMADHAN', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 48, nim: 'P20637024015', name: 'LIFATUL GONIYYAH', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 49, nim: 'P20637024027', name: 'RIFAA NAZLAA NURJIHAN TIYOGA', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 50, nim: 'P20637024014', name: 'KANIA NAFISA', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 51, nim: 'P20637024048', name: 'DESMA AULIA RAMADANTHI', hospital: 'RSUD Dr Soekardjo', lecturers: ['Fajar Yunita Sari, SKM'], ci: 'Irwan Setiawan, S.ST' },
-      { no: 52, nim: 'P20637024002', name: 'ALYA HIJRIA MADINA', hospital: 'RS Hermina Tasikmalaya', lecturers: ['Dr. Arief Tarmansyah Iman, MKM'], ci: 'Ns. Dewi Sartika, S.Tr.Kes' },
-      { no: 53, nim: 'P20637024044', name: 'ALYA KHOERUNNISA', hospital: 'RS Hermina Tasikmalaya', lecturers: ['Dr. Arief Tarmansyah Iman, MKM'], ci: 'Ns. Dewi Sartika, S.Tr.Kes' },
-      { no: 54, nim: 'P20637024038', name: 'YENI LESTARI', hospital: 'RS Hermina Tasikmalaya', lecturers: ['Dr. Arief Tarmansyah Iman, MKM'], ci: 'Ns. Dewi Sartika, S.Tr.Kes' },
-      { no: 55, nim: 'P20637024022', name: 'NIZAR TAUFIK ZULFITRI', hospital: 'RS Hermina Tasikmalaya', lecturers: ['Dr. Arief Tarmansyah Iman, MKM'], ci: 'Ns. Dewi Sartika, S.Tr.Kes' },
-      { no: 56, nim: 'P20637024045', name: 'AMNA NURALIFA AVISA', hospital: 'RS Hermina Tasikmalaya', lecturers: ['Dr. Arief Tarmansyah Iman, MKM'], ci: 'Ns. Dewi Sartika, S.Tr.Kes' },
-      { no: 57, nim: 'P20637024043', name: 'ALIFIA NUR IRBAH', hospital: 'RS Hermina Tasikmalaya', lecturers: ['Dr. Arief Tarmansyah Iman, MKM'], ci: 'Ns. Dewi Sartika, S.Tr.Kes' },
-      { no: 58, nim: 'P20637024036', name: 'SYALSA DWI ANJANI', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 59, nim: 'P20637024041', name: 'AISAH DIVA ANANDA', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 60, nim: 'P20637024066', name: 'NAZWA ALIFA', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 61, nim: 'P20637024006', name: 'DISTI CITRA MAUDINA A', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 62, nim: 'P20637024013', name: 'KANIA DWI RAHMAWATI', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 63, nim: 'P20637024025', name: 'RIBI SABINA NURMERISA', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 64, nim: 'P20637024052', name: 'ERFA PURNAMA SUGIH', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 65, nim: 'P20637024011', name: 'INTAN KHOERUNNISA', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 66, nim: 'P20637024059', name: 'MUHAMMAD RAFI KHAIRULLAH', hospital: 'RSUD KHZ Mustofa', lecturers: ['Dedi Setiadi, SKM, M.Kes', 'Ayu Rahayu lestari, SST, M.MKes'], ci: 'Encep Hendra, A.Md.PK' },
-      { no: 67, nim: 'P20637024080', name: 'GIANINA NAJLA FEYZA', hospital: 'RS Permata Bunda Tasikmalaya', lecturers: ['Ari Sukawan, SST, MKM', 'Fery Fadli, SKM, MKM'], ci: 'Risma Anggraeni, S.Tr.Kes' },
-      { no: 68, nim: 'P20637024077', name: 'ZAHRINA SYARIFATUL MUNAWAR', hospital: 'RS Permata Bunda Tasikmalaya', lecturers: ['Ari Sukawan, SST, MKM', 'Fery Fadli, SKM, MKM'], ci: 'Risma Anggraeni, S.Tr.Kes' },
-      { no: 69, nim: 'P20637024001', name: 'AGNI DWI RAHMANI', hospital: 'RS Permata Bunda Tasikmalaya', lecturers: ['Ari Sukawan, SST, MKM', 'Fery Fadli, SKM, MKM'], ci: 'Risma Anggraeni, S.Tr.Kes' },
-      { no: 70, nim: 'P20637024029', name: 'SALWA LASAUFA YARDHA', hospital: 'RS Permata Bunda Tasikmalaya', lecturers: ['Ari Sukawan, SST, MKM', 'Fery Fadli, SKM, MKM'], ci: 'Risma Anggraeni, S.Tr.Kes' },
-      { no: 71, nim: 'P20637024030', name: 'SALWA ZAKIA', hospital: 'RS Permata Bunda Tasikmalaya', lecturers: ['Ari Sukawan, SST, MKM', 'Fery Fadli, SKM, MKM'], ci: 'Risma Anggraeni, S.Tr.Kes' },
-      { no: 72, nim: 'P20637024051', name: 'EMILY MEISYA SNC', hospital: 'RS Permata Bunda Tasikmalaya', lecturers: ['Ari Sukawan, SST, MKM', 'Fery Fadli, SKM, MKM'], ci: 'Risma Anggraeni, S.Tr.Kes' },
+      { no: 1, nim: "P20637024032", name: "SITI ZHARIFAH DWITA RAHMADHANI", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 2, nim: "P20637024068", name: "NEISHA AYU LESTARI", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 3, nim: "P20637024065", name: "NAYLA ZAHIRA SALSABILA RAMADHANI", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 4, nim: "P20637024012", name: "INTANIA PUTRI KURNIAWAN", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 5, nim: "P20637024009", name: "GINNA FEBRIANA SUBEKTHY", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 6, nim: "P20637024004", name: "ASTI GEA AUZIA", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 7, nim: "P20637024060", name: "MUHAMMAD SABIQ THORIQ AL-GHIFARY", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 8, nim: "P20637024067", name: "NAZWA NAZIA", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 9, nim: "P20637024061", name: "NABELA APRILLANITA", hospital: "RSUD kota Bandung", lecturers: ["Ida Wahyuni, SKM, MHPM", "Neli puspitasari, SKM, MKM"], ci: "Hani Marwiyah, S.ST ; Rita Nurheryati, Amd. Perkes, ; Dikdik Shadikin, A.Md ; Elia Anusuci, S.ST" },
+      { no: 10, nim: "P20637024033", name: "SOLEHA QORIATIN", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 11, nim: "P20637024005", name: "AZKA HIJRAN HASYA", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 12, nim: "P20637024037", name: "TIARA ROSANDA PRAMESTI", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 13, nim: "P20637024008", name: "GILANG SETYO NUGROHO", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 14, nim: "P20637024042", name: "ALEA PUTRI MANDELLA", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 15, nim: "P20637024070", name: "RAIDAH ADLA KUSUMANINGRUM", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 16, nim: "P20637024054", name: "IJMA HALIZA WAHDAH", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 17, nim: "P20637024062", name: "NADHIRA PUTRI ERDIANSYAH", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 18, nim: "P20637024055", name: "KHAERANI NURMALA RAHMAT", hospital: "RSHS", lecturers: ["Dr. Ida Sugiarti, S.Kep, MH.Kes", "Fajar Yunita Sari, SKM., MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 19, nim: "P20637024016", name: "LORENA FUZIYANTI", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 20, nim: "P20637024021", name: "NAILA HANUM MUTIARA", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 21, nim: "P20637024001", name: "AGNI DWI RAHMANI", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 22, nim: "P20637024077", name: "ZAHRINA SYARIFATUL MUNAWAR", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 23, nim: "P20637024003", name: "APRISA LUTFI", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 24, nim: "P20637024034", name: "SOPIATUL KAMILAH", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 25, nim: "P20637024080", name: "GIANINA NAJLA FEYZA", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 26, nim: "P20637024046", name: "ANESTIA SUKMANINGRASYA", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 27, nim: "P20637024064", name: "NAYLA SATRIANDINI SAPUTRA", hospital: "RS Sartika Asih Bhayangkara Bandung", lecturers: ["Dewi Lena SK, SKM, MPH", "Rizka Ajeng, AMd.RMIK, SST"], ci: "Pepi Alam Mukti, A.Md.PK" },
+      { no: 28, nim: "P20637024039", name: "ZAHRA NABILIA LY", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 29, nim: "P20637024017", name: "MUHAMMAD DICKA SETYA ATMADJA", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 30, nim: "P20637024020", name: "NABILLA RAHMANIAR", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 31, nim: "P20637024035", name: "SYAHLA MAULIDA NURULFADILAH", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 32, nim: "P20637024075", name: "SHELA AGUSTINA", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 33, nim: "P20637024026", name: "RIFA JALALUDDIN", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 34, nim: "P20637024076", name: "TIARA NURSYIFA", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 35, nim: "P20637024058", name: "MEZZALUNA NURUL MAULIDA", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 36, nim: "P20637024078", name: "ZENI PUTRI", hospital: "RSUD Bandung Kiwari", lecturers: ["Andi Suhenda, S.Kep, MPH", "Ulfah Fauziah, SST, M.Mkes"], ci: "Taufik Hidayat, S. Tr" },
+      { no: 37, nim: "P20637024040", name: "ZAHWA ALIYA KEYSA", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 38, nim: "P20637024071", name: "RAIHAN LESTARI", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 39, nim: "P20637024028", name: "RISA AZZAHRA", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 40, nim: "P20637024024", name: "QEILLA FUJI ANNISA", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 41, nim: "P20637024050", name: "MUHAMMAD YUSUF FIRDAUS", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 42, nim: "P20637024031", name: "SELLY AULIA QURROTU'AIN", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 43, nim: "P20637024057", name: "MEIRA NASYWA MUAWIYAH", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 44, nim: "P20637024072", name: "RAYA HERAWAN", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 45, nim: "P20637024010", name: "HANIIFA ZEMI 'AAQILAH", hospital: "RSHS", lecturers: ["Dr. Arief Tarmansyah Iman, S.Kep, MKM"], ci: "Cika Hasanah,SST.RMIK.MM ; Asep supriatna, SST.RMIK ; Sapta L SST.RMIK ;  Sobur, SST.RMIK ; Lilis Anisa, SST.RMIK" },
+      { no: 46, nim: "P20637024047", name: "BILSA AERADIRADJA HAEZAMANA", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 47, nim: "P20637024023", name: "PUTRI NABILA SALMA", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 48, nim: "P20637024073", name: "SALMA AZKIA AGUSTINNISA", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 49, nim: "P20637024056", name: "MARYAM SYA", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 50, nim: "P20637024069", name: "NIZAR SYAHRUR RAMADHAN", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 51, nim: "P20637024015", name: "LIFATUL GONIYYAH", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 52, nim: "P20637024027", name: "RIFAA NAZLAA NURJIHAN TIYOGA", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 53, nim: "P20637024014", name: "KANIA NAFISA", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 54, nim: "P20637024048", name: "DESMA AULIA RAMADANTHI", hospital: "Santosa Hospital Bandung Central", lecturers: ["Gugun Priyadi, , SAP, M.Kes"], ci: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM" },
+      { no: 55, nim: "P20637024002", name: "ALYA HIJRIA MADINA", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 56, nim: "P20637024044", name: "ALYA KHOERUNNISA", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 57, nim: "P20637024029", name: "SALWA LASAUFA YARDHA", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 58, nim: "P20637024030", name: "SALWA ZAKIA", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 59, nim: "P20637024038", name: "YENI LESTARI", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 60, nim: "P20637024022", name: "NIZAR TAUFIK ZULFITRI", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 61, nim: "P20637024045", name: "AMNA NURALIFA AVISA", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 62, nim: "P20637024043", name: "ALIFIA NUR IRBAH", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 63, nim: "P20637024051", name: "EMILY MEISYA SNC", hospital: "RS Welas Asih Bandung", lecturers: ["Ari Sukawan, SST, MKM", "Fery Fadli, SKM, MKM"], ci: "Nadya Noviandini, A.Md" },
+      { no: 64, nim: "P20637024036", name: "SYALSA DWI ANJANI", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 65, nim: "P20637024041", name: "AISAH DIVA ANANDA", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 66, nim: "P20637024066", name: "NAZWA ALIFA", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 67, nim: "P20637024006", name: "DISTI CITRA MAUDINA A", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 68, nim: "P20637024013", name: "KANIA DWI RAHMAWATI", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 69, nim: "P20637024025", name: "RIBI SABINA NURMERISA", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 70, nim: "P20637024052", name: "ERFA PURNAMA SUGIH", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 71, nim: "P20637024011", name: "INTAN KHOERUNNISA", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
+      { no: 72, nim: "P20637024059", name: "MUHAMMAD RAFI KHAIRULLAH", hospital: "RS Santosa Kopo Bandung", lecturers: ["Dedi Setiadi, SKM, M.Kes", "Ayu Rahayu lestari, SST, M.MKes"], ci: "Ryan Wika Ramdani, A.Md.RMIK" },
     ];
 
     const HOSPITALS_DEFAULT = [
-      'RSUD Kota Bandung',
-      'RS Santosa Bandung Central',
-      'RS Santosa Bandung Kopo',
-      'RS Al Islam Bandung',
-      'RS Dustira Cimahi',
-      'RS Immanuel Bandung',
-      'RSUD Cibabat Cimahi',
-      'RS Melinda 2 Bandung',
-      'RS Muhammadiyah Bandung'
+      "RSUD kota Bandung",
+      "RSHS",
+      "RS Sartika Asih Bhayangkara Bandung",
+      "RSUD Bandung Kiwari",
+      "Santosa Hospital Bandung Central",
+      "RS Welas Asih Bandung",
+      "RS Santosa Kopo Bandung",
     ];
 
     const STUDENTS_STORAGE_KEY = 'standalone_sep_students_magang2';
@@ -2402,23 +2400,6 @@
         if (doc.exists) {
           const cloudData = doc.data();
           if (Array.isArray(cloudData.list)) {
-            // Purity check: jika terdeteksi data Bandung di Magang 1, bersihkan cloud dan pulihkan default 72 mhs
-            const hasForeign = false;
-            if (hasForeign) {
-              console.warn('[Purity Guard] Data asing terdeteksi di Magang 1 cloud. Memulihkan 72 mahasiswa Tasik & Ciamis...');
-              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
-              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
-              firestore.collection('sipinter_config_magang2').doc('students').set({
-                list: STUDENTS_DEFAULT,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-              }).catch(console.error);
-              firestore.collection('sipinter_config_magang2').doc('hospitals').set({
-                list: HOSPITALS_DEFAULT,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-              }).catch(console.error);
-              syncAllComponents();
-              return;
-            }
             if (!isWritingToCloud) {
               localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(cloudData.list));
               syncAllComponents();
@@ -2648,7 +2629,7 @@
     }
 
     function resetStudentsToDefault() {
-      if (confirm('Kembalikan data mahasiswa ke daftar asli 72 mahasiswa dari dokumen Excel institusi?')) {
+      if (confirm('Kembalikan data mahasiswa ke daftar asli 72 mahasiswa Magang 2 (RS Bandung & Cimahi)?')) {
         localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
         localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
         syncDocToCloud('sipinter_config_magang2', 'students', { list: STUDENTS_DEFAULT });
@@ -2688,27 +2669,30 @@
     const DEFAULT_USERS = [
       { id: 'u1', username: 'admin', password: '123', name: 'Super Admin Pusbangdik', role: 'ADMIN', hospital: null, lecturerName: null },
       
-      // CI Lapangan (Sesuai 9 RS Mitra)
-      { id: 'u2', username: 'ci.hermina', password: '123', name: 'Ns. Dewi Sartika, S.Tr.Kes', role: 'CI', hospital: 'RS Hermina Tasikmalaya', lecturerName: null },
-      { id: 'u3', username: 'ci.prasetya', password: '123', name: 'Hj. Rina Marlina, Amd.PK', role: 'CI', hospital: 'RS Prasetya Bunda', lecturerName: null },
-      { id: 'u4', username: 'ci.ciamis', password: '123', name: 'Dadang Hidayat, A.Md.RMIK', role: 'CI', hospital: 'RSUD Ciamis', lecturerName: null },
-      { id: 'u5', username: 'ci.tmc', password: '123', name: 'Yulianti, Amd.PK', role: 'CI', hospital: 'RS TMC', lecturerName: null },
-      { id: 'u6', username: 'ci.dadikeluarga', password: '123', name: 'Asep Saepuloh, A.Md.Kes', role: 'CI', hospital: 'RS Dadi Keluarga Ciamis', lecturerName: null },
-      { id: 'u7', username: 'ci.jhc', password: '123', name: 'Fitri Handayani, S.Tr.Kes', role: 'CI', hospital: 'RS JHC Tsm', lecturerName: null },
-      { id: 'u8', username: 'ci.soekardjo', password: '123', name: 'Irwan Setiawan, S.ST', role: 'CI', hospital: 'RSUD Dr Soekardjo', lecturerName: null },
-      { id: 'u9', username: 'ci.khzmustofa', password: '123', name: 'Encep Hendra, A.Md.PK', role: 'CI', hospital: 'RSUD KHZ Mustofa', lecturerName: null },
-      { id: 'u10', username: 'ci.permatabunda', password: '123', name: 'Risma Anggraeni, S.Tr.Kes', role: 'CI', hospital: 'RS Permata Bunda Tasikmalaya', lecturerName: null },
-
-      // Dosen Pembimbing Lapangan (DPL) - 1 Paket Penugasan dengan Lahan Praktik
-      { id: 'u11', username: 'dosen.arief', password: '123', name: 'Dr. Arief Tarmansyah Iman, MKM', role: 'DOSEN', hospital: 'RS Hermina Tasikmalaya', lecturerName: 'Dr. Arief Tarmansyah Iman, MKM' },
-      { id: 'u12', username: 'dosen.ida', password: '123', name: 'Ida Wahyuni, SKM, MHPM', role: 'DOSEN', hospital: 'RS Prasetya Bunda', lecturerName: 'Ida Wahyuni, SKM, MHPM' },
-      { id: 'u13', username: 'dosen.idasugiarti', password: '123', name: 'Dr. Ida Sugiarti, S.Kep, MH.Kes', role: 'DOSEN', hospital: 'RSUD Ciamis', lecturerName: 'Dr. Ida Sugiarti, S.Kep, MH.Kes' },
-      { id: 'u14', username: 'dosen.dewi', password: '123', name: 'Dewi Lena SK, SKM, MPH', role: 'DOSEN', hospital: 'RS TMC', lecturerName: 'Dewi Lena SK, SKM, MPH' },
-      { id: 'u15', username: 'dosen.andi', password: '123', name: 'Andi Suhenda, S.Kep, MPH', role: 'DOSEN', hospital: 'RS Dadi Keluarga Ciamis', lecturerName: 'Andi Suhenda, S.Kep, MPH' },
-      { id: 'u16', username: 'dosen.gugun', password: '123', name: 'Gugun Priyadi, SAP, M.Kes', role: 'DOSEN', hospital: 'RS JHC Tsm', lecturerName: 'Gugun Priyadi, SAP, M.Kes' },
-      { id: 'u17', username: 'dosen.fajar', password: '123', name: 'Fajar Yunita Sari, SKM', role: 'DOSEN', hospital: 'RSUD Dr Soekardjo', lecturerName: 'Fajar Yunita Sari, SKM' },
-      { id: 'u18', username: 'dosen.dedi', password: '123', name: 'Dedi Setiadi, SKM, M.Kes', role: 'DOSEN', hospital: 'RSUD KHZ Mustofa', lecturerName: 'Dedi Setiadi, SKM, M.Kes' },
-      { id: 'u19', username: 'dosen.ari', password: '123', name: 'Ari Sukawan, SST, MKM', role: 'DOSEN', hospital: 'RS Permata Bunda Tasikmalaya', lecturerName: 'Ari Sukawan, SST, MKM' },
+      // CI Lapangan (Sesuai 7 RS Mitra Wilayah Bandung & Cimahi)
+      { id: 'u2', username: 'ci.kotabandung', password: '123', name: "Hani Marwiyah, S.ST", role: 'CI', hospital: "RSUD kota Bandung", lecturerName: null },
+      { id: 'u3', username: 'ci.rshs', password: '123', name: "Cika Hasanah, SST.RMIK.MM", role: 'CI', hospital: "RSHS", lecturerName: null },
+      { id: 'u4', username: 'ci.sartikaasih', password: '123', name: "Pepi Alam Mukti, A.Md.PK", role: 'CI', hospital: "RS Sartika Asih Bhayangkara Bandung", lecturerName: null },
+      { id: 'u5', username: 'ci.bandungkiwari', password: '123', name: "Taufik Hidayat, S. Tr", role: 'CI', hospital: "RSUD Bandung Kiwari", lecturerName: null },
+      { id: 'u6', username: 'ci.santosacentral', password: '123', name: "Muzna Iqbal Nurzeha, Amd.Perkes., S.Tr.Kom.RM", role: 'CI', hospital: "Santosa Hospital Bandung Central", lecturerName: null },
+      { id: 'u7', username: 'ci.welasasih', password: '123', name: "Nadya Noviandini, A.Md", role: 'CI', hospital: "RS Welas Asih Bandung", lecturerName: null },
+      { id: 'u8', username: 'ci.santosakopo', password: '123', name: "Ryan Wika Ramdani, A.Md.RMIK", role: 'CI', hospital: "RS Santosa Kopo Bandung", lecturerName: null },
+      
+      // Dosen Pembimbing Lapangan (DPL) Magang 2
+      { id: 'u9', username: 'dosen.ida', password: '123', name: "Ida Wahyuni, SKM, MHPM", role: 'DOSEN', hospital: "RSUD kota Bandung", lecturerName: "Ida Wahyuni, SKM, MHPM" },
+      { id: 'u10', username: 'dosen.neli', password: '123', name: "Neli puspitasari, SKM, MKM", role: 'DOSEN', hospital: "RSUD kota Bandung", lecturerName: "Neli puspitasari, SKM, MKM" },
+      { id: 'u11', username: 'dosen.idasugiarti', password: '123', name: "Dr. Ida Sugiarti, S.Kep, MH.Kes", role: 'DOSEN', hospital: "RSHS", lecturerName: "Dr. Ida Sugiarti, S.Kep, MH.Kes" },
+      { id: 'u12', username: 'dosen.fajar', password: '123', name: "Fajar Yunita Sari, SKM., MKM", role: 'DOSEN', hospital: "RSHS", lecturerName: "Fajar Yunita Sari, SKM., MKM" },
+      { id: 'u13', username: 'dosen.arief', password: '123', name: "Dr. Arief Tarmansyah Iman, S.Kep, MKM", role: 'DOSEN', hospital: "RSHS", lecturerName: "Dr. Arief Tarmansyah Iman, S.Kep, MKM" },
+      { id: 'u14', username: 'dosen.dewi', password: '123', name: "Dewi Lena SK, SKM, MPH", role: 'DOSEN', hospital: "RS Sartika Asih Bhayangkara Bandung", lecturerName: "Dewi Lena SK, SKM, MPH" },
+      { id: 'u15', username: 'dosen.rizka', password: '123', name: "Rizka Ajeng, AMd.RMIK, SST", role: 'DOSEN', hospital: "RS Sartika Asih Bhayangkara Bandung", lecturerName: "Rizka Ajeng, AMd.RMIK, SST" },
+      { id: 'u16', username: 'dosen.andi', password: '123', name: "Andi Suhenda, S.Kep, MPH", role: 'DOSEN', hospital: "RSUD Bandung Kiwari", lecturerName: "Andi Suhenda, S.Kep, MPH" },
+      { id: 'u17', username: 'dosen.ulfah', password: '123', name: "Ulfah Fauziah, SST, M.Mkes", role: 'DOSEN', hospital: "RSUD Bandung Kiwari", lecturerName: "Ulfah Fauziah, SST, M.Mkes" },
+      { id: 'u18', username: 'dosen.gugun', password: '123', name: "Gugun Priyadi, SAP, M.Kes", role: 'DOSEN', hospital: "Santosa Hospital Bandung Central", lecturerName: "Gugun Priyadi, SAP, M.Kes" },
+      { id: 'u19', username: 'dosen.ari', password: '123', name: "Ari Sukawan, SST, MKM", role: 'DOSEN', hospital: "RS Welas Asih Bandung", lecturerName: "Ari Sukawan, SST, MKM" },
+      { id: 'u20', username: 'dosen.fery', password: '123', name: "Fery Fadli, SKM, MKM", role: 'DOSEN', hospital: "RS Welas Asih Bandung", lecturerName: "Fery Fadli, SKM, MKM" },
+      { id: 'u21', username: 'dosen.dedi', password: '123', name: "Dedi Setiadi, SKM, M.Kes", role: 'DOSEN', hospital: "RS Santosa Kopo Bandung", lecturerName: "Dedi Setiadi, SKM, M.Kes" },
+      { id: 'u22', username: 'dosen.ayu', password: '123', name: "Ayu Rahayu lestari, SST, M.MKes", role: 'DOSEN', hospital: "RS Santosa Kopo Bandung", lecturerName: "Ayu Rahayu lestari, SST, M.MKes" },
     ];
 
     const ADMIN_USER = { id: 'u1', username: 'admin', password: '123', name: 'Super Admin Pusbangdik', role: 'ADMIN', hospital: null, lecturerName: null };
