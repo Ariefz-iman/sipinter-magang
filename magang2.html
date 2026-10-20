@@ -2471,7 +2471,38 @@
           snapshot.forEach(docSnap => {
             const data = docSnap.data();
             const nim = docSnap.id;
-            if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
+            const localRec = currentEvals[nim];
+
+            // Cek apakah data lokal memiliki isian nilai (draft/submitted)
+            const localHasContent = localRec && (
+              (localRec.responsi && Object.keys(localRec.responsi).length > 0) ||
+              (localRec.lapDosen && Object.keys(localRec.lapDosen).length > 0) ||
+              (localRec.kinerja && Object.keys(localRec.kinerja).length > 0) ||
+              (localRec.kompetensi && Object.keys(localRec.kompetensi).length > 0) ||
+              (localRec.lapCI && Object.keys(localRec.lapCI).length > 0) ||
+              (localRec.signerDosen && localRec.signerDosen.trim() !== '') ||
+              (localRec.signerCI && localRec.signerCI.trim() !== '')
+            );
+
+            // Cek apakah data cloud memiliki isian nilai
+            const cloudHasContent = data && (
+              (data.responsi && Object.keys(data.responsi).length > 0) ||
+              (data.lapDosen && Object.keys(data.lapDosen).length > 0) ||
+              (data.kinerja && Object.keys(data.kinerja).length > 0) ||
+              (data.kompetensi && Object.keys(data.kompetensi).length > 0) ||
+              (data.lapCI && Object.keys(data.lapCI).length > 0) ||
+              (data.signerDosen && data.signerDosen.trim() !== '') ||
+              (data.signerCI && data.signerCI.trim() !== '')
+            );
+
+            // Jika lokal punya isian (draft) sedangkan cloud kosong/template default, JANGAN timpa lokal!
+            if (localHasContent && !cloudHasContent) {
+              console.log(`[Draft Protection] Mempertahankan draft lokal untuk NIM ${nim} dan menyinkronkan ke cloud.`);
+              firestore.collection('sipinter_evaluations_magang2').doc(nim).set({
+                ...localRec,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(console.error);
+            } else if (JSON.stringify(currentEvals[nim]) !== JSON.stringify(data)) {
               currentEvals[nim] = data;
               changed = true;
             }
