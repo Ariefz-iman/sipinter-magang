@@ -2309,6 +2309,113 @@
     const SESSION_STORAGE_KEY = 'standalone_sep_session_magang2';
     const EVALUATION_STORAGE_KEY = 'standalone_sep_magang2_2026';
 
+    // -------------------------------------------------------------
+    // MAGANG 2 CONTEXT LOCK & PURITY GUARD
+    // Memastikan Magang 2 terkunci strictly pada 7 RS Bandung & Cimahi
+    // serta 72 Mahasiswa & 22 Akun DPL/CI terkait.
+    // -------------------------------------------------------------
+    const MAGANG_CONTEXT_METADATA = {
+      assignment_id: 'MAGANG_2_BANDUNG_CIMAHI',
+      site_id: 'RS_BANDUNG_CIMAHI_7',
+      periode_magang: '2026',
+      active_branch: 'main',
+      database_scope: 'sipinter_magang2',
+      lock_version: '2026.04.v2'
+    };
+
+    const MAGANG1_LEGACY_HOSPITAL_KEYWORDS = [
+      'prasetya', 'ciamis', 'tmc', 'dadi keluarga', 'jhc', 'soekardjo',
+      'hermina tasikmalaya', 'khz mustofa', 'permata bunda', 'tasikmalaya'
+    ];
+
+    function isLegacyMagang1Data(target) {
+      if (!target) return false;
+      const str = typeof target === 'string' ? target : JSON.stringify(target);
+      const lower = str.toLowerCase();
+      return MAGANG1_LEGACY_HOSPITAL_KEYWORDS.some(kw => lower.includes(kw));
+    }
+
+    function enforceMagang2ContextLock() {
+      try {
+        let resetNeeded = false;
+
+        // 1. Validasi cache Mahasiswa
+        const rawStudents = localStorage.getItem(STUDENTS_STORAGE_KEY);
+        if (rawStudents) {
+          try {
+            const parsed = JSON.parse(rawStudents);
+            if (isLegacyMagang1Data(parsed) || !Array.isArray(parsed) || parsed.length !== 72) {
+              console.warn('[ContextLock] Residu Magang 1 terdeteksi pada cache mahasiswa. Memulihkan ke 72 mahasiswa Magang 2.');
+              localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
+              resetNeeded = true;
+            }
+          } catch (e) {
+            localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
+          }
+        } else {
+          localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(STUDENTS_DEFAULT));
+        }
+
+        // 2. Validasi cache Rumah Sakit
+        const rawHospitals = localStorage.getItem(HOSPITALS_STORAGE_KEY);
+        if (rawHospitals) {
+          try {
+            const parsed = JSON.parse(rawHospitals);
+            if (isLegacyMagang1Data(parsed) || !Array.isArray(parsed) || parsed.length !== 7) {
+              console.warn('[ContextLock] Residu Magang 1 terdeteksi pada cache RS. Memulihkan ke 7 RS Bandung & Cimahi.');
+              localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+              resetNeeded = true;
+            }
+          } catch (e) {
+            localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+          }
+        } else {
+          localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
+        }
+
+        // 3. Validasi cache Akun Pengguna (Users)
+        const rawUsers = localStorage.getItem(USERS_STORAGE_KEY);
+        if (rawUsers) {
+          try {
+            const parsed = JSON.parse(rawUsers);
+            if (isLegacyMagang1Data(parsed) || !Array.isArray(parsed) || parsed.length < 20) {
+              console.warn('[ContextLock] Residu Magang 1 terdeteksi pada cache pengguna. Memulihkan ke akun Magang 2.');
+              localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
+              resetNeeded = true;
+            }
+          } catch (e) {
+            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
+          }
+        } else {
+          localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(DEFAULT_USERS));
+        }
+
+        // 4. Validasi Sesi Aktif
+        const rawSession = localStorage.getItem(SESSION_STORAGE_KEY);
+        if (rawSession) {
+          try {
+            const parsed = JSON.parse(rawSession);
+            if (isLegacyMagang1Data(parsed)) {
+              console.warn('[ContextLock] Sesi login sebelumnya merujuk ke RS Magang 1 lokal. Menghapus sesi lama.');
+              localStorage.removeItem(SESSION_STORAGE_KEY);
+              resetNeeded = true;
+            }
+          } catch (e) {
+            localStorage.removeItem(SESSION_STORAGE_KEY);
+          }
+        }
+
+        // 5. Tandai flag context lock
+        localStorage.setItem('sipinter_context_lock_magang2', JSON.stringify(MAGANG_CONTEXT_METADATA));
+
+        if (resetNeeded) {
+          console.info('[ContextLock] Verifikasi & Penguncian konteks Magang 2 selesai diterapkan.');
+        }
+      } catch (err) {
+        console.error('[ContextLock] Error pada sanitasi konteks:', err);
+      }
+    }
+
     // =============================================================
     // GOOGLE FIREBASE CLOUD FIRESTORE REAL-TIME SYNCHRONIZATION
     // =============================================================
@@ -2395,11 +2502,19 @@
     function setupFirestoreRealtimeListeners() {
       if (!firestore) return;
 
-      // 1. Sinkronisasi Data Mahasiswa (Dengan Proteksi Purity Magang 1)
+      // 1. Sinkronisasi Data Mahasiswa (Dengan Proteksi Purity Magang 2)
       firestore.collection('sipinter_config_magang2').doc('students').onSnapshot(doc => {
         if (doc.exists) {
           const cloudData = doc.data();
           if (Array.isArray(cloudData.list)) {
+            if (isLegacyMagang1Data(cloudData.list) || cloudData.list.length !== 72) {
+              console.warn('[Firestore] Data mahasiswa di cloud terdeteksi residu Magang 1. Mengoreksi kembali ke data resmi 72 mahasiswa Magang 2.');
+              firestore.collection('sipinter_config_magang2').doc('students').set({
+                list: STUDENTS_DEFAULT,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(console.error);
+              return;
+            }
             if (!isWritingToCloud) {
               localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(cloudData.list));
               syncAllComponents();
@@ -2424,6 +2539,14 @@
         if (doc.exists) {
           const cloudData = doc.data();
           if (Array.isArray(cloudData.list)) {
+            if (isLegacyMagang1Data(cloudData.list)) {
+              console.warn('[Firestore] Data akun di cloud terdeteksi residu Magang 1. Mengoreksi kembali ke 22 akun resmi Magang 2.');
+              firestore.collection('sipinter_config_magang2').doc('users').set({
+                list: DEFAULT_USERS,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(console.error);
+              return;
+            }
             if (!isWritingToCloud) {
               localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cloudData.list));
               renderUsersTable();
@@ -2448,6 +2571,14 @@
         if (doc.exists) {
           const cloudData = doc.data();
           if (Array.isArray(cloudData.list)) {
+            if (isLegacyMagang1Data(cloudData.list) || cloudData.list.length !== 7) {
+              console.warn('[Firestore] Data rumah sakit di cloud terdeteksi residu Magang 1. Mengoreksi kembali ke 7 RS Bandung & Cimahi.');
+              firestore.collection('sipinter_config_magang2').doc('hospitals').set({
+                list: HOSPITALS_DEFAULT,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(console.error);
+              return;
+            }
             if (!isWritingToCloud) {
               localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(cloudData.list));
             }
@@ -2607,9 +2738,10 @@
       if (raw !== null) {
         try {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) {
-            // Purity check: jika localStorage memiliki data Bandung, pulihkan default Magang 1
-            if (false) {
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // Strict context lock: jika cache terdeteksi data Magang 1 atau jumlah bukan 72, pulihkan default Magang 2
+            if (isLegacyMagang1Data(parsed) || parsed.length !== 72) {
+              console.warn('[ContextLock] getStudents: Terdeteksi cache Magang 1 / tidak valid. Memulihkan ke 72 mahasiswa Magang 2.');
               list = JSON.parse(JSON.stringify(STUDENTS_DEFAULT));
               localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(list));
             } else {
@@ -2627,7 +2759,7 @@
       // Pastikan s.ci dan s.lecturers selalu aman dan valid jika ada data
       let updated = false;
       list.forEach(s => {
-        if (!s.ci) {
+        if (!s.ci || s.ci === '-') {
           const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
           if (def && def.ci) {
             s.ci = def.ci;
@@ -2636,14 +2768,17 @@
             s.ci = '-';
           }
         }
-        if (!Array.isArray(s.lecturers)) {
+        if (!Array.isArray(s.lecturers) || s.lecturers.length === 0 || s.lecturers[0] === 'Dosen Pembimbing Lapangan') {
           if (typeof s.lecturers === 'string' && s.lecturers.trim()) {
             s.lecturers = parseLecturersField(s.lecturers);
+            updated = true;
           } else {
             const def = STUDENTS_DEFAULT.find(d => d.nim === s.nim);
-            s.lecturers = def && Array.isArray(def.lecturers) ? [...def.lecturers] : ['Dosen Pembimbing Lapangan'];
+            if (def && Array.isArray(def.lecturers) && def.lecturers.length > 0) {
+              s.lecturers = [...def.lecturers];
+              updated = true;
+            }
           }
-          updated = true;
         }
       });
 
@@ -2675,8 +2810,9 @@
       if (raw !== null) {
         try {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) {
-            if (false) {
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            if (isLegacyMagang1Data(parsed) || parsed.length !== HOSPITALS_DEFAULT.length) {
+              console.warn('[ContextLock] getHospitals: Terdeteksi cache Magang 1. Memulihkan ke 7 RS Bandung & Cimahi.');
               localStorage.setItem(HOSPITALS_STORAGE_KEY, JSON.stringify(HOSPITALS_DEFAULT));
               return HOSPITALS_DEFAULT;
             }
@@ -2735,6 +2871,12 @@
         try {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
+            if (isLegacyMagang1Data(parsed)) {
+              console.warn('[ContextLock] getUsers: Terdeteksi akun Magang 1. Memulihkan ke 22 akun Magang 2.');
+              users = JSON.parse(JSON.stringify(DEFAULT_USERS));
+              localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+              return users;
+            }
             users = parsed;
           }
         } catch (e) {}
@@ -2787,6 +2929,11 @@
         try {
           const u = JSON.parse(raw);
           if (u) {
+            if (isLegacyMagang1Data(u)) {
+              console.warn('[ContextLock] getCurrentSession: Sesi lama merujuk ke RS Magang 1. Membersihkan sesi.');
+              localStorage.removeItem(SESSION_STORAGE_KEY);
+              return null;
+            }
             if (u.role === 'DOSEN' && !u.hospital) {
               const def = DEFAULT_USERS.find(d => d.username === u.username);
               if (def && def.hospital) {
@@ -2802,6 +2949,10 @@
     }
 
     function setCurrentSession(user) {
+      if (user && isLegacyMagang1Data(user)) {
+        console.warn('[ContextLock] setCurrentSession: Menolak menyimpan sesi yang merujuk ke RS Magang 1.');
+        return;
+      }
       localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
     }
 
@@ -7207,6 +7358,9 @@
           if (ciSigPad) ciSigPad.setupDimensions();
           if (dosenSigPad) dosenSigPad.setupDimensions();
         });
+
+        // Strict Context Locking Enforcement on Initialization
+        enforceMagang2ContextLock();
 
         buildForms();
         getStudents();
